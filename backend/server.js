@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import  cookieParser from "cookie-parser";
 import { connectDB } from "./db/config.js";
+import productRoutes from "./routes/productRoutes.js"
 
 
 // express declaration
@@ -22,9 +22,8 @@ app.use(cookieParser());
 const PORT = process.env.PORT || 5000;
 
 
-app.get("/", (req, res) => {
-     res.send("Hello World!");
-});
+app.use("/api/products", productRoutes);
+
 
 app.listen(PORT, () => {
      console.log(`Server is running on port : ${PORT}`);
