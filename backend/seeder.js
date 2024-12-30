@@ -3,15 +3,12 @@ import Product from "./models/productModel.js";
 import products from "./data/products.js";
 
 
-
-connectDB();
-
-
 export const importData = async () => {
     try{
 
-        await Product.deleteMany();
-        await Product.importMany(products);
+        await connectDB();
+        // await Product.deleteMany();
+        await Product.insertMany(products); // it wait untils this line executes.
 
         console.log("Data Imported..");
         process.exit();
@@ -21,3 +18,5 @@ export const importData = async () => {
         process.exit(1);
     }
 }
+
+importData();
