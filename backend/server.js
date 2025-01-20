@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 // import  cookieParser from "cookie-parser";
 import { connectDB } from "./db/config.js";
 import productRoutes from "./routes/productRoutes.js"
+import authRoutes from "./routes/authRoutes.js"
 
 
 // express declaration
@@ -29,6 +30,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/products", productRoutes); // route link - http://localhost:5000/api/products/
+app.use("/api/users/", authRoutes)
 
 
 app.listen(PORT, () => {

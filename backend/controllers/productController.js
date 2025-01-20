@@ -12,12 +12,13 @@ export const getProducts  = async(req, res) => {
     }
 }
 
-// export const getProductById  = async(req, res) => {
+export const getProductById  = async(req, res) => {
 
-//     try{
-//         const data = await Product.findById(req);
-//         res.status(200).json(data);
-//     } catch(err){
-//         console.log(err);
-//     }
-// }
+    try{
+        const data = await Product.findById(req.params.id);
+        res.status(200).json(data);
+    } catch(err){
+        console.log(err);
+        res.status(500).send("Server Error");
+    }
+}
