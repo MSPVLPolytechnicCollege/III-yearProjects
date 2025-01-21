@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDENT PRESENCE MANAGER</title>
+     <link rel="stylesheet" href="\static\css\all_attendance.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="sidebar">
+        <img src="\static\images\logo.jpg">
+        <ul>
+            <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="#">Staffs</a></li>
+            <li><a href="{{url_for('all_attendance')}}">All Attendance</a></li>
+            <li><a href="{{url_for('create_attendence_form')}}">Create Attendance</a></li>
+            <li><a href="#">Late Time</a></li>
+            <li><a href="#">Leave</a></li>
+            <li><a href="{{url_for('login')}}">Logout</a></li>
+        </ul>
+    </div>
+    <div class="attendance_container">
+        <h1>ALL STUDENT ATTENDANCE</h1>
+        {% for row in data %}
+        <div  class="attendances-div">
+            <div class="attendance">
+                <h4>Name    : {{row["name"]}}</h4>
+                <h4>Section : {{row["section"]}}</h4>
+                <h4>Id      : {{row["id"]}} </h4>
+                <a href="{{url_for('view_attendance',name=row['name'])}}"><input type="submit" value="View"></a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

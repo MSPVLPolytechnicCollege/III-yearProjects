@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STUDENT PRESENCE MANAGER</title>
+    <link rel="stylesheet" href="\static\css\attendance_sheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="sidebar">
+        <img src="\static\images\logo.jpg">
+        <ul>
+            <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="#">Staffs</a></li>
+            <li><a href="{{url_for('all_attendance')}}">All Attendance</a></li>
+            <li><a href="{{url_for('create_attendence_form')}}">Create Attendance</a></li>
+            <li><a href="#">Late Time</a></li>
+            <li><a href="#">Leave</a></li>
+            <li><a href="{{url_for('login')}}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="table-container">
+        <a class="login" href="{{url_for('login')}}"><i class="fa-solid fa-user"></i></a>
+        <div class="date">
+            <h1>STUDENT'S ATTENDANCE</h1>
+            <input type="date">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Slno</th>
+                    <th>Rollno</th>
+                    <th>Name</th>
+                    <th>All</th>
+                    <th>Period 1</th>
+                    <th>Period 2</th>
+                    <th>Period 3</th>
+                    <th>Period 4</th>
+                    <th>Period 5</th>
+                    <th>Period 6</th>
+                    <th>Period 7</th>
+                    <th>Period 8</th>
+                    <th>How Present</th>
+                    <th>How Absent</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>101</td>
+                    <td>John Doe</td>
+                    <td><input type="checkbox" class="all-checkbox" data-row="1" value="all"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="1"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="2"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="3"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="4"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="5"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="6"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="7"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="1" value="8"></td>
+                   
+                    <td class="how-present" data-row="1">0</td>
+                    <td class="how-absent" data-row="1">8</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>102</td>
+                    <td>Jane Smith</td>
+                    <td><input type="checkbox" class="all-checkbox" data-row="2" value="all" ></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="1"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="2"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="3"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="4"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="5"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="6"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="7"></td>
+                    <td><input type="checkbox" class="period-checkbox" data-row="2" value="8"></td>
+                    
+                    <td class="how-present" data-row="2">0</td>
+                    <td class="how-absent" data-row="2">8</td>
+                </tr>
+             
+            </tbody>
+
+        </table>
+
+        <div style="text-align: center;">
+            <button class="submit" onclick="submitForm()">Submit</button>
+            <button class="clear" onclick="clearForm()">Clear</button>
+            <a href="{{url_for('add_student',name=name)}}"><button class="submit" type="button">Add student</button></a>
+
+        </div>
+    </div>
+
+    <script>
+        const periodCheckboxes = document.querySelectorAll('.period-checkbox');
+const allCheckboxes = document.querySelectorAll('.all-checkbox');
+
+periodCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', updateAttendance);
+});
+
+allCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', toggleAllPeriods);
+});
+
+function updateAttendance() {
+    const row = this.getAttribute('data-row');
+    const allCheckbox = document.querySelector(`input[data-row="${row}"][value="all"]`);
+    const checkboxes = document.querySelectorAll(`input[data-row="${row}"]:not([value="all"])`);
+    const howPresentCell = document.querySelector(`.how-present[data-row="${row}"]`);
+    const howAbsentCell = document.querySelector(`.how-absent[data-row="${row}"]`);
+
+    if (allCheckbox.checked) {
+        checkboxes.forEach(checkbox => checkbox.checked = true); // Check all periods
+        howPresentCell.textContent = '8';  // All periods present
+        howAbsentCell.textContent = '0';  // None absent
+    } else {
+        let presentCount = 0;
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                        presentCount++;
+                    }
+                });
+        howPresentCell.textContent = presentCount;  // Present count
+        howAbsentCell.textContent = 8 - presentCount;  // Remaining are absent
+    }
+}
+
+function toggleAllPeriods() {
+    const row = this.getAttribute('data-row');
+    const checkboxes = document.querySelectorAll(`input[data-row="${row}"]:not([value="all"])`);
+    const isChecked = this.checked;
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = isChecked;
+        });
+
+    updateAttendance.call(this);
+}
+
+function submitForm() {
+            alert('Form submitted!');
+            // Add your submit logic here
+}
+
+function clearForm() {
+    // Clear all checkboxes and reset attendance counts
+    periodCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    allCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    const allPresentCells = document.querySelectorAll('.how-present');
+    const allAbsentCells = document.querySelectorAll('.how-absent');
+    allPresentCells.forEach(cell => cell.textContent = '0');
+    allAbsentCells.forEach(cell => cell.textContent = '8');
+}
+    </script>
+</body>
+</html>

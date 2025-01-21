@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #007BFF;
+    color: white;
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+.sidebar img {
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    margin-left: 50px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    padding: 20px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color:white;
+    transition: all 0.5s 0.2s ease;
+    color:black;
+}
+
+.table-container {
+    margin-left: 250px;
+    max-width: 100%;
+    overflow: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+.table-container .date h1{
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+.date{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content:space-between;
+}
+.date input[type='date']{
+    font-size: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+.login{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 35px;
+    color: #007BFF;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 5px 5px 5px rgb(177, 177, 177);
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: 400;
+    position: sticky;
+    top: 0;
+    text-transform:capitalize;
+}
+input[type='checkbox']{
+    cursor: pointer;
+}
+
+td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 3px 3px 3px gray;
+    margin: 5%;
+}
+
+button.submit {
+    background-color: #28a745;
+    color: white;
+}
+
+button.clear {
+    background-color: #dc3545;
+    color: white;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+@media screen and (max-width: 768px) {
+    table, th, td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    th, td {
+        word-wrap: break-word;
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .table-container {
+        margin-left: 200px;
+    }
+}
