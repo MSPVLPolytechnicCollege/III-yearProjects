@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+</head>
+<style>
+    body{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        min-height:100vh;
+        background:#081b29;
+    }
+    .form{
+        position:relative;
+        width:600px;
+        height:300px;
+        background:transparent;
+        border:2px solid #0ef;
+
+    .box .form{
+        position:absolute;
+        top:0px;
+        width:50%;
+        height:100%;
+        background:red;
+        text-align:center;
+        flex-direction:column;
+        justify-content:center;
+}
+</style>
+
+<body>
+<!----<div class="box2">
+                <img src="static/c2.jpg" alt="" width="300px" height="300px">
+            </div>---->
+
+<form action="/confirm" method="POST">
+
+<div class="box">
+    <div class="form">
+        <h1>Loginpage </h1>
+    <label>username</label>
+    <input type="text" name="uname" required><br><br>
+    <label>password</label>
+    <input type="password" name="password">
+    <div class="btn">
+    <input type="submit" value="login" class="btn2">
+ <p>Don't have an account?<a href="register"><span> Sign up</span></a></p>    </div>
+
+    </div>
+</div>
+</form>
+<!----img---->
+
+
+</body>
+</html>
