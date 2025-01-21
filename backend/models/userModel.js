@@ -32,14 +32,16 @@ userSchema.methods.matchPassword = async function (enteredPassword){
 
 userSchema.pre("save", async function (next) {
 
-    // checks for password modify agiruka ilayanu - password modify panalana next() call agirum that means aduthu ula code run agum
     if(!this.isModified("password")){
         next();
     }
 
+    console.log("Hashing Password...");
+
 
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 const User = mongoose.model("User", userSchema);

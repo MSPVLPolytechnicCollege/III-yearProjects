@@ -1,17 +1,17 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"
 
-// authUser
-// /api/users/login
+
+// login user
 const authUser = asyncHandler(async (req, res) => {
     // console.log(req.body)
-    const {email, password} = req.body; // frontend la pass panra data va get panrom
-    const user = await User.findOne({email}); // email vachu data db la irka nu search pannum
+    const {email, password} = req.body;
+    console.log(email);
+    console.log(password);
+    const user = await User.findOne({email});
     // console.log(user);
-
-    // user found & db la irukura password aa match panni paakurom [bcrypt]
     if(user && (await user.matchPassword(password))){
     
         generateToken(res,user._id);
@@ -28,29 +28,25 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
+
 // @Access Public
-// /api/users/
 const registerUser = asyncHandler(async (req, res) => {
-    const {name, email, password} = req.body; // namma pass panra name,email,password aa get panni vaikrom
+    const {name, email, password} = req.body;
     // console.log(name,email,password)
 
-    // email vachu nammaloda data already ulla iruka nu check panrom 
     const userExists = await User.findOne({email});
 
-    // if data iruntha status 400 agirum
     if(userExists){
         res.status(400);
         throw new Error("User Already Exists"); 
     }
 
-    // user ula ilana userModel la create panrom
     const user = await User.create({
         name,
         email,
         password
     });
     
-    // user create aachuna new jwt token create aagum 
     if(user){
         generateToken(res,user._id);
         res.status(201).json({
@@ -69,13 +65,14 @@ const registerUser = asyncHandler(async (req, res) => {
 // @Access Private
 // /api/users/logout
 const logoutUser = asyncHandler(async (req, res) => {
-    res.cookie("jwt", "", { // token aa clear panrom..
+    res.cookie("jwt", "", {
         httpOnly: true,
-        expires: new Date(0), // expire aa date aa reset panrom
+        expires: new Date(0), 
     });
 
     res.status(200).json({message:"Logged out successfully"});
 });
+
 
 // @Access Public
 // /api/users/profile
@@ -95,11 +92,37 @@ const getUserProfile = asyncHandler(async (req, res) => {
     }
 });
 
-// @Access Private
+/// @Access Private
 // /api/users/profile
 const updateUserProfile = asyncHandler(async (req, res) => {
-    res.send("Users UpdateProfile"); // Got UpdateProfile On [Put]
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+        res.status(404);
+        throw new Error('User not found');
+    }
+
+    const { name, email, password } = req.body;
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+
+    if (password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+    }
+
+    await user.save();
+
+    res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        message: "Profile updated successfully",
+    });
 });
+
 
 // @Access Public
 // /api/users
