@@ -4,14 +4,14 @@ import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcrypt"
 
 
-// login user
+// authUser
+// /api/users/login
 const authUser = asyncHandler(async (req, res) => {
     // console.log(req.body)
-    const {email, password} = req.body;
-    console.log(email);
-    console.log(password);
+    const {email, password} = req.body; 
     const user = await User.findOne({email});
     // console.log(user);
+
     if(user && (await user.matchPassword(password))){
     
         generateToken(res,user._id);
@@ -84,6 +84,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
             _id:user._id,
             name:user.name,
             email:user.email,
+            // password:user.password,
             isAdmin:user.isAdmin
         })
     }else {
@@ -91,6 +92,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
         throw new Error("User not found");
     }
 });
+
 
 /// @Access Private
 // /api/users/profile
@@ -105,23 +107,42 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
 
     if (name) user.name = name;
-    if (email) user.email = email;
+    
+    if (email) {
+        if (!validateEmail(email)) {
+            res.status(400).json({ message: 'Invalid email format' });
+            return;
+        }
+        user.email = email;
+    }
 
     if (password) {
+        if (password.length < 6) {
+            res.status(400).json({ message: 'Password must be at least 6 characters' });
+            return;
+        }
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
     }
 
     await user.save();
+    console.log(user);
 
     res.json({
         _id: user._id,
         name: user.name,
         email: user.email,
-        password: user.password,
+        password:user.password,
         message: "Profile updated successfully",
     });
 });
+
+
+const validateEmail = (email) => {
+    const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return re.test(String(email).toLowerCase());
+};
+
 
 
 // @Access Public
