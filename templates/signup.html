@@ -82,15 +82,15 @@
     </style>
 </head>
 <body>
-    <form action="">
-        <h2>CREAT ACCOUNT</h2>
+    <form action="/insert_users" method="post">
+        <h2>CREATE ACCOUNT</h2>
         <label for="user_name">USER NAME :</label>
         <input type="text" name="user_name" required>
         <label for="password">PASSWORD :</label>
         <input type="password" name="password" required>
-        <label for="password">CONFIRM PASSWORD :</label>
-        <input type="password" name="password" required>
-        <input type="submit" value="CREAT ACCOUNT">
+        <label for="confirmassword">CONFIRM PASSWORD :</label>
+        <input type="password" name="confirmpassword" required>
+        <input type="submit" value="CREATE ACCOUNT">
         <div class="group">
             <p>Do you have an account?</p>
             <a href="{{url_for('login')}}">Signin</a>

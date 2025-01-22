@@ -73,6 +73,20 @@ def insert_student():
     con.close()
     return "inserted"
 
+@app.route("/insert_users",methods=["POST","GET"])
+def insert_users():
+    in_username = request.form['user_name']
+    in_password = request.form['password']
+    in_confirmpass = request.form['confirmpassword']
+    if in_password == in_confirmpass:
+        con = sqlite3.connect("data_base.db")
+        cur = con.cursor()
+        cur.execute("INSERT INTO users(username,password) VALUES(?,?)", (in_username, in_password))
+        con.commit()
+        con.close()
+        return render_template("login.html")
+    else:
+        return "password not match"
 '''@app.route("/add_contact")
 def add_contact():
     return render_template("add_contact.html")
