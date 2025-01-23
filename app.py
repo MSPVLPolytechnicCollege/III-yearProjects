@@ -1,10 +1,10 @@
 
-from flask import Flask, render_template, request,redirect,url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import sqlite3
 
-con = sqlite3.connect('alumini__db.db')
-
 app = Flask(__name__)
+
+app.secret_key="123"
 
 
 @app.route('/')
@@ -12,7 +12,85 @@ app = Flask(__name__)
 def home():
     return render_template('login-stu.html')
 
+@app.route('/student-home')
+def stuhome():
+    return render_template('home-stu.html')
 
+@app.route('/success')
+def success():
+    return render_template('success.html')
+
+con = sqlite3.connect('alumini__db.db')
+con.execute("create table if not exists student(regno integer primary key, sname text, email text unique ,username text unique,password text,confirmpass text) ")
+con.close()
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        try:
+            regno = request.form["stu_reg"]
+            sname = request.form["stu_name"]
+            email = request.form["stu_email"]
+            username = request.form["stu_user"]
+            password = request.form["stu_pass"]
+            confirmpass = request.form["stu_con-pass"]
+
+            if password != confirmpass:
+                return render_template('error.html', message="Passwords do not match.")
+
+            con = sqlite3.connect('alumini__db.db')
+            cursor = con.cursor()
+            cursor.execute("insert into student(regno,sname,email,username,password,confirmpass) values(?,?,?,?,?,?);", (regno,sname,email,username,password,confirmpass))
+            con.commit()
+            # Redirect to the 'success' page and pass the message
+            return render_template('success.html', message="Registered Successfully.")
+
+        except:
+            return render_template('error.html', message="Registration failed. Details: " )
+        finally:
+            return redirect(url_for('home'))
+            con.close()
+    return render_template('register-stu.html')
+
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        username = request.form['stu-name']
+        password = request.form["stu-pass"]
+        con=sqlite3.connect('alumini__db.db')
+        con.row_factory=sqlite3.Row #select query use pana ithu use panuvo to select the row
+        cursor=con.cursor()
+        cursor.execute("select * from student where username=? and password=?;" ,(username,password))
+        data=cursor.fetchone() #to fetch only one day that username and password
+
+        if data:
+            session['username']=data['username']
+            session['password']=data['password']
+            return redirect(url_for("stuhome"))
+        else:
+            return render_template('success.html', message="Username and Password Mismatch.")
+
+    return redirect(url_for("home"))
+@app.route('/update')
+def update_stu():
+    return render_template('update-stu.html')
+
+@app.route('/update/<string:id>',methods=['GET','POST'])
+def update(username):
+    return render_template('update-stu.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('register-stu.html')
+
+@app.route('/adminlogin')
+def admin():
+    return render_template('login-admin.html')
+
+
+'''
 @app.route('/success', methods=["GET", "POST"])
 def insertData():
     if request.method == 'POST':
@@ -26,36 +104,10 @@ def insertData():
         # Redirect to the 'success' page and pass the message
         return render_template('success.html', message="Login successfully.")
     return redirect(url_for('home'))
+'''
 
-@app.route('/update')
-def update():
-    return render_template('update-stu.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('register-stu.html')
 
-@app.route('/adminlogin')
-def admin():
-    return render_template('login-admin.html')
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        regno = request.form["stu_reg"]
-        name = request.form["stu_name"]
-        email = request.form["stu_email"]
-        user = request.form["stu_user"]
-        pas = request.form["stu_pass"]
-        conpas = request.form["stu_con-pass"]
-        con = sqlite3.connect('alumini__db.db')
-        cursor = con.cursor()
-        cursor.execute("insert into stu_reg(sreg,sname,email,username,password,confirmpass) values(?,?,?,?,?,?);", (regno,name,email,user,pas,conpas))
-        con.commit()
-        con.close()
-        # Redirect to the 'success' page and pass the message
-        return render_template('success.html', message="Registered Successfully.")
-    return redirect(url_for('home'))
 
 
 
@@ -67,7 +119,7 @@ def updateData():
         forgot_s_pass = request.form['forgot-stu-pass']
         con = sqlite3.connect('alumini_db.db')
         cursor = con.cursor()
-        cursor.execute("update stu_login set password=? where username=?",(forgot_s_pass,forgot_s_user))
+        cursor.execute("update student set password=? where username=?",(forgot_s_pass,forgot_s_user))
         con.commit()  # commit will give it will execute on the db
         con.close()
         return render_template('success.html')
