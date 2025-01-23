@@ -77,6 +77,8 @@ def login():
 def update_stu():
     return render_template('update-stu.html')
 
+@app.route('/')
+
 @app.route('/update/<string:id>',methods=['GET','POST'])
 def update(username):
     return render_template('update-stu.html')
