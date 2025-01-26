@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 
 // authUser
@@ -21,7 +21,7 @@ const authUser = asyncHandler(async (req, res) => {
         name:user.name,
         email:user.email,
         isAdmin:user.isAdmin
-        })
+        });
     } else{
         res.status(401);
         throw new Error("Invalid Email Or Password");
