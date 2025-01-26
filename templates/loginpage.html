@@ -1,10 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>login</title>
-
 </head>
 <style>
     body{
@@ -12,49 +11,80 @@
         justify-content:center;
         align-items:center;
         min-height:100vh;
-        background:#081b29;
+        background: rgb(63,94,251);
+background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(239,52,255,1) 100%);;
+        margin-left:80px;
     }
-    .form{
+    .wrapper{
         position:relative;
         width:600px;
         height:300px;
         background:transparent;
-        border:2px solid #0ef;
+       }
+       .form-lgn h1{
+       color:#0d30e3;}
+/* Entire form */
 
-    .box .form{
+    .form-lgn{
+      background: rgb(16,238,255);
+background: linear-gradient(349deg, rgba(16,238,255,1) 3%, rgba(255,101,251,1) 78%);
+        border:1px solid white;
+        border-radius:20px;
+        width:290px;
+        height:290px;
+        margin-left:100px;
         position:absolute;
         top:0px;
-        width:50%;
-        height:100%;
-        background:red;
         text-align:center;
         flex-direction:column;
         justify-content:center;
+
 }
+    .btn2{
+    margin-top:10px;
+    background: rgb(63,94,251);
+background: linear-gradient(113deg, rgba(63,94,251,1) 12%, rgba(239,52,255,1) 81%);
+    border-radius:3px;
+    width:50px;
+    height:25px;
+    border: 2px solid #0d30e3;
+
+    }
+    .input-box input{
+    border-radius:2px;
+    border: 1px solid black;
+    }
 </style>
 
 <body>
+
 <!----<div class="box2">
+ <img src="static/images/c2.jpg" alt="" width="300px" height="300px">
                 <img src="static/c2.jpg" alt="" width="300px" height="300px">
+                  background-color:tranparent;
             </div>---->
 
+<div class="wrapper">
+
+ <div class="form-lgn">
+     <a href="admin"><span> Admin</span></a><!---admin link----->
+     <h1>Loginpage </h1>
 <form action="/confirm" method="POST">
-
-<div class="box">
-    <div class="form">
-        <h1>Loginpage </h1>
-    <label>username</label>
-    <input type="text" name="uname" required><br><br>
-    <label>password</label>
-    <input type="password" name="password">
-    <div class="btn">
-    <input type="submit" value="login" class="btn2">
- <p>Don't have an account?<a href="register"><span> Sign up</span></a></p>    </div>
-
+    <div class="input-box">
+            <label>Username</label>
+                <input type="text" name="name" required><br><br>
+            <label>Password</label>
+                <input type="password" name="password" required> <br>
     </div>
-</div>
+    <input type="submit" value="Login" class="btn2">
+        <div class="link">
+              <p>Don't have an account?<a href="register"><span> Sign up</span></a></p>
+        </div>
+
 </form>
-<!----img---->
+
+</div>
+ </div>
 
 
 </body>
