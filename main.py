@@ -72,7 +72,6 @@ def insert_student():
     in_att_name = request.form['attendance_name']
     con = sqlite3.connect("data_base.db")
     cur = con.cursor()
-    #cur.execute("INSERT INTO nantha(rollno,name) VALUES(?,?)",(in_roll,in_name))
     cur.execute( "INSERT INTO nantha (rollno,name) VALUES(?,?)",(in_roll,in_name))
     con.commit()
     con.close()
@@ -192,5 +191,4 @@ def delete_contact(id):
     con.commit()
     return render_template('delete_success.html')
     con.close()
-
 '''

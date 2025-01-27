@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATTENDANCE MODULE</title>
+    <link rel="stylesheet" href="\static\css\index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                display: flex;
+            }
+            
+            .sidebar {
+                width: 20%;
+                background-color: #007BFF;
+                color: white;
+                padding-top: 20px;
+                flex-direction: column;
+                min-height: 100vh;
+                box-shadow: 7px 7px 7px gray;
+            
+            }
+            
+            .sidebar img {
+                width: 150px;
+                height: 150px;
+                margin: 5px;
+                margin-left: 50px;
+                border-radius: 50%;
+                padding: 5px;
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+            
+            .sidebar ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+            
+            .sidebar ul li {
+                padding: 20px;
+                text-align: left;
+                font-size: 24px;
+                font-weight: 500;
+            }
+            
+            .sidebar ul li a {
+                text-decoration: none;
+                color: #fff;
+                display: block;
+            }
+            
+            .sidebar ul li a:hover {
+                background-color:white;
+                transition: all 0.5s 0.2s ease;
+                color:black;
+            }
+            
+            .img_container{
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .img_container h1{
+                text-align: left;
+                font-weight: 800;
+                font-weight: 40px;
+                text-shadow: 2px 2px 2px #007BFF;
+            }
+            .img_container a button{
+                background-color: green;
+                width: 100px;
+                height:50px;
+                color:white;
+                border: none;
+                font-weight: 600;
+                border-radius: 5px;
+                padding: 5px;
+                box-shadow: 3px 3px 3px gray;
+                margin: 10px;
+            }
+            .img_container a button:hover{
+                transform: scale(1.04);
+            }
+        </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <img src="\static\images\logo.jpg">
+        <ul>
+              <li><a href="{{url_for('home')}}">Home</a></li>
+            <li><a href="#">Student</a></li>
+            <li><a href="{{url_for('all_attendance')}}">Faculty</a></li>
+            <li><a href="{{url_for('create_attendence_form')}}">Attendance Details</a></li>
+            <li><a href="#">Admin</a></li>
+            <li><a href="#">Report</a></li>
+            <li><a href="{{url_for('login')}}">Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="img_container"> 
+        <a href="{{url_for('create_attendence_form')}}"><button>CREATE ATTENDANCE</button></a>
+    </div>
+</body>
+</html>
