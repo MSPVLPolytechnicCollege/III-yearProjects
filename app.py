@@ -20,7 +20,7 @@ def stuhome():
 def success():
     return render_template('success.html')
 
-con = sqlite3.connect('alumini__db.db')
+con = sqlite3.connect('alumini_db.db')
 con.execute("create table if not exists student(regno integer primary key, sname text, email text unique ,username text unique,password text,confirmpass text) ")
 con.close()
 
@@ -39,7 +39,7 @@ def register():
             if password != confirmpass:
                 return render_template('error.html', message="Passwords do not match.")
 
-            con = sqlite3.connect('alumini__db.db')
+            con = sqlite3.connect('alumini_db.db')
             cursor = con.cursor()
             cursor.execute("insert into student(regno,sname,email,username,password,confirmpass) values(?,?,?,?,?,?);", (regno,sname,email,username,password,confirmpass))
             con.commit()
@@ -59,7 +59,7 @@ def login():
     if request.method=='POST':
         username = request.form['stu-name']
         password = request.form["stu-pass"]
-        con=sqlite3.connect('alumini__db.db')
+        con=sqlite3.connect('alumini_db.db')
         con.row_factory=sqlite3.Row #select query use pana ithu use panuvo to select the row
         cursor=con.cursor()
         cursor.execute("select * from student where username=? and password=?;" ,(username,password))
@@ -73,15 +73,8 @@ def login():
             return render_template('success.html', message="Username and Password Mismatch.")
 
     return redirect(url_for("home"))
-@app.route('/update')
-def update_stu():
-    return render_template('update-stu.html')
 
-@app.route('/')
 
-@app.route('/update/<string:id>',methods=['GET','POST'])
-def update(username):
-    return render_template('update-stu.html')
 
 @app.route('/signup')
 def signup():
@@ -91,7 +84,39 @@ def signup():
 def admin():
     return render_template('login-admin.html')
 
+@app.route('/aluminilogin')
+def alumini():
+    return render_template('login-alumini.html')
 
+'''
+@app.route('/alumini-register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        try:
+            regno = request.form["alumini-name"]
+            sname = request.form["stu_name"]
+            email = request.form["stu_email"]
+            username = request.form["stu_user"]
+            password = request.form["stu_pass"]
+            confirmpass = request.form["stu_con-pass"]
+
+            if password != confirmpass:
+                return render_template('error.html', message="Passwords do not match.")
+
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute("insert into student(regno,sname,email,username,password,confirmpass) values(?,?,?,?,?,?);", (regno,sname,email,username,password,confirmpass))
+            con.commit()
+            # Redirect to the 'success' page and pass the message
+            return render_template('success.html', message="Registered Successfully.")
+
+        except:
+            return render_template('error.html', message="Registration failed. Details: " )
+        finally:
+            return redirect(url_for('home'))
+            con.close()
+    return render_template('register-stu.html')
+'''
 '''
 @app.route('/success', methods=["GET", "POST"])
 def insertData():
@@ -129,8 +154,8 @@ def updateData():
 '''
 
 
-@app.route('/forgot/<string:username>', methods=["GET", "POST"])
-def updateData(username):
+@app.route('/forgot', methods=["GET", "POST"])
+def updateData():
     if request.method == 'POST':
         # Retrieve form data
         forgot_s_user = request.form['forgot-stu-name']
@@ -140,14 +165,17 @@ def updateData(username):
             # Connect to the database
             con = sqlite3.connect('alumini_db.db')
             cursor = con.cursor()
+            username='forgot_s_user'
+            cursor.execute('select username from student where username=?',(forgot_s_user))
+            result = cursor.fetchone()
 
             # Check if the username matches the route parameter
-            if forgot_s_user != username:
+            if result is None or forgot_s_user != username:
                 return render_template('error.html', message="Username mismatch. Please try again.")
 
             # Update the password in the database
             cursor.execute(
-                "UPDATE stu_login SET password=? WHERE username=?",
+                "UPDATE student SET password=? WHERE username=?",
                 (forgot_s_pass, forgot_s_user)
             )
 
@@ -162,11 +190,11 @@ def updateData(username):
             # Redirect to a success page
             return render_template('success.html', message="Password updated successfully!")
 
-        except Exception as e:
-            return render_template('error.html', message=f"An error occurred: {str(e)}")
+        except:
+            return render_template('error.html', message="An error occurred")
 
-    # If the request method is GET, show the forgot password form
-    return render_template('forgot_password.html', username=username)
+
+    return render_template('update-stu.html')
 
 
 if __name__=='__main__':
