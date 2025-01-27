@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication Page</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    * {
+      padding: 0%;
+      margin: 0%;
+      box-sizing:border-box;
+      font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      font-size: 9pt;
+    }
+    body{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: url('bg1.jpg');
+      background-position: center;
+      background-size: cover;
+    }
+    .continer{
+      width: 30%;
+      color: rgb(255, 255, 255);
+      padding: 20px 30px;
+      border-radius: 3dvh;
+      background: transparent;
+      border: 1px solid rgb(255, 255, 255);;
+      backdrop-filter: blur(20px);
+      box-shadow: 3px 3px 20px black (10,0,0,10);
+    }
+    .continer h1{
+      text-align: center;
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 30pt;
+      padding-bottom: 10pt;
+      font-weight: 500; 
+    }
+   .inp input{
+    height: 30px;
+    display: flex;
+    width: 95%;
+    margin: 10px;
+    border: 1px solid;
+    background: transparent;
+    border-color: rgb(255, 255, 255);
+    outline: none;
+    border-radius: 4dvh;
+    padding: 20px;
+    font-weight: 900;
+    color: rgb(255, 255, 255);
+   }
+   .continer .frgt{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 15px 15px;
+   }
+   .frgt p{
+    font-size: 9pt;
+   }
+   .sl p{
+    display:contents ;
+    text-decoration: none;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    font-weight: 900;
+   }
+   .continer .btn button{
+    width: 95%;
+    height: 40px; 
+    border-radius: 4dvh;
+    border: none;
+    box-shadow: 3px 3px 10px rgb(0, 0, 0, .10);
+    cursor: pointer;
+    font-size: 12pt;
+    font-weight:100;
+   }
+   .continer .btn{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+   }
+   .continer .sl{
+    text-align: center;
+    padding-top: 5pt;
+   }
+   .frgt label{
+    display:flex;
+   }
+   .inp{
+    font-size: 12pt;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   }
+   .continer .btn button:hover{
+    background:linear-gradient(to right,rgb(255, 111, 22),rgb(255, 205, 26));
+    color: white;
+   }
+   .sl .link {
+      cursor: pointer;
+    }
+    .sl label p:hover{
+      text-decoration: underline;
+    }
+    .continer .frgt a{
+      color: white;
+      text-decoration: none;
+    }
+    .continer .frgt a:hover{
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="continer" id="login-container">
+    <form action="">
+      <h1>Login</h1>
+      <div class="inp">
+        <i class='bx bxs-user'></i>
+        Username<input type="text" required>
+      </div>
+      <div class="inp">
+        <i class='bx bxs-lock-alt'></i>
+        Password<input type="password" required>        
+      </div>
+      <div class="frgt">
+        <label>
+        </label><a href="#">Forget Password?</a>
+      </div>
+      <div class="btn">
+        <button type="submit">Login</button>
+      </div>
+      <div class="sl">
+        <label>Don't have an Account? <p onclick="showRegister()" class="link">Sign-up</p></label>
+      </div>
+    </form>
+  </div>
+
+  <div class="continer" id="register-container" style="display: none;">
+    <form action="">
+      <h1>Sign-up</h1>
+      <div class="inp">
+        <i class='bx bxs-user'></i>
+        Username<input type="text" required>
+      </div>
+      <div class="inp">
+        <i class='bx bxl-gmail'></i>
+        Gmail<input type="email" required>        
+      </div>
+      <div class="inp">
+        <i class='bx bxs-lock-alt'></i>
+        Password<input type="password" required>        
+      </div>
+      <div class="frgt">
+        <label><input type="checkbox">&nbsp;&nbsp;I agree to the Tearms and Conditions</input></label>
+      </div>
+      <div class="btn">
+        <button type="submit">Sign-up</button>
+      </div>
+      <div class="sl">
+        <label>You have an Account? <p onclick="showLogin()" class="link">Login</p></label>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function showRegister() {
+      document.getElementById("login-container").style.display = "none";
+      document.getElementById("register-container").style.display = "block";
+    }
+
+    function showLogin() {
+      document.getElementById("register-container").style.display = "none";
+      document.getElementById("login-container").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
