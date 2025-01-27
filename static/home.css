@@ -24,7 +24,7 @@
 }
 header{
     font-family: 'Lato',sans-serif;
-    position: sticky;
+    position: static;
     top: 0;
     z-index: 1;
 }
