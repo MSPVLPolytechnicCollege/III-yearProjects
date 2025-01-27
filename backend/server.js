@@ -5,6 +5,7 @@ import { connectDB } from "./db/config.js";
 import productRoutes from "./routes/productRoutes.js"
 import authRoutes from "./routes/authRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
+import cartRoutes from "./routes/cartRoutes.js"
 
 
 // express declaration
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes); // route link - http://localhost:5000/api/products/
 app.use("/api/users/", authRoutes);
+app.use("/api/cart/", cartRoutes)
 
 
 // Error Handler
