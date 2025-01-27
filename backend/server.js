@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 import  cookieParser from "cookie-parser";
 import { connectDB } from "./db/config.js";
 import productRoutes from "./routes/productRoutes.js"
-import authRoutes from "./routes/authRoutes.js"
+import authRoutes from "./routes/authRoutes.js";
+import { errorHandler, notFound } from "./middleware/errorHandler.js";
 
 
 // express declaration
 const app = express();
-
 
 
 // env file configuration
@@ -20,7 +20,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 
-
 // PORT
 const PORT = 5000; // port to run a server.
 
@@ -30,7 +29,12 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/products", productRoutes); // route link - http://localhost:5000/api/products/
-app.use("/api/users/", authRoutes)
+app.use("/api/users/", authRoutes);
+
+
+// Error Handler
+app.use(notFound);
+app.use(errorHandler);
 
 
 app.listen(PORT, () => {

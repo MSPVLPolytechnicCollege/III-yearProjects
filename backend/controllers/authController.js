@@ -1,7 +1,7 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 
 
 // authUser
@@ -132,13 +132,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
-        password:user.password,
         message: "Profile updated successfully",
     });
 });
 
-
-const validateEmail = (email) => {
+export const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return re.test(String(email).toLowerCase());
 };
@@ -148,26 +146,82 @@ const validateEmail = (email) => {
 // @Access Public
 // /api/users
 const getUsers = asyncHandler(async (req, res) => {
-    res.send("Users GetUsers"); // Got Users On [Get]
+
+    const { isAdmin } = req.body;
+
+    if(isAdmin === false){
+        res.status(401);
+        throw new Error("Unauthorized");
+    }
+
+
+    try{
+
+        const allUsers = await User.find({});
+
+        if(!allUsers || allUsers.length === 0){
+            res.status(401).json({message:"Message Not Found"});
+        }
+
+        res.status(200).json(allUsers);
+
+    } catch(err){
+        console.log(err);
+        res.status(500);
+    }
 });
 
 // @Access Public
 // /api/users/:id
 const getUserByID = asyncHandler(async (req, res) => {
-    res.send("Users GetUserByID")  // Got UserID On [Get]
-});
+    const { id } = req.params;
+  
+    // Find the user by ID
+    const user = await User.findById(id);
+  
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  
+    res.status(200).json(user);
+  });
 
 // @Access Private
 // /api/users/:id
 const deleteUser = asyncHandler(async (req, res) => {
-    res.send("Users DeleteUser") // Got DeleteUser On [Delete]
-});
+    const { id } = req.params;
+  
+    // Find the user by ID and delete
+    const user = await User.findByIdAndDelete(id);
+  
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  
+    res.status(200).json({ message: 'User deleted successfully' });
+  });
 
 // @Access Private
 // /api/users/:id
 const updateUser = asyncHandler(async (req, res) => {
-    res.send("Users UpdateUser") // Got UpdateUser On [Put]
-});
+    const { id } = req.params;
+    const updatedData = req.body;
+  
+    // Find the user by ID and update their data
+    const user = await User.findByIdAndUpdate(id, updatedData, {
+      new: true, // Return the updated user
+      runValidators: true, // Validate the data using the model schema
+    });
+  
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  
+    res.status(200).json(user);
+  });
 
 export {
     authUser,
