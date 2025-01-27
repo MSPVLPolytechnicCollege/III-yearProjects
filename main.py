@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("login.html")
 
 @app.route("/signup")
 def signup():
@@ -19,6 +19,11 @@ def login():
 @app.route("/create_attendence_form")
 def create_attendence_form():
     return render_template('create_attendance.html')
+
+
+@app.route("/attendance_module")
+def attendance_module():
+    return render_template('attendance_module.html')
 
 @app.route("/create_attendence",methods=["POST","GET"])
 def create_attendence():
@@ -78,15 +83,48 @@ def insert_users():
     in_username = request.form['user_name']
     in_password = request.form['password']
     in_confirmpass = request.form['confirmpassword']
+
     if in_password == in_confirmpass:
         con = sqlite3.connect("data_base.db")
         cur = con.cursor()
-        cur.execute("INSERT INTO users(username,password) VALUES(?,?)", (in_username, in_password))
-        con.commit()
-        con.close()
-        return render_template("login.html")
+        con.row_factory = sqlite3.Row
+        cur.execute("SELECT * FROM users WHERE username=?", (in_username,))
+
+        data = cur.fetchall()
+        if data:
+            return "user already exist"
+        else:
+            cur.execute("INSERT INTO users(username,password) VALUES(?,?)", (in_username, in_password))
+            con.commit()
+            con.close()
+            return render_template("login.html")
     else:
         return "password not match"
+
+
+@app.route('/login_users',methods=["POST","GET"])
+def login_users():
+    user_name = request.form['user_name']
+    password = request.form['password']
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("Select * from users where username=? and password=?",(user_name,password))
+    data = cur.fetchall()
+    if data:
+        return render_template('index.html')
+    else:
+        return "invalid user or password"
+
+
+
+
+
+
+
+if(__name__ == '__main__'):
+    app.run()
+
 '''@app.route("/add_contact")
 def add_contact():
     return render_template("add_contact.html")
@@ -156,6 +194,3 @@ def delete_contact(id):
     con.close()
 
 '''
-
-if(__name__ == '__main__'):
-    app.run()

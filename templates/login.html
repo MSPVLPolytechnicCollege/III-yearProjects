@@ -82,7 +82,7 @@
     </style>
 </head>
 <body>
-    <form action="">
+    <form action="/login_users" method="post">
         <h2>LOGIN</h2>
         <label for="user_name">USER NAME :</label>
         <input type="text" name="user_name" required>
@@ -92,7 +92,7 @@
         <div class="group">
             <p>Dont have an account?</p>
             <a href="{{url_for('signup')}}">Create Account</a>
-
+        </div>
     </form>
 </body>
 </html>
