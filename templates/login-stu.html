@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +12,9 @@
 </head>
 <body>
     <div class="header">
-        <a href="admin" target="_self"><button type="submit">Admin</button></a>
-        <a href="login-alumini.html" target="_self"><button type="submit">Alumini</button></a>
-        <a href="login-stu.html" target="_self"><button type="submit">Student</button></a>
+        <a href="{{url_for('admin')}}" target="_self"><button type="submit">Admin</button></a>
+        <a href="{{url_for('alumini')}}" target="_self"><button type="submit">Alumini</button></a>
+        <a href="{{url_for('login')}}" target="_self"><button type="submit">Student</button></a>
     </div>
     <div class="student-login-container">
         <div class="stu-login-page">
@@ -35,7 +36,7 @@
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" name="stu-rem" id="">Remember Me
-                        <span><a href="{{url_for('update_stu')}}">Forgot Password?</a></span>
+                        <span><a href="{{url_for('updateData')}}">Forgot Password?</a></span>
                     </div>
                     <div class="button">
                         <button type="submit">Login</button>
