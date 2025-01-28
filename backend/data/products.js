@@ -12,7 +12,7 @@ const products = [
     },
     {
       name: 'Samsung Galaxy S21',
-      image: '/images/samsungs21.webp',
+      image: '/images/samsung.jpg',
       description: 'High-resolution camera and sleek design for Samsung lovers.',
       brand: 'Samsung',
       category: 'Smartphones',
@@ -20,6 +20,39 @@ const products = [
       countInStock: 15,
       rating: 3.8,
       numReviews: 120,
+    },
+    {
+      name: 'Vivo v30e',
+      image: '/images/vivo.jpg',
+      description: 'High-resolution camera and sleek design for Samsung lovers.',
+      brand: 'Vivo',
+      category: 'Smartphones',
+      price: 699.99,
+      countInStock: 17,
+      rating: 4.8,
+      numReviews: 177,
+    },
+    {
+      name: 'Motorola Edge 50',
+      image: '/images/moto.jpg',
+      description: 'High-resolution camera and sleek design for Samsung lovers.',
+      brand: 'motorola',
+      category: 'Smartphones',
+      price: 499.99,
+      countInStock: 151,
+      rating: 3.2,
+      numReviews: 111,
+    },
+    {
+      name: 'Oneplus 12r',
+      image: '/images/oneplus.jpg',
+      description: 'High-resolution camera and sleek design for Samsung lovers.',
+      brand: 'Oneplus',
+      category: 'Smartphones',
+      price: 459.99,
+      countInStock: 25,
+      rating: 2.8,
+      numReviews: 10,
     }
 ]
 

@@ -1,6 +1,6 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import Cart from "../model/cartModel.js";
-import Product from "../model/productModel.js"; 
+import Cart from "../models/cartModel.js";
+import Product from "../models/productModel.js"; 
 
 
 // Controller to add a product to the cart
