@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("login.html")
+    return render_template("index.html")
 
 @app.route("/signup")
 def signup():
@@ -45,6 +45,7 @@ def create_attendence():
     data = cur.fetchall()
     con.close()
     return render_template("all_attendance.html", data=data)
+
 
 
 @app.route("/all_attendance")
