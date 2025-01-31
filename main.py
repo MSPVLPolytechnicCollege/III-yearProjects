@@ -20,6 +20,26 @@ def login():
 def manage_classes():
     return render_template('manage_classes.html')
 
+@app.route("/create_class",methods=["POST","GET"])
+def create_class():
+    in_classname = request.form['classname']
+    in_classid = request.form['classid']
+    in_classteacher = request.form['classteacher']
+    con = sqlite3.connect("data_base.db")
+    cur = con.cursor()
+    #query = f"""
+     #   CREATE TABLE IF NOT EXISTS {in_classname} (
+      #      classname TEXT,
+       #     classid INTEGER PRIMARY KEY,
+        #    classteacher TEXT
+        #);
+        #"""
+    query = "CREATE TABLE IF NOT EXISTS {} (classname TEXT,classid INTEGER PRIMARY KEY,classteacher TEXT".format(in_classname)
+    cur.execute(query)
+    con.commit()
+    con.close()
+    return "Class Created"
+
 @app.route("/create_attendence_form")
 def create_attendence_form():
     return render_template('create_attendance.html')
