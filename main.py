@@ -16,6 +16,10 @@ def signup():
 def login():
     return render_template('login.html')
 
+@app.route("/manage_classes")
+def manage_classes():
+    return render_template('manage_classes.html')
+
 @app.route("/create_attendence_form")
 def create_attendence_form():
     return render_template('create_attendance.html')
