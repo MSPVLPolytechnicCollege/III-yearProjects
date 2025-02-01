@@ -1,9 +1,9 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,flash
 import sqlite3
-
+import os
 app = Flask(__name__)
 
-
+app.secret_key = os.urandom(24) 
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -20,19 +20,17 @@ def login():
 def manage_classes():
     return render_template('manage_classes.html')
 
-@app.route("/create_class", methods=["POST", "GET"]) 
+
+@app.route("/create_class", methods=["POST", "GET"])
 def create_class():
     try:
         in_classname = request.form['classname']
         in_classid = request.form['classid']
         in_classteacher = request.form['classteacher']
         
-        # Create a connection to the database
         con = sqlite3.connect("data_base.db")
         cur = con.cursor()
 
-        # Create a new table with the provided classname, if it doesn't exist
-        # Note: Adding proper column definitions and data types
         create_table_query = f"""
         CREATE TABLE IF NOT EXISTS {in_classname} (
             classname TEXT,
@@ -42,20 +40,18 @@ def create_class():
         """
         cur.execute(create_table_query)
 
-        # Insert the class details into the all_classes table
         cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES (?, ?, ?)", 
                     (in_classname, in_classid, in_classteacher))
 
-        # Commit the changes and close the connection
         con.commit()
         con.close()
-        return "Class and table created and inserted successfully"
-       
+
+        flash("Class and table created and inserted successfully!", "success")
+        return redirect("/create_class")
 
     except Exception as e:
-        # Return a more informative error message
-        return f"Error: {str(e)}"                                             
-
+        flash(f"Error: {str(e)}", "error")
+        return redirect("/create_class")
 
 @app.route("/create_attendence_form")
 def create_attendence_form():

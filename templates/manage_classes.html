@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="{{url_for('static',filename='js/jQuery.min.js')}}"></script>
 </head>
 <body>
 
@@ -25,26 +24,18 @@
     </div>
 
     <div class="img_container">
-       
-        <!---<form action="/create_class" class="create-class-form" method="post">
-            <h1>CREATE CLASS</h1>
-            <div>
-                <label for="classname">Class Name</label>
-                <input type="text" name="classname" placeholder="Class Name" id="" required>
-                <label for="classteacher">Class Teacher</label>
-                <input type="text" name="classteacher" placeholder="Class Teacher" id="" required>
-            </div>   
-            <div>
-               <label for="classid">Class Id</label>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input type="text" name="classid" placeholder="Class Id" id="" required>
-               &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Create</button>
-            </div>
-        </form>
-
-!---->  
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         <form action="/create_class" class="create-class-form" method="post">
             <h1>CREATE CLASS</h1>
-            
+
                 <label for="classname">Class Name</label>
                 <input type="text" name="classname" placeholder="Class Name"  required>
                 <label for="classteacher">Class Teacher</label>
@@ -102,16 +93,26 @@
                     <td><button class="btn-edit">EDIT</button></td>
                     <td><button class="btn-delete">DELETE</button></td>
                 </tr>
-
             </table>
         </div>
-
-        
     </div>
 </body>
 </html>
-<script>
-    $(document).ready(function(){
-        $("form").attr("autocomplete","off");
-    });
-</script>
+
+
+       <!---<form action="/create_class" class="create-class-form" method="post">
+            <h1>CREATE CLASS</h1>
+            <div>
+                <label for="classname">Class Name</label>
+                <input type="text" name="classname" placeholder="Class Name" id="" required>
+                <label for="classteacher">Class Teacher</label>
+                <input type="text" name="classteacher" placeholder="Class Teacher" id="" required>
+            </div>   
+            <div>
+               <label for="classid">Class Id</label>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input type="text" name="classid" placeholder="Class Id" id="" required>
+               &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Create</button>
+            </div>
+        </form>
+
+!---->  
