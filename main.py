@@ -1,24 +1,86 @@
-from flask import Flask,render_template,request,flash
+from flask import Flask,render_template,request
 import sqlite3
-import os
+
 app = Flask(__name__)
 
-app.secret_key = os.urandom(24) 
+
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+
 
 @app.route("/signup")
 def signup():
     return render_template('signup.html')
 
+
+
+
 @app.route("/login")
 def login():
     return render_template('login.html')
 
+
+
+
+
+
+@app.route("/insert_users",methods=["POST","GET"])
+def insert_users():
+    in_username = request.form['user_name']
+    in_password = request.form['password']
+    in_confirmpass = request.form['confirmpassword']
+
+    if in_password == in_confirmpass:
+        con = sqlite3.connect("data_base.db")
+        cur = con.cursor()
+        con.row_factory = sqlite3.Row
+        cur.execute("SELECT * FROM users WHERE username=?", (in_username,))
+
+        data = cur.fetchall()
+        if data:
+            return "user already exist"
+        else:
+            cur.execute("INSERT INTO users(username,password) VALUES(?,?)", (in_username, in_password))
+            con.commit()
+            con.close()
+            return render_template("login.html")
+    else:
+        return "password not match"
+
+
+
+
+
+@app.route('/login_users',methods=["POST","GET"])
+def login_users():
+    user_name = request.form['user_name']
+    password = request.form['password']
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("Select * from users where username=? and password=?",(user_name,password))
+    data = cur.fetchall()
+    if data:
+        return render_template('index.html')
+    else:
+        return "invalid user or password"
+
+
+
+
+
 @app.route("/manage_classes")
 def manage_classes():
     return render_template('manage_classes.html')
+
+
+
+
 
 
 @app.route("/create_class", methods=["POST", "GET"])
@@ -46,12 +108,11 @@ def create_class():
         con.commit()
         con.close()
 
-        flash("Class and table created and inserted successfully!", "success")
-        return redirect("/create_class")
+        return "Class and table created and inserted successfully!"
 
-    except Exception as e:
-        flash(f"Error: {str(e)}", "error")
-        return redirect("/create_class")
+    except:
+        return "ERROR"
+        
 
 @app.route("/create_attendence_form")
 def create_attendence_form():
@@ -115,52 +176,29 @@ def insert_student():
     con.close()
     return "inserted"
 
-@app.route("/insert_users",methods=["POST","GET"])
-def insert_users():
-    in_username = request.form['user_name']
-    in_password = request.form['password']
-    in_confirmpass = request.form['confirmpassword']
-
-    if in_password == in_confirmpass:
-        con = sqlite3.connect("data_base.db")
-        cur = con.cursor()
-        con.row_factory = sqlite3.Row
-        cur.execute("SELECT * FROM users WHERE username=?", (in_username,))
-
-        data = cur.fetchall()
-        if data:
-            return "user already exist"
-        else:
-            cur.execute("INSERT INTO users(username,password) VALUES(?,?)", (in_username, in_password))
-            con.commit()
-            con.close()
-            return render_template("login.html")
-    else:
-        return "password not match"
-
-
-@app.route('/login_users',methods=["POST","GET"])
-def login_users():
-    user_name = request.form['user_name']
-    password = request.form['password']
-    con = sqlite3.connect("data_base.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    cur.execute("Select * from users where username=? and password=?",(user_name,password))
-    data = cur.fetchall()
-    if data:
-        return render_template('index.html')
-    else:
-        return "invalid user or password"
-
-
-
 
 
 
 
 if(__name__ == '__main__'):
     app.run()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''@app.route("/add_contact")
 def add_contact():

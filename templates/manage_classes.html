@@ -24,15 +24,6 @@
     </div>
 
     <div class="img_container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul>
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
         <form action="/create_class" class="create-class-form" method="post">
             <h1>CREATE CLASS</h1>
 
