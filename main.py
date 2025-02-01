@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 
 
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -85,34 +84,15 @@ def manage_classes():
 
 @app.route("/create_class", methods=["POST", "GET"])
 def create_class():
-    try:
-        in_classname = request.form['classname']
-        in_classid = request.form['classid']
-        in_classteacher = request.form['classteacher']
-        
-        con = sqlite3.connect("data_base.db")
-        cur = con.cursor()
-
-        create_table_query = f"""
-        CREATE TABLE IF NOT EXISTS {in_classname} (
-            classname TEXT,
-            classid INTEGER PRIMARY KEY,
-            classteacher TEXT
-        )
-        """
-        cur.execute(create_table_query)
-
-        cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES (?, ?, ?)", 
-                    (in_classname, in_classid, in_classteacher))
-
-        con.commit()
-        con.close()
-
-        return "Class and table created and inserted successfully!"
-
-    except:
-        return "ERROR"
-        
+    in_classname = request.form['classname']
+    in_classid = request.form['classid']
+    in_classteacher = request.form['classteacher'] 
+    con = sqlite3.connect('data_base.db')
+    cur = con.cursor()
+    cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
+    con.commit()
+    con.close()
+    return "inserted successfully"
 
 @app.route("/create_attendence_form")
 def create_attendence_form():
