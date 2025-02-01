@@ -20,19 +20,42 @@ def login():
 def manage_classes():
     return render_template('manage_classes.html')
 
-@app.route("/create_class", methods=["POST", "GET"])
+@app.route("/create_class", methods=["POST", "GET"]) 
 def create_class():
-    in_classname = request.form['classname']
-    in_classid = request.form['classid']
-    in_classteacher = request.form['classteacher']
-    con = sqlite3.connect("data_base.db")
-    cur = con.cursor()
-    #query = "CREATE TABLE IF NOT EXISTS {} (classname TEXT,classid INTEGER PRIMARY KEY,classteacher TEXT".format(in_classname)
-    cur.execute("insert into all_classes(classname,classid,classteacher)values(?,?,?)",(in_classname,in_classid,in_classteacher))
-   # cur.execute(query)
-    con.commit()
-    con.close()
-    return "Classes inserted"
+    try:
+        in_classname = request.form['classname']
+        in_classid = request.form['classid']
+        in_classteacher = request.form['classteacher']
+        
+        # Create a connection to the database
+        con = sqlite3.connect("data_base.db")
+        cur = con.cursor()
+
+        # Create a new table with the provided classname, if it doesn't exist
+        # Note: Adding proper column definitions and data types
+        create_table_query = f"""
+        CREATE TABLE IF NOT EXISTS {in_classname} (
+            classname TEXT,
+            classid INTEGER PRIMARY KEY,
+            classteacher TEXT
+        )
+        """
+        cur.execute(create_table_query)
+
+        # Insert the class details into the all_classes table
+        cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES (?, ?, ?)", 
+                    (in_classname, in_classid, in_classteacher))
+
+        # Commit the changes and close the connection
+        con.commit()
+        con.close()
+        return "Class and table created and inserted successfully"
+       
+
+    except Exception as e:
+        # Return a more informative error message
+        return f"Error: {str(e)}"                                             
+
 
 @app.route("/create_attendence_form")
 def create_attendence_form():
