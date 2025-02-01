@@ -84,16 +84,20 @@ def manage_classes():
 
 @app.route("/create_class", methods=["POST", "GET"])
 def create_class():
-    in_classname = request.form['classname']
-    in_classid = request.form['classid']
-    in_classteacher = request.form['classteacher'] 
-    con = sqlite3.connect('data_base.db')
-    cur = con.cursor()
-    cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
-    con.commit()
-    con.close()
-    return "inserted successfully"
-
+    try:
+        in_classname = request.form['classname']
+        in_classid = request.form['classid']
+        in_classteacher = request.form['classteacher'] 
+        con = sqlite3.connect('data_base.db')
+        cur = con.cursor()
+        cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
+        con.commit()
+        con.close()
+        return "inserted successfully"
+    except:
+        return "Class name or Id already exist"
+    
+    
 @app.route("/create_attendence_form")
 def create_attendence_form():
     return render_template('create_attendance.html')
