@@ -1,65 +1,117 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Registerpage</title>
-</head>
-<style>
-    form{
-    background: rgb(16,238,255);
-background: linear-gradient(349deg, rgba(16,238,255,1) 3%, rgba(255,101,251,1) 78%);
-    padding:30px;
-    text-align:center;
-    height:300px;
-    width:350px;
-    margin-left:150px;
-    border-radius:25px;
-}
+  </head>
+  <style>
+    form {
+      background: rgb(247, 131, 127);
+      background: linear-gradient(
+        60deg,
+        rgba(247, 131, 127, 1) 20%,
+        rgba(255, 0, 183, 1) 48%,
+        rgba(247, 131, 127, 1) 79%,
+        rgba(247, 131, 127, 1) 81%
+      );
 
-    .form label{
-        margin-right:10px;
+      padding: 30px;
+      text-align: center;
+      height: 400px;
+      width: 350px;
+      margin-left: 500px;
+      border-radius: 25px;
+      margin-top: 50px;
     }
-    .form input{
-        margin-left:10px;
+        .b1{
+            margin-top: 30px;
+
+        }
+
+
+    .b1 input {
+      background: rgb(63, 94, 251);
+      background: linear-gradient(
+        113deg,
+        rgba(63, 94, 251, 1) 12%,
+        rgba(239, 52, 255, 1) 81%
+      );
+      border: 2px solid #0d30e3;
+      border-radius: 3px;
+       padding: 5px;
+       width: 80px;
+        height: 25px;
+
+
     }
-    .b1 input{
-       background: rgb(63,94,251);
-background: linear-gradient(113deg, rgba(63,94,251,1) 12%, rgba(239,52,255,1) 81%);
-        border: 2px solid #0d30e3;
-        border-radius:3px;
+    .b1 a button {
+      background: rgb(63, 94, 251);
+      background: linear-gradient(
+        113deg,
+        rgba(63, 94, 251, 1) 12%,
+        rgba(239, 52, 255, 1) 81%
+      );
+      border: 1px solid black;
+      border-radius: 3px;
+      padding: 5px;
+      width: 80px;
+       height: 25px;
+
+
     }
-    .b1 a button{
-    background: rgb(63,94,251);
-background: linear-gradient(113deg, rgba(63,94,251,1) 12%, rgba(239,52,255,1) 81%);
-        border: 1px solid black;
-        border-radius:3px;
+    .b1 a{
+        margin-left: 40px;
     }
-    .form input{
-    border-radius:2px;
-    border: 1px solid black;
-    }
-</style>
-<!--content for form--->
-<body>
+
+      label {
+        width: 100px;
+        display: inline-block;
+        margin: 1px;
+        padding: 10px;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: Arial, Helvetica, sans-serif;
+
+      }
+
+      .form input{
+        background: rgb(63, 94, 251);
+      background: linear-gradient(
+        113deg,
+        rgba(63, 94, 251, 1) 12%,
+        rgba(239, 52, 255, 1) 81%
+      );
+      border: 1px solid black;
+      border-radius: 3px;
+      height: 25px;
+
+      }
+
+  </style>
+  <!--content for form--->
+  <body>
+
+      <form action="/register" method="POST">
          <div class="form">
-        <form action="/register" method="POST">
-            <h1>Registeration</h1>
-            <label>Name</label>
-           <input type="text" name="name"><br><br>
-            <label>Email</label>
-           <input type="text" name="email" required><br><br>
-            <label>MobileNo</label>
-           <input type="text" name="mobile" required><br><br>
-            <label>password</label>
-            <input type="password" name="password" required><br><br>
-            <div class="b1">
-            <input type="submit" value="Register">
-            <a href="loginpage"><button type="button">Cancel</button></a></div>
-        </form>
-         </div>
-</body>
+        <h1>Registeration</h1>
+        <label>Name</label>
+          <input type="text" size="20" name="name" /><br />
+          <label>Email</label>
+          <input type="email" name="email" required /><br />
+          <label>MobileNo</label>
+          <input type="text" name="mobile" required /><br />
+          <label>password</label>
+          <input type="password" name="password" required /><br />
+        <div class="b1">
+          <input type="submit" value="Register" />
+          <a href="loginpage"><button type="button">Cancel</button></a>
+        </div></div>
+      </form>
+    </div>
+  </body>
 </html>
