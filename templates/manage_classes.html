@@ -57,14 +57,16 @@
                 </thead>
 
                 <tbody>
-                  
-                    <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    </tr>
+                    {% for row in data %}
+                        <tr>
+                            <td> {{row["classid"]}}</td>
+                            <td> {{row["classname"]}}</td>
+                            <td> {{row["classteacher"]}}</td>
+                            <td><button class="btn-attendance">ATTENDANCE</button></td>
+                            <td><button class="btn-edit">EDIT</button></td>
+                            <td><button class="btn-delete">DELETE</button></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

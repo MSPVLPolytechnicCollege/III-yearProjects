@@ -68,20 +68,20 @@ def login_users():
         return render_template('index.html')
     else:
         return "invalid user or password"
-
-
+    
 
 
 
 @app.route("/manage_classes",methods=["POST", "GET"])
 def manage_classes():
-    con = sqlite3.connect('data_base.db')
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
     cur.execute("Select * from all_classes")
     data = cur.fetchall()
     con.close()
-    #return render_template("manage_classes.html",data=data)
-    return data
+    return render_template("manage_classes.html", data=data)
+    
 
 
 
