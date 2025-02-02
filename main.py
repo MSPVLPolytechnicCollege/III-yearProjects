@@ -75,7 +75,13 @@ def login_users():
 
 @app.route("/manage_classes")
 def manage_classes():
-    return render_template('manage_classes.html')
+    con = sqlite3.connect('data_base.db')
+    cur = con.cursor()
+    cur.execute("Select * from all_classes")
+    data = cur.fetchall()
+    con.close()
+    return render_template("manage_classes.html", data=data)
+  
 
 
 
@@ -90,13 +96,17 @@ def create_class():
         in_classteacher = request.form['classteacher'] 
         con = sqlite3.connect('data_base.db')
         cur = con.cursor()
+        query = f"CREATE TABLE {in_classname} (in_classname varchar(50), in_classid integer primary key, in_classteacher varchar(100))"
         cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
+        cur.execute(query)
         con.commit()
         con.close()
         return "inserted successfully"
     except:
         return "Class name or Id already exist"
-    
+
+ 
+        
     
 @app.route("/create_attendence_form")
 def create_attendence_form():

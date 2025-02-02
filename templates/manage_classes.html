@@ -53,37 +53,15 @@
                     <th>EDIT</th>
                     <th>DELETE</th>
                 </tr>
+                {% for row in data %}
                 <tr>
-                    <td>1</td>
-                    <td>A</td>
+                    <td> {{row["classid"]}}</td>
+                    <td> {{row["classname"]}}</td>
                     <td><button class="btn-attendance">ATTENDANCE</button></td>
                     <td><button class="btn-edit">EDIT</button></td>
                     <td><button class="btn-delete">DELETE</button></td>
                 </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A</td>
-                    <td><button class="btn-attendance">ATTENDANCE</button></td>
-                    <td><button class="btn-edit">EDIT</button></td>
-                    <td><button class="btn-delete">DELETE</button></td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A</td>
-                    <td><button class="btn-attendance">ATTENDANCE</button></td>
-                    <td><button class="btn-edit">EDIT</button></td>
-                    <td><button class="btn-delete">DELETE</button></td>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td>A</td>
-                    <td><button class="btn-attendance">ATTENDANCE</button></td>
-                    <td><button class="btn-edit">EDIT</button></td>
-                    <td><button class="btn-delete">DELETE</button></td>
-                </tr>
+                {% endfor %}
             </table>
         </div>
     </div>
