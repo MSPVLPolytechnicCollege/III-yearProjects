@@ -38,6 +38,7 @@ body{
     width: 300px;
     height: 100vh;
     box-shadow: 10px 5px 5px rgb(177, 177, 177);
+    
 }
 
 .menu{
@@ -110,18 +111,20 @@ body{
 /*-------Heading Start--------*/
 .main-content{
     color: black;
-    height: 60px;
+    height: 65px;
     text-align: center;
-    margin-left: 310px;
-    background-color: aqua;
+    margin-left: 280px;
+    background-color: var(--clr-white);
+    box-shadow: 10px 6px 3px rgb(177, 177, 177);
 }
 header{
     display: flex;
     justify-content: space-between;
     
+    
 }
 .wrapper{
-    margin-left: 20px;
+    margin-left: 50px;
     margin-top: 10px;
     display: flex;
     font-size: 25px;
@@ -140,13 +143,52 @@ header{
     background-color: white;
     border-radius: 15px;
     margin-right: 250px;
+    border: 1px solid var(--clr-grey-2);
 }
 .text{
     height: 20px;
     margin-top: 10px;
     font-size: 16px;
+   
+}
+input {
+    border: none;
+    outline: none; /* Removes focus outline */
+}
+
+input:hover {
+    border: none;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
+#search{
+    padding-right: 10px;
+    margin-top: 3px;
+    opacity: 0.6;
 }
 .search span{
    padding-top: 5px;
 
+}
+
+.user-wrapper{
+    margin-right: 100px;
+    margin-top: 10px;
+}
+.image{
+    margin-top:7px;
+    font-size: 28px;
+    margin-right: 10px;
+    color: black;
+}
+
+.name{
+
+    font-family: 'Roboto',sans-serif;
+    font-size: 20px;
+    margin-top: 11px;
 }

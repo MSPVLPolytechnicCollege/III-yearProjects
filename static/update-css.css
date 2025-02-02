@@ -101,14 +101,20 @@ hr{
 .cancel button{
     margin-top: 30px;
     padding: 5px 120px;
-    background-color: #00c334d1;
+    background-color: green;
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    outline: 3px solid #06c452d2;
+    outline: 3px solid green;
     color: white;
+}
+.cancel button:hover{
+    background-color: rgb(0, 103, 0);
+    outline: 3px solid rgb(0, 103, 0);
+    transition: 0.2s linear;
 }
 button:hover{
     background-color: #003b88;
     outline: 3px solid #003b88;
+    transition: 0.2s linear;
 }
