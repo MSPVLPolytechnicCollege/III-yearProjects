@@ -4,4 +4,4 @@ var typed = new Typed(".text", {
     backSpeed: 100,                                    // Speed of deleting each character in milliseconds
     backDelay: 1000,                                   // Delay before starting to delete characters after finishing the typing
     loop: true                                          // Loops the typing and deleting animation indefinitely
-});
+}); //end
