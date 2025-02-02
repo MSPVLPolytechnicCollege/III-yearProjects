@@ -1,5 +1,6 @@
 from flask import Flask,render_template,request
 import sqlite3
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -68,20 +69,20 @@ def login_users():
         return render_template('index.html')
     else:
         return "invalid user or password"
-
-
+    
 
 
 
 @app.route("/manage_classes",methods=["POST", "GET"])
 def manage_classes():
-    con = sqlite3.connect('data_base.db')
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
     cur.execute("Select * from all_classes")
     data = cur.fetchall()
     con.close()
-    #return render_template("manage_classes.html",data=data)
-    return data
+    return render_template("manage_classes.html", data=data)
+    
 
 
 
@@ -105,7 +106,13 @@ def create_class():
         return "Class name or Id already exist"
 
  
+@app.route('/add_stud')
+def add_stud():
+    return render_template('add_stud.html')
         
+@app.route('/excel_to_table')
+def excel_to_table():
+    pass
     
 @app.route("/create_attendence_form")
 def create_attendence_form():

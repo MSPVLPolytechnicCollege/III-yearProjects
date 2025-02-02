@@ -50,6 +50,7 @@
                     <tr>
                         <th>SL.NO</th>
                         <th>CLASS NAME</th>
+                        <th>STAFF NAME </th>
                         <th>ATTENDANCE</th>
                         <th>EDIT</th>
                         <th>DELETE</th>
@@ -58,16 +59,16 @@
 
                 <tbody>
                     {% for row in data %}
-                    <tr>
-                        <td> {{row["classid"]}}</td>
-                        <td> {{row["classname"]}}</td>
-                        <td> {{row["classteacher"]}}</td>
-                        <td><button class="btn-attendance">ATTENDANCE</button></td>
-                        <td><button class="btn-edit">EDIT</button></td>
-                        <td><button class="btn-delete">DELETE</button></td>
-                    </tr>
+                        <tr>
+                            <td> {{row["classid"]}}</td>
+                            <td> {{row["classname"]}}</td>
+                            <td> {{row["classteacher"]}}</td>
+                            <td><a href="{{url_for('add_stud')}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
+                            <td><button class="btn-edit">EDIT</button></td>
+                            <td><button class="btn-delete">DELETE</button></td>
+                        </tr>
                     {% endfor %}
-            </tbody>
+                </tbody>
             </table>
         </div>
     </div>
