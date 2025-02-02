@@ -142,15 +142,17 @@ def updateData():
         forgot_s_pass = request.form['forgot-stu-pass']
         forgot_s_con = request.form['forgot-stu-conpass']
 
+        if forgot_s_pass != forgot_s_con:
+            return render_template('error.html', message="Passwords do not match.")
         try:
             # Connect to the database
             con = sqlite3.connect('alumini_db.db')
             cursor = con.cursor()
-            cursor.execute('select username from student where username=?',(forgot_s_user))
-            result = cursor.fetchall()
+            cursor.execute('select username from student where username=?',(forgot_s_user,))
+            result = cursor.fetchone()
 
             # Check if the username matches the route parameter
-            if result is None or forgot_s_user != username:
+            if result is None :
                 return render_template('error.html', message="Username mismatch. Please try again.")
 
             # Update the password in the database
@@ -158,12 +160,9 @@ def updateData():
                 "UPDATE student SET password=? confirmpass=?  WHERE username=?",
 
 
-                (forgot_s_pass, forgot_s_user)
+                (forgot_s_pass,forgot_s_con, forgot_s_user)
             )
 
-            # Check if the update was successful
-            if cursor.rowcount == 0:
-                return render_template('error.html', message="Username not found. Please try again.")
 
             # Commit the changes and close the connection
             con.commit()
@@ -224,6 +223,11 @@ def deleteUsers(sno):
     con.commit()
     con.close()
     return redirect(url_for('updateevent'))
+
+#student can be contact
+@app.route('/stu-contact')
+def contact():
+    return render_template('contact.html')
 
 
 if __name__=='__main__':
