@@ -6,10 +6,16 @@
     <title>Alumini Management system</title>
     <link rel="stylesheet" href="static/home.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
+     {% if messages %}
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+    {% endif %}
     <div class="alumini">
-        <form action="/student-home" method="">
         <header>
             <div class="header1">
                 <div class="doubt">
@@ -41,6 +47,9 @@
             </div>
         </section>
         <section class="welcome">
+            <div class="center">
+                
+            </div>
             <div class="left-content">
                 <p class="left">Alumni today are the best soure of jobs, donation and Knowledge capital for you institude, so get them back by signing up for ALUMNI TODAY!!</p>
             </div>
@@ -51,15 +60,46 @@
             </div>
         </section>
         <section class="event">
-
+            <div class="event-head">
+                <p>Events</p>
+            </div>
+            <div class="event-content">
+                <p>It is important to carry out a good follow-up marketing of alumini events. With over
+                    100 worldwide events a year, you have a wealth of alumni networking opportunities.
+                </p>
+            </div>
+            <div class="event-box">
+                <div class="event-box">
+                    {% for data in datas %}
+                        <div class="event-row">
+                            <span class="date">{{ data['event_date'] }} <span class="day"></span></span>
+                            <span class="description"> {{ data['event_des'] }}</span>
+                            <a href="{{url_for('eventdetail')}}" class="read">Read More</a>
+                        </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
         </section>
-      </form>
+        <div class="copyright">
+            <div class="logos">
+                <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-github"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+            </div>
+            <div class="content">
+               <p>Contact Us &nbsp;</p>
+            </div>
+            <div class="copy">
+                <p>&copy; 2025 MSPVL</p>
+            </div>
+        </div>
     </div>
 
 
 
 
-    <script src="script.js"></script>
-
+    <script src="static/script.js"></script>
 </body>
 </html>

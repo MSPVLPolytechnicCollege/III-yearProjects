@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+
+        body{
+            background-color: #f1f5f8;
+            font-family: 'Roboto',sans-serif;
+
+        }
+        .event-box2{
+            margin-left: 35%;
+            margin-top: 8%;
+            height: 380px;
+            width: 460px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            color: #000000;
+        }
+        p{
+            color: #005cd5;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 25px;
+            text-align: center;
+            padding-top: 20px;
+        }
+        table{
+            border-collapse: separate;  /* Required for border-spacing to work */
+            border-spacing: 0 35px;     /* Adds 30px vertical space between rows */
+        }
+        tr{
+            padding-top: 30px;
+        }
+        td{
+            padding-left: 50px;
+            font-size: 20px;
+        }
+        body i{
+            margin-top: 10px;
+            margin-left: 1500px;
+            font-size: 28px;
+            color: black;
+        }
+        i:hover{
+            color: #005cd5;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+    {% endif %}
+     <a href="{{url_for('stuhome')}}"><i class="fas fa-close"></i></a>
+    <div class="event-box2">
+
+        <form action="/event-details">
+        <table >
+            <p>Event Information</p>
+                {% for data in datas %}
+                <tr>
+                    <td>Event Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['event_date'] }}</td>
+                </tr>
+                <tr>
+                    <td>Event Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td><td>{{ data['event_location'] }}</td>
+                </tr>
+                <tr>
+                    <td>Event Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['event_time'] }}</td>
+                </tr>
+                <tr>
+                    <td>Event Description &nbsp;&nbsp;: </td><td>{{ data['event_des'] }}</td>
+                </tr>
+                {% endfor %}
+        </table>
+        </form>
+    </div>
+</body>
+</html>
