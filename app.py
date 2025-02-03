@@ -44,7 +44,7 @@ def admipage():
         if data:
             session["ad_name"]= data['ad_name']
             session["ad_pass"] = data['ad_pass']
-            return redirect("adboard")  #call the success in router
+            return redirect("admindashboard")  #call the success in router
         else:
             return ("Mismatch the password and username")
     #return redirect(url_for("sucess.html"))
@@ -52,6 +52,18 @@ def admipage():
         #con.close()
 
     return render_template('admin.html')# return the admin.html page
+
+
+#contact details
+@app.route('/admindashboard')
+def admindashboard():
+    con = sqlite3.connect('charity.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from contact')
+    res = cursor.fetchall()
+    return render_template("admindashboard.html", datas=res)
+
 
 # call the route
 @app.route('/adboard',methods=['GET','POST'])
