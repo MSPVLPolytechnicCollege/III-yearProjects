@@ -5,7 +5,8 @@ import { connectDB } from "./db/config.js";
 import productRoutes from "./routes/productRoutes.js"
 import authRoutes from "./routes/authRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
-import cartRoutes from "./routes/cartRoutes.js"
+import cartRoutes from "./routes/cartRoutes.js";
+import cors from "cors";
 
 
 // express declaration
@@ -20,6 +21,7 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
+app.use(cors());
 
 // PORT
 const PORT = 5000; // port to run a server.

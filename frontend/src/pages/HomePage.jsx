@@ -9,7 +9,7 @@ const HomePage = () => {
     const fetchProducts = async () => {
       try {
         const { data } = await axios.get('http://localhost:5000/api/products/');
-        console.log('API Response:', data);
+        // console.log('API Response:', data);
   
         if (Array.isArray(data)) {
           setProducts(data);
@@ -42,7 +42,7 @@ const HomePage = () => {
           {products.length > 0 ? (
             products.map((product) => (
               <div className="col" key={product._id}>
-                {console.log(product)}
+                {/* {console.log(product)} */}
                 <Product products={product} />
               </div>
             ))

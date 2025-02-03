@@ -6,7 +6,25 @@ import { ArrowLeft } from 'lucide-react';
 
 const ProductPage = () => {
 
-  
+  const { id } = useParams();  // Extract the 'id' parameter from the URL
+  const [products, setProducts] = useState([]);
+
+  const { qty } = 1;
+
+  useEffect(() => {
+    // Define an async function inside useEffect
+    const fetchProduct = async () => {
+      try {
+        const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+        setProducts(data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    // Call the async function
+    fetchProduct();
+  }, [id]);
 
   return (
     <div className="container py-5 mt-5">

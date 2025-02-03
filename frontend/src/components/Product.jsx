@@ -7,7 +7,7 @@ const Product = ({ products }) => {
 
   if (!products) return <p>Loading...</p>; 
 
-  console.log(products)
+  // console.log(products)
   return (
     <Link to={`/products/${products._id}`} className="text-decoration-none">
       <div className="card h-100 mb-4 mx-2 shadow-sm hover-shadow" id={`${products._id}`}>
