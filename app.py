@@ -1,3 +1,5 @@
+
+
 #import sqlite
 import sqlite3
 #import modules
@@ -26,22 +28,22 @@ def ourimpact():
     return render_template("ourimpact.html")
 
 
-
 #adminpage
 @app.route('/admin',methods=['GET','POST'])
 def admipage():
     if request.method=="POST":
         ad_nm = request.form['ad_name']
-        ad_pd = request.form['ad_password']
+        ad_pd = request.form['ad_pass']
         con = sqlite3.connect('charity.db')
         con.row_factory = sqlite3.Row
         cursor = con.cursor()
-        cursor.execute("select * from admin where ad_name=? and ad_password=?;", (ad_nm, ad_pd))
+        # cursor.execute("insert into lgn(uname,password) values(?,?);", (, p))
+        cursor.execute("select * from admin where ad_name=? and ad_pass=?;", (ad_nm, ad_pd))
         data = cursor.fetchone()
     # compare the data name&password
         if data:
             session["ad_name"]= data['ad_name']
-            session["ad_password"] = data['ad_password']
+            session["ad_pass"] = data['ad_pass']
             return redirect("adboard")  #call the success in router
         else:
             return ("Mismatch the password and username")
@@ -86,6 +88,23 @@ def register():
         con.close()
     return render_template('register.html')
     #return redirect (url_for('loginpage.html'))
+
+
+#donate form
+@app.route('/donate',methods=['GET','POST'])
+def donate():
+    if request.method=="POST":
+        n = request.form['name']
+        e = request.form['email']
+        m = request.form['phone']
+        add = request.form['address']
+        pay = request.form['payment']
+        con = sqlite3.connect('charity.db')
+        cursor = con.cursor()
+        cursor.execute("insert into donate(name,email,phone,address,payment) values(?,?,?,?,?);", (n, e, m,add,pay))
+        con.commit()
+        con.close()
+    return render_template('donate.html')
 
 #login page code
 
@@ -135,5 +154,3 @@ if __name__ == "__main__":
 
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
