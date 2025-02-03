@@ -132,6 +132,11 @@ def signup():
 def alumini():
     return render_template('login-alumini.html')
 
+#Update the password
+@app.route('/update_redirect')
+def update_redirect():
+    return render_template('update-stu.html')
+
 
 #Update
 @app.route('/forgot', methods=["GET", "POST"])
@@ -157,12 +162,8 @@ def forgot():
 
             # Update the password in the database
             cursor.execute(
-                "UPDATE student SET password=? WHERE username=?",
-                (forgot_s_pass, forgot_s_user)
-            )
-
-
-
+                "UPDATE student SET password=? ,confirmpass=?  WHERE username=?",
+                (forgot_s_pass, forgot_s_con, forgot_s_user))
 
             # Commit the changes and close the connection
             con.commit()
@@ -174,8 +175,9 @@ def forgot():
         except:
             return render_template('error.html', message="An error occurred")
 
-
     return render_template('update-stu.html')
+
+
 
 #event to be view on the student
 @app.route('/event-details')
@@ -226,11 +228,10 @@ def deleteevent(sno):
     con.close()
     return redirect(url_for('updateevent'))
 
-
+'''
 #update the event by admin
 @app.route('/editevent/<string:sno>',methods=['GET','POST'])
 def editevent(sno):
-    con=sqlite3.connect('alumini_db.db')
     if request.method=="POST":
         date=request.form['event-date']
         location=request.form['event-location']
@@ -238,7 +239,17 @@ def editevent(sno):
         des=request.form['event-des']
         con=sqlite3.connect('alumini_db.db')
         cursor=con.cursor()
-        cursor.execute('update event set date=?,location=?,time=?,des=? where sno=?',())
+        cursor.execute('update event set date=?,location=?,time=?,des=? where sno=?',(date,location,time,des,sno))
+        con.commit()
+        con.close()
+        return redirect('updateevent')
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor=con.cursor()
+    cursor.execute('select * from event where sno=?', (sno,))
+    res = cursor.fetchall()
+    return render_template('event.html',datas=res)
+'''
 
 #student can be contact
 @app.route('/stu-contact')
@@ -246,9 +257,6 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/update_redirect')
-def update_redirect():
-    return render_template('update-stu.html')
 
 
 
