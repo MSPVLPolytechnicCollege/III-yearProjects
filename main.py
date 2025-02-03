@@ -110,9 +110,16 @@ def create_class():
 def add_stud():
     return render_template('add_stud.html')
         
-@app.route('/excel_to_table')
+@app.route('/excel_to_table',methods=["POST", "GET"])
 def excel_to_table():
-    pass
+    file = request.files['file']
+    df = pd.read_excel(file)
+    conn = sqlite3.connect("data_base.db")
+    df.to_sql('computer_tb', conn, if_exists='append', index=False)
+    conn.commit()
+    conn.close()
+
+    return "inserted successfully"
     
 @app.route("/create_attendence_form")
 def create_attendence_form():

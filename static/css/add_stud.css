@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+   
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #007BFF;
+    color: white;
+    padding-top: 20px;
+    flex-direction: column;
+    min-height: 100vh;
+    box-shadow: 7px 7px 7px gray;
+
+}
+
+.sidebar img {
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    margin-left: 50px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.sidebar ul li {
+    padding: 20px;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}
+
+.sidebar ul li a:hover {
+    background-color:white;
+    transition: all 0.5s 0.2s ease;
+    color:black;
+}
+
+.img_container{
+    width: 80%;
+    display: flex;
+    margin: 1%;
+    flex-direction: column;
+    gap:40px;
+    background-color:#FFFFFF;
+    padding-left: 10px;
+}
+
+.img_container h1{
+    font-weight: 700;
+    margin-top: 2%;
+}
+
+.img_container form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 5px rgb(177, 177, 177);
+    
+    
+}
+
+
+.img_container form button{
+    width: 180px;
+    height: 45px;
+    font-size: 18px;
+    background-color: green;
+    border: none;
+    color:white;
+    font-weight: 700;
+    border-radius: 10px;
+    box-shadow: 4px 5px 5px gray;
+    margin-bottom: 30px
+}
+
+.img_container form button:hover{
+    transform: scale(1.03);
+}
+
