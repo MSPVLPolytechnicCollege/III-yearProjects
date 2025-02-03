@@ -115,11 +115,14 @@ def excel_to_table():
     file = request.files['file']
     df = pd.read_excel(file)
     conn = sqlite3.connect("data_base.db")
-    df.to_sql('computer_tb', conn, if_exists='append', index=False)
+    df.to_sql('attendance', conn, if_exists='append', index=False)
     conn.commit()
-    conn.close()
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute("Select * from attendance")
+    data = cur.fetchall()
 
-    return "inserted successfully"
+    return render_template("add_stud.html",data=data)
     
 @app.route("/create_attendence_form")
 def create_attendence_form():

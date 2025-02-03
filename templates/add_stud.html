@@ -24,14 +24,48 @@
     </div>
 
     <div class="img_container">
-        <h1>ADD STUDENTS</h1>
-        <form action="/excel_to_table" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".xlsx, .xls">
-            <button type="submit">Upload File</button>
-        </form>
+
+        <div>
+            <h1>ADD STUDENTS</h1>
+            <form action="/excel_to_table" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".xlsx, .xls" class="file-upload">
+                <button type="submit">Upload File</button>
+            </form>
+        </div>
+
+        <div class="all-attendance-table">
+            <h1>ALL CLASSES</h1>
+            <div class="search-box">
+                <form>
+                    <input type="search" name="search" required placeholder="Search">
+                    <button>search</button>
+                </form>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ROLL.NO</th>
+                        <th>NAME</th>
+                        <th>MARK1 </th>
+                        <th>MARK1</th>
+                        <th>MARK3</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for row in data %}
+                        <tr>
+                            <td> {{row["rollno"]}}</td>
+                            <td> {{row["name"]}}</td>
+                            <td> {{row["m1"]}}</td>
+                            <td> {{row["m2"]}}</td>
+                            <td> {{row["m3"]}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>
-
-
-      
