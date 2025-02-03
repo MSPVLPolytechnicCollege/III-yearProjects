@@ -135,7 +135,7 @@ def alumini():
 
 #Update
 @app.route('/forgot', methods=["GET", "POST"])
-def updateData():
+def forgot():
     if request.method == 'POST':
         # Retrieve form data
         forgot_s_user = request.form['forgot-stu-name']
@@ -148,7 +148,7 @@ def updateData():
             # Connect to the database
             con = sqlite3.connect('alumini_db.db')
             cursor = con.cursor()
-            cursor.execute('select username from student where username=?',(forgot_s_user,))
+            cursor.execute('select username from student where username=?', (forgot_s_user,))
             result = cursor.fetchone()
 
             # Check if the username matches the route parameter
@@ -157,11 +157,11 @@ def updateData():
 
             # Update the password in the database
             cursor.execute(
-                "UPDATE student SET password=? confirmpass=?  WHERE username=?",
-
-
-                (forgot_s_pass,forgot_s_con, forgot_s_user)
+                "UPDATE student SET password=? WHERE username=?",
+                (forgot_s_pass, forgot_s_user)
             )
+
+
 
 
             # Commit the changes and close the connection
@@ -204,6 +204,7 @@ def addevent():
         return redirect(url_for('admin_dashboard'))
     return render_template('event.html')
 
+
 #update the event
 @app.route('/view_update_event')
 def updateevent():
@@ -214,9 +215,10 @@ def updateevent():
     res = cursor.fetchall()
     return render_template("update-event.html", datas=res)
 
+
 #Delete the event by admin
-@app.route('/view_update_event/<string:sno>',methods=['GET','POST'])
-def deleteUsers(sno):
+@app.route('/deleteevent/<string:sno>',methods=['GET','POST'])
+def deleteevent(sno):
     con=sqlite3.connect('alumini_db.db')
     cursor=con.cursor()
     cursor.execute('delete from event where sno=?',(sno,))
@@ -224,10 +226,30 @@ def deleteUsers(sno):
     con.close()
     return redirect(url_for('updateevent'))
 
+
+#update the event by admin
+@app.route('/editevent/<string:sno>',methods=['GET','POST'])
+def editevent(sno):
+    con=sqlite3.connect('alumini_db.db')
+    if request.method=="POST":
+        date=request.form['event-date']
+        location=request.form['event-location']
+        time=request.form['event-time']
+        des=request.form['event-des']
+        con=sqlite3.connect('alumini_db.db')
+        cursor=con.cursor()
+        cursor.execute('update event set date=?,location=?,time=?,des=? where sno=?',())
+
 #student can be contact
 @app.route('/stu-contact')
 def contact():
     return render_template('contact.html')
+
+
+@app.route('/update_redirect')
+def update_redirect():
+    return render_template('update-stu.html')
+
 
 
 if __name__=='__main__':
