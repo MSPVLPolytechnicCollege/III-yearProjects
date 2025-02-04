@@ -3,115 +3,167 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Registerpage</title>
   </head>
   <style>
-    form {
-      background: white;
-      box-shadow:5px 5px 5px 5px rgb(0,0,0.2);
-      padding: 30px;
-      text-align: center;
-      height: 400px;
-      width: 350px;
-      margin-left: 500px;
-      border-radius: 25px;
-      margin-top: 50px;
+    * {
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        font-family:'poppins',san-serif;
     }
-        .b1{
-            margin-top: 30px;
-
-        }
-
-
-    .b1 input {
-     background: rgb(63, 94, 251);
-
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        90deg,
-        rgba(255, 198, 239, 1) 36%,
-        rgba(243, 173, 255, 1) 91%
-      );
-      border: 2px solid #0d30e3;
-      border-radius: 3px;
-       padding: 5px;
-       width: 80px;
-        height: 25px;
-
+     body {
+    display:flex;
+      height: 100vh;
+      justify-content:center;
+      align-items:center;
+      background: rgb(255,71,235);
+background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
+padding:10px;
 
     }
-    .b1 a button {
-      background: rgb(63, 94, 251);
+     .container {
+     max-width:700px;
+      width: 100%;
+      background:white;
+      padding:25px 30px;
+      border-radius:20px;
 
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        90deg,
-        rgba(255, 198, 239, 1) 36%,
-        rgba(243, 173, 255, 1) 91%
-      );
-      border: 1px solid black;
-      border-radius: 3px;
-      padding: 5px;
-      width: 80px;
-       height: 25px;
+    }
+
+ .container .title{
+        font-size:40px;
+        font-weight:500;
+        position:relative;
+    }
+
+    .container .title::before{
+        content:'';
+        position:absolute;
+        left:0;
+        bottom:0;
+        height:3px;
+        background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
+    }
+      .container form .user-details{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+     margin:20px 0 12px 0;
+
+    }
+    form .user-details .input-box{
+    width:calc(100% / 2 - 20px);
+    margin-bottom:15px;
+
 
 
     }
-    .b1 a{
-        margin-left: 40px;
+     .user-details .input-box .details{
+     display:block;
+     font-weight:500;
+     margin-bottom:5px;
+     }
+
+
+    .user-details .input-box input
+    {
+    height:35px;
+    width:100%;
+    outline:none;
+    border-radius:5px;
+    border: 1px solid #ccc;
+    padding-left:15px;
+    font-size:16px;
+    border-bottom-width:2px
+    transition: all 0.3s ease;
+    }
+   .user-details .input-box input:focus,
+   .user-details .input-box input:valid{
+    border-color:#9b59b6;
     }
 
-      label {
-        width: 100px;
-        display: inline-block;
-        margin: 1px;
-        padding: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        font-family: Arial, Helvetica, sans-serif;
+.input-box span{
+     font-size:20px;
+      font-weight:900;
+    }
+form .button{
+    height:45px;
+    margin:45px 0;
+}
+.button{
+display:flex;
+ justify-content:space-between;
+}
+    form .button input{
+    height:40px;
+    width:250px;
+    outline:none;
+    color:#fff;
+  background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
+    border: 1px solid #ccc;
+      outline:none;
+     border-radius:5px;
+     font-size:18px;
+     margin-left:50px
+     }
 
-      }
 
-      .form input{
-        background: rgb(63, 94, 251);
 
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        90deg,
-        rgba(255, 198, 239, 1) 36%,
-        rgba(243, 173, 255, 1) 91%
-      );
-      border: 1px solid black;
-      border-radius: 3px;
-      height: 25px;
+.link a button{
+    height:40px;
+    width:200px;
+    outline:none;
+    color:#fff;
+     background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
+    border: 1px solid #ccc;
+      outline:none;
+     border-radius:5px;
+     font-size:18px;
+     margin-right:20px;
+}
+    .b1:hover{
+     transform: scale(1.1);
 
-      }
+    }
 
+     .link a button:hover {
+      transform: scale(1.1);
+    }
   </style>
-  <!--content for form--->
+
   <body>
 
-      <form action="/register" method="POST">
-         <div class="form">
-        <h1>Registeration</h1>
-        <label>Name</label>
-          <input type="text" size="20" name="name" /><br />
-          <label>Email</label>
-          <input type="email" name="email" required /><br />
-          <label>MobileNo</label>
-          <input type="text" name="mobile" required /><br />
-          <label>password</label>
-          <input type="password" name="password" required /><br />
-        <div class="b1">
-          <input type="submit" value="Register" />
-          <a href="loginpage"><button type="button">Cancel</button></a>
-        </div></div>
+
+         <div class="container">
+      <div class="title"> Registeration </div>
+           <form action="/register" method="POST">
+           <div class="user-details">
+             <div class="input-box">
+               <span class="details">Name</span>
+                  <input type="text"  name="name"  required placeholder="Enter your name"/></div>
+
+               <div class="input-box">
+               <span class="details">Email</span>
+                 <input type="email"  name="email"  required placeholder="Enter your email"/></div>
+
+                 <div class="input-box">
+               <span class="details">Mobile Number</span>
+                 <input type="text"  name="mobile"  required placeholder="Enter your number"/></div>
+
+              <div class="input-box">
+               <span class="details">password</span>
+                 <input type="password"  name="password"  required placeholder="Enter your password"/></div>
+              </div>
+                    <div class="button">
+                      <div class="b1">
+                    <input type="submit" value="Register" /></div>
+                      <div class="link">
+                    <a href="loginpage"><button type="button">Cancel</button></a></div>
+                      </div>
+
       </form>
+
     </div>
   </body>
 </html>
