@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <title>Registerpage</title>
   </head>
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
   <style>
     * {
         margin:0;
@@ -140,19 +143,19 @@ display:flex;
            <form action="/register" method="POST">
            <div class="user-details">
              <div class="input-box">
-               <span class="details">Name</span>
+               <span class="details">Name <ion-icon name="person-add"></ion-icon></span>
                   <input type="text"  name="name"  required placeholder="Enter your name"/></div>
 
                <div class="input-box">
-               <span class="details">Email</span>
+               <span class="details">Email <ion-icon name="mail"></ion-icon></span>
                  <input type="email"  name="email"  required placeholder="Enter your email"/></div>
 
                  <div class="input-box">
-               <span class="details">Mobile Number</span>
+               <span class="details">Mobile Number <ion-icon name="call"></ion-icon></span>
                  <input type="text"  name="mobile"  required placeholder="Enter your number"/></div>
 
               <div class="input-box">
-               <span class="details">password</span>
+               <span class="details">password <ion-icon name="lock-closed"></ion-icon> </span>
                  <input type="password"  name="password"  required placeholder="Enter your password"/></div>
               </div>
                     <div class="button">

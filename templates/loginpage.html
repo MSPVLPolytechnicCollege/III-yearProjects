@@ -4,10 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <title>login</title>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/
-   libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/
-   F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous"
-         referrerpolicy="no-referrer" />
+   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 
 
   </head>
@@ -152,9 +151,9 @@ background: linear-gradient(10deg, rgba(238,195,242,1) 25%, rgba(238,50,255,1) 9
         <form action="/confirm" method="POST">
           <div class="input-box">
 
-            <label>Username </label>
-            <input type="text" name="name" required /><br /><br />
-            <label>Password</label>
+            <label>Username <ion-icon name="person"></ion-icon></label>
+            <input type="text" name="name" required   /><br /><br />
+            <label>Password   <ion-icon name="lock-closed"></ion-icon></label>
             <input type="password" name="password" required> <br />
             <div class="b1">
               <input type="submit" value="Login" class="btn2" />

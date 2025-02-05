@@ -98,8 +98,9 @@ def register():
         cursor.execute("insert into register(name,email,mobile_no,password) values(?,?,?,?);", (n, e, m, pw))
         con.commit()
         con.close()
+        return redirect (url_for('loginpage'))
     return render_template('register.html')
-    #return redirect (url_for('loginpage.html'))
+
 
 
 #donate form
@@ -139,13 +140,17 @@ def login():
         else:
             return ("Mismatch the password and username")
     return redirect(url_for("sucess.html"))
-        #con.commit()
-        #con.close()
+
 
 #compare this router
 @app.route('/sucess',methods=['GET','POST'])
 def sucess():
     return render_template("sucess.html")
+
+
+@app.route('/loginpage',methods=['GET','POST'])
+def loginpage():
+    return render_template("loginpage.html")
 
 
 
@@ -166,5 +171,3 @@ if __name__ == "__main__":
 
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
