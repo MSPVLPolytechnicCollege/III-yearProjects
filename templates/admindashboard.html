@@ -1,17 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>admindashboard</title>
-</head>
-<body>
- {% if messages %}
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "poppins", sans-serif;
+    }
+    body {
+      min-height: 10vh;
+    }
+    a {
+      text-decoration: none;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .side-menu {
+      position: fixed;
+      background: #f92288;
+      width: 20vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+    }
+    .side-menu .brand-name {
+      height: 1ovh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-name h1 {
+      color: white;
+    }
+    .link a {
+      text-decoration: none;
+      font-size: 18px;
+      color: #0d30e3;
+      font-size: 24px;
+      padding: 25px 50px;
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+    .link a:hover {
+      background: white;
+      color: #f92288;
+    }
+    .container {
+      position: absolute;
+      right: 0;
+      width: 80vw;
+      height: 100vh;
+      background: #f1f1f1;
+    }
+    .container .header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 80vw;
+      height: 10vh;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
+    }
+    .container .header .nav {
+      width: 90%;
+      display: flex;
+      align-items: center;
+    }
+    .container .header .nav .search {
+      flex: 3;
+    }
+
+    .container .header .nav .search input[type="text"] {
+      border: none;
+      background: #f1f1f1;
+      padding: 10px;
+      width: 50%;
+      border-radius: 3px;
+    }
+
+    .btn {
+      background: #f92288;
+      color: white;
+      padding: 5px 10px;
+      text-align: center;
+      margin-right: 50px;
+    }
+    .btn:hover {
+      color: #f92288;
+      background: white;
+      padding: 3px 8px;
+      /* border: 2px solid #f92288; */
+    }
+  </style>
+
+  <body>
+    <div class="side-menu">
+      <div class="brand-name">
+        <h1>Dashboard <ion-icon name="list-outline"></ion-icon></h1>
+      </div>
+      <div class="link">
+        <a href="about"
+          ><span>About <ion-icon name="add-circle-outline"></ion-icon></span
+        ></a>
+        <a href="gallery"
+          ><span>Gallery <ion-icon name="image-outline"></ion-icon></span
+        ></a>
+        <a href="contact"
+          ><span>Contact us <ion-icon name="call-outline"></ion-icon></span
+        ></a>
+        <a href="setting"
+          ><span>Setting <ion-icon name="settings-outline"></ion-icon></span
+        ></a>
+        <a href="help"
+          ><span>help <ion-icon name="help-outline"></ion-icon></span
+        ></a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="header">
+        <div class="nav">
+          <div class="search">
+            <input type="text" placeholder="search...." /><ion-icon
+              name="search-outline"
+            ></ion-icon>
+          </div>
+          <div class="user">
+            <a href="#" class="btn">view more </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!------ {% if messages %}
             {% for message in messages %}
             {{message}}
         {% endfor %}
     {% endif %}
 
-    <div class="event-box2">
+    <div class="contactdts">
 
         <form action="/admindashboard">
         <table border="1" >
@@ -31,7 +179,8 @@
                 </tr>
             {% endfor %}
         </table>
+         <ion-icon name="logo-linkedin"></ion-icon>
         </form>
-
-</body>
+    </div>---->
+  </body>
 </html>
