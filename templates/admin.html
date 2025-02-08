@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="static/admin.css">
+    <link rel="stylesheet" href="/static/css/admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -16,7 +16,7 @@
         <div class="side-bar">
             <div class="menu">
                 <div class="item"><a href="#" class="desk"><i class="fas fa-desktop"></i>Home</a></div>
-                <div class="item"><a href="#"><i class="fas fa-book"></i>Manage Course</a></div>
+                <div class="item"><a href="{{url_for('manage_course')}}"><i class="fas fa-book"></i>Manage Course</a></div>
                 <div class="item">
                     <a class="sub-btn" ><i class="fas fa-table"></i>Event <i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
@@ -63,6 +63,18 @@
                     </div>
                 </div>
             </header>
+        </div>
+        <div class="box">
+            <div class="box1">
+                <a href="{{url_for('view_contact')}}">Request</a>
+                <div class="request">
+                    <div class="icon">
+                        <i class="fas fa-message"></i>
+                    </div>
+                    
+                </div>
+                
+            </div>
         </div>
         <script>
             $(document).ready(function(){

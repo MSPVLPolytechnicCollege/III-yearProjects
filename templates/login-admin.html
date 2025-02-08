@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="static/login-style.css">
+    <link rel="stylesheet" href="/static/css/login-style.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
     <div class="header">
         <a href="{{url_for('admin')}}" target="_self"><button type="submit">Admin</button></a>
-        <a href="{{url_for('alumini')}}" target="_self"><button type="submit">Alumini</button></a>
+        <a href="{{url_for('alumni_login')}}" target="_self"><button type="submit">Alumini</button></a>
         <a href="{{url_for('login')}}" target="_self"><button type="submit">Student</button></a>
     </div>
     <div class="student-login-container">
