@@ -23,6 +23,8 @@ def stuhome():
     return render_template("home-stu.html", datas=res)
 
 
+
+
 @app.route('/success')
 def success():
     return render_template('success.html')
@@ -42,10 +44,47 @@ con.execute("""
     );
 """)
 
+#contact table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS contact (
+        stu_name  text,
+        stu_email TEXT PRIMARY KEY,
+        stu_contact integer,
+        subject TEXT,
+        message TEXT
+    );
+""")
+
+#alumni register table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS alumni1 (
+        alumni_name  text,
+        alumni_pass text,
+        alumni_email TEXT PRIMARY KEY,
+        alumni_phone integer,
+        graduation integer,
+        dob integer,
+        course text,
+        address text
+    );
+""")
+
+
 
 con=sqlite3.connect('alumini_db.db')
 con.execute("create table if not exists admin1(username text primary key,password text);")
 con.close()
+
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS course (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        course_name TEXT,
+        action text
+    );
+""")
 
 #Register the student details
 @app.route('/register', methods=['GET', 'POST'])
@@ -76,9 +115,72 @@ def register():
             con.close()
     return render_template('register-stu.html')
 
+@app.route('/alumni_dashboard')
+def alumni_dashboard():
+    return render_template('alumni.html')
+
+
+
+@app.route('/alumni_redirect')
+def alumni_redirect():
+    return render_template('register-alumini.html')
+
+
+#register page for alumni
+@app.route('/alumni_register', methods=['GET', 'POST'])
+def alumni_register():
+    if request.method == 'POST':
+        try:
+            name=request.form['alumini-name']
+            password=request.form['alumini-pass']
+            email=request.form['alumini-email']
+            phone=request.form['alumini-phone']
+            graduation=request.form['graduation-year']
+            dob=request.form['dob']
+            course=request.form['course']
+            address=request.form['address']
+
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute("insert into alumni1(alumni_name,alumni_pass,alumni_email,alumni_phone,graduation,dob,course,address) values(?,?,?,?,?,?,?,?);", (name,password,email,phone,graduation,dob,course,address))
+            con.commit()
+            # Redirect to the 'success' page and pass the message
+            return render_template('success.html', message="Registered Successfully.")
+
+        except:
+            return render_template('error.html', message="Registration failed. Details: " )
+        finally:
+            return redirect(url_for('alumni_login'))
+    return render_template('register-alumni.html')
+
+
+#alumni login page to verify
+@app.route('/alumni_login',methods=['GET','POST'])
+def alumni_login():
+    if request.method=='POST':
+        username = request.form['alumini-name']
+        password = request.form["alumini-pass"]
+        con = sqlite3.connect('alumini_db.db')
+        con.row_factory = sqlite3.Row  # select query use pana ithu use panuvo to select the row
+        cursor = con.cursor()
+        cursor.execute("select * from alumni1 where alumni_name=? and alumni_pass=?", (username, password))
+        data = cursor.fetchone()  # to fetch only one day that username and password
+
+        if data:
+            session['username'] = data['alumni_name']
+            session['password'] = data['alumni_pass']
+
+            return redirect(url_for("alumni_dashboard"))
+        else:
+            return render_template('error.html', message="Username and Password Mismatch.")
+    return render_template('login-alumini.html')
+
+
+
 @app.route('/admin')
 def admin_dashboard():
     return render_template('admin.html')
+
 
 #admin login page to verify
 @app.route('/adminlogin',methods=['GET','POST'])
@@ -128,9 +230,7 @@ def signup():
 
 
 
-@app.route('/aluminilogin')
-def alumini():
-    return render_template('login-alumini.html')
+
 
 #Update the password
 @app.route('/update_redirect')
@@ -249,15 +349,57 @@ def editevent(sno):
     cursor.execute('select * from event where sno=?', (sno,))
     res = cursor.fetchall()
     return render_template('event.html',datas=res)
-'''
+
 
 #student can be contact
 @app.route('/stu-contact')
 def contact():
     return render_template('contact.html')
+'''
+
+@app.route('/stu-contact',methods=['POST','GET'])
+def stucontact():
+    if request.method=='POST':
+        name=request.form['contact-name']
+        email = request.form['contact-email']
+        contact = request.form['contact-number']
+        subject = request.form['contact-subject']
+        message = request.form['contact-message']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into contact(stu_name,stu_email,stu_contact,subject,message) values(?,?,?,?,?)',(name,email,contact,subject,message))
+        con.commit()
+        con.close()
+        return redirect(url_for('stuhome'))
+    return render_template('contact.html')
+
+
+#contact to be view on the admin
+@app.route('/view_contact')
+def view_contact():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from contact')
+    res = cursor.fetchall()
+    return render_template('contact-view.html',datas=res)
 
 
 
+
+#Manage the course for admin only
+@app.route('/manage_course')
+def manage_course():
+    return render_template('manage-course.html')
+
+@app.route('/course')
+def course():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from course')
+    res = cursor.fetchall()
+    return render_template("manage-course.html", datas=res)
 
 
 if __name__=='__main__':
