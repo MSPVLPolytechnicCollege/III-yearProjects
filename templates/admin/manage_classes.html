@@ -16,8 +16,8 @@
         <ul>
             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('manage_classes')}}">Manage Classes</a></li>
-            <li><a href="{{url_for('all_attendance')}}">Manage Teachers</a></li>
-            <li><a href="{{url_for('create_attendence_form')}}">Manage Students</a></li>
+            <li><a href="#">Manage Teachers</a></li>
+            <li><a href="#">Manage Students</a></li>
             <li><a href="#">Manage Reports</a></li>
             <li><a href="{{url_for('login')}}">Logout</a></li>
         </ul>
@@ -63,9 +63,9 @@
                             <td> {{row["classid"]}}</td>
                             <td> {{row["classname"]}}</td>
                             <td> {{row["classteacher"]}}</td>
-                            <td><a href="{{url_for('add_stud')}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
+                            <td><a href="{{url_for('attendance',classname = row['classname'])}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
                             <td><button class="btn-edit">EDIT</button></td>
-                            <td><button class="btn-delete">DELETE</button></td>
+                            <td><a href="{{url_for('del_attendance',classname = row['classname'])}}"><button class="btn-delete">DELETE</button></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -74,21 +74,3 @@
     </div>
 </body>
 </html>
-
-
-       <!---<form action="/create_class" class="create-class-form" method="post">
-            <h1>CREATE CLASS</h1>
-            <div>
-                <label for="classname">Class Name</label>
-                <input type="text" name="classname" placeholder="Class Name" id="" required>
-                <label for="classteacher">Class Teacher</label>
-                <input type="text" name="classteacher" placeholder="Class Teacher" id="" required>
-            </div>   
-            <div>
-               <label for="classid">Class Id</label>
-               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input type="text" name="classid" placeholder="Class Id" id="" required>
-               &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Create</button>
-            </div>
-        </form>
-
-!---->  

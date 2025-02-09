@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDENT PRESENCE MANAGER</title>
-    <link rel="stylesheet" href="\static\css\add_stud.css">
+    <link rel="stylesheet" href="\static\css\manage_classes.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,23 +16,12 @@
         <ul>
             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('manage_classes')}}">Manage Classes</a></li>
-            <li><a href="{{url_for('all_attendance')}}">Manage Teachers</a></li>
-            <li><a href="{{url_for('create_attendence_form')}}">Manage Students</a></li>
             <li><a href="#">Manage Reports</a></li>
             <li><a href="{{url_for('login')}}">Logout</a></li>
         </ul>
     </div>
 
     <div class="img_container">
-
-        <div>
-            <h1>ADD STUDENTS</h1>
-            <form action="/excel_to_table" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".xlsx, .xls" class="file-upload">
-                <button type="submit">Upload File</button>
-            </form>
-        </div>
-
         <div class="all-attendance-table">
             <h1>ALL CLASSES</h1>
             <div class="search-box">
@@ -45,22 +34,22 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ROLL.NO</th>
-                        <th>NAME</th>
-                        <th>MARK1 </th>
-                        <th>MARK1</th>
-                        <th>MARK3</th>
+                        <th>SL.NO</th>
+                        <th>CLASS NAME</th>
+                        <th>STAFF NAME </th>
+                        <th>ATTENDANCE</th>
+                  
                     </tr>
                 </thead>
 
                 <tbody>
                     {% for row in data %}
                         <tr>
-                            <td> {{row["rollno"]}}</td>
-                            <td> {{row["name"]}}</td>
-                            <td> {{row["m1"]}}</td>
-                            <td> {{row["m2"]}}</td>
-                            <td> {{row["m3"]}}</td>
+                            <td> {{row["classid"]}}</td>
+                            <td> {{row["classname"]}}</td>
+                            <td> {{row["classteacher"]}}</td>
+                            <td><a href="{{url_for('staff_view_attendance',classname = row['classname'])}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
+                           
                         </tr>
                     {% endfor %}
                 </tbody>
