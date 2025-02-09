@@ -56,6 +56,16 @@ con.execute("""
     );
 """)
 
+#course table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS course_college (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        course TEXT ,
+        active text
+    );
+""")
+
 #alumni register table
 con = sqlite3.connect('alumini_db.db')
 con.execute("""
@@ -77,14 +87,7 @@ con=sqlite3.connect('alumini_db.db')
 con.execute("create table if not exists admin1(username text primary key,password text);")
 con.close()
 
-con = sqlite3.connect('alumini_db.db')
-con.execute("""
-    CREATE TABLE IF NOT EXISTS course (
-        sno INTEGER PRIMARY KEY AUTOINCREMENT,
-        course_name TEXT,
-        action text
-    );
-""")
+
 
 #Register the student details
 @app.route('/register', methods=['GET', 'POST'])
@@ -384,20 +387,12 @@ def view_contact():
     res = cursor.fetchall()
     return render_template('contact-view.html',datas=res)
 
-
-
-
-#Manage the course for admin only
-@app.route('/manage_course')
-def manage_course():
-    return render_template('manage-course.html')
-
 @app.route('/course')
 def course():
     con = sqlite3.connect('alumini_db.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
-    cursor.execute('select * from course')
+    cursor.execute('select * from course_college')
     res = cursor.fetchall()
     return render_template("manage-course.html", datas=res)
 
