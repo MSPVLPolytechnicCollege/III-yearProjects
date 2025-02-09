@@ -54,8 +54,16 @@ def admipage():
     return render_template('admin.html')# return the admin.html page
 
 
-#contact details
+#donate details
 @app.route('/admindashboard')
+def admindashboard():
+    con = sqlite3.connect('charity.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from donate')
+    res = cursor.fetchall()
+    return render_template("admindashboard.html", datas=res)
+
 def admindashboard():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
@@ -63,6 +71,9 @@ def admindashboard():
     cursor.execute('select * from contact')
     res = cursor.fetchall()
     return render_template("admindashboard.html", datas=res)
+
+
+
 
 
 # call the route

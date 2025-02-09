@@ -1,12 +1,16 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Admin</title>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
   </head>
   <style>
     body {
@@ -14,14 +18,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      border: 1px solid #ec3ad7;
       margin-left: 10px;
-      background: rgb(63, 94, 251);
-      background: radial-gradient(
-        circle,
-        rgba(63, 94, 251, 1) 0%,
-        rgba(239, 52, 255, 1) 100%
-      );
     }
     .wrapper {
       position: relative;
@@ -31,7 +28,7 @@
       background: transparent;
     }
     .form-lgn h1 {
-      color: #0d30e3;
+      color: white;
     }
     /* Entire form */
 
@@ -43,13 +40,7 @@
       position: absolute;
       margin-left: 100px;
       margin-left: 10px;
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        90deg,
-        rgba(255, 198, 239, 1) 13%,
-        rgba(218, 173, 255, 1) 57%,
-        rgba(255, 228, 127, 1) 83%
-      );
+      background: #fa469a;
       margin-left: 100px;
     }
     .form-lgn h1 {
@@ -59,22 +50,17 @@
     }
     .btn2 {
       margin-top: 10px;
-      background: rgb(63, 94, 251);
-
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        90deg,
-        rgba(255, 198, 239, 1) 36%,
-        rgba(243, 173, 255, 1) 91%
-      );
+      background: white;
       border-radius: 3px;
       width: 50px;
       height: 25px;
-      border: 2px solid #0d30e3;
-      margin-left: 100px;
+      border: 2px solid #fa469a;
+      margin-left: 200px;
     }
     .btn2:hover {
       transform: scale(1.1);
+      background: white;
+      color: #f92288;
     }
 
     .img img {
@@ -83,6 +69,7 @@
       width: 450px;
       height: 400px;
       border-radius: 15px;
+      background: rgb(174, 173, 173);
     }
     .img {
       margin-top: 0px;
@@ -94,57 +81,46 @@
     .input-box label {
       font-family: Arial;
       font-weight: bold;
-      color: #0d30e3;
+      color: white;
     }
     .b1 {
-      margin-left: 100px;
+      margin-left: 150px;
       margin-top: 10px;
     }
     .input-box input {
       border-radius: 3px;
-      border: 1px solid #ec3ad7;
+      border: 1px solid #fa469a;
       margin-left: 10px;
-
-      background: rgb(255, 198, 239);
-      background: linear-gradient(
-        60deg,
-        rgba(255, 198, 239, 1) 41%,
-        rgba(127, 129, 247, 1) 92%
-      );
     }
-    .link{
-      margin-top:140px;
-
+    .link {
+      margin-top: 130px;
     }
-    .link a{
-    text-decoration: none;
-     font-size:18px;
-      color:#0d30e3;
+    .link a {
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
     }
   </style>
 
   <body>
-
     <div class="wrapper">
       <div class="form-lgn">
         <div class="img">
-        <img src="static/images/im1.jpg">
+          <img src="static/images/rafiki.png" />
         </div>
         <h1>Adminpage</h1>
 
         <form action="/admin" method="POST">
           <div class="input-box">
-            <label>Username  <ion-icon name="person"></ion-icon></label>
+            <label>Username <ion-icon name="person"></ion-icon></label>
             <input type="text" name="ad_name" required /><br /><br />
-            <label>Password  <ion-icon name="lock-closed"></ion-icon> </label>
+            <label>Password <ion-icon name="lock-closed"></ion-icon> </label>
             <input type="password" name="ad_pass" required /> <br />
             <div class="b1">
               <input type="submit" value="Login" class="btn2" />
             </div>
             <div class="link">
-
-               <a href="loginpage"><span>Login</span></a>
-
+              <a href="loginpage"><span>Login</span></a>
             </div>
           </div>
         </form>

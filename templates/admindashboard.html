@@ -29,7 +29,9 @@
     li {
       list-style: none;
     }
-
+    h3 {
+      color: gray;
+    }
     .side-menu {
       position: fixed;
       background: #f92288;
@@ -67,7 +69,7 @@
       position: absolute;
       right: 0;
       width: 80vw;
-      height: 100vh;
+      height: 400vh;
       background: #f1f1f1;
     }
     .container .header {
@@ -98,13 +100,17 @@
       width: 50%;
       border-radius: 3px;
     }
-
+    .nav .img {
+      font-size: 40px;
+      margin-right: 30px;
+      margin-top: 3px;
+    }
     .btn {
       background: #f92288;
       color: white;
       padding: 5px 10px;
       text-align: center;
-      margin-right: 50px;
+      margin-left: 900px;
     }
     .btn:hover {
       color: #f92288;
@@ -112,6 +118,62 @@
       padding: 3px 8px;
       /* border: 2px solid #f92288; */
     }
+
+    .container .content {
+      position: relative;
+      margin-top: 10vh;
+      min-height: 50vh;
+    }
+    .container .content .cards {
+      padding: 20px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .container .content .cards .card {
+      width: 250px;
+      height: 200px;
+      background: white;
+      margin: 20px 10px;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0, 0, 0, 0.19);
+      border-radius: 15px;
+    }
+
+    .box {
+      margin-top: 80px;
+    }
+
+    .imgs img {
+      margin-top: 50px;
+    }
+
+    .table {
+      margin-left: 100px;
+    }
+    .table p {
+      margin-left: 100px;
+      color: #f92288;
+    }
+
+    .table td {
+      padding: 5px;
+    }
+
+
+      .t2{ 
+        margin-left: 100px;
+        padding-top: 50px;
+      }
+
+ .t2 p {
+      margin-left: 80px;
+      color: #f92288;
+    }
+
+    
   </style>
 
   <body>
@@ -142,45 +204,128 @@
       <div class="header">
         <div class="nav">
           <div class="search">
-            <input type="text" placeholder="search...." /><ion-icon
-              name="search-outline"
-            ></ion-icon>
+            <div class="user">
+              <a href="#" class="btn">view more </a>
+            </div>
           </div>
-          <div class="user">
-            <a href="#" class="btn">view more </a>
+          <div class="img">
+            <img src="static/images/msk1.png" height="40px" width="40px" />
           </div>
         </div>
       </div>
+      <div class="content">
+        <div class="cards">
+          <div class="card">
+            <div class="box">
+              <h1>500</h1>
+              <h3>Donaters</h3>
+            </div>
+            <div class="imgs">
+              <img src="static/images/msk2.png" height="90px" width="90px" />
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="box">
+              <h1>30000</h1>
+              <h3>Income</h3>
+            </div>
+            <div class="imgs">
+              <img
+                src="static/images/mask group.png"
+                height="90px"
+                width="90px"
+              />
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="box">
+              <h1>300</h1>
+              <h3>contactlist</h3>
+            </div>
+            <div class="imgs">
+              <img src="static/images/msk3.png" height="90px" width="90px" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table">
+        <p>Donate details</p>
+        {% if messages %} {% for message in messages %} {{message}} {% endfor %}
+        {% endif %}
+
+        <div class="donatedeatils">
+            <table border="1" color="gray">
+              {% for data in datas %}
+              <tr>
+                <td>
+                  Name
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>{{ data['name'] }}</td>
+              </tr>
+              <tr>
+                <td>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>{{ data['email'] }}</td>
+              </tr>
+              <tr>
+                <td>
+                  Phone
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>{{ data['phone'] }}</td>
+              </tr>
+              <tr>
+                <td>Address &nbsp;&nbsp;</td>
+                <td>{{ data['address'] }}</td>
+              </tr>
+
+               <tr>
+                <td>payments &nbsp;&nbsp;</td>
+                <td>{{ data['payment'] }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </form>
+        </div>
+      </div>
+
+      <div class="t2">
+          <p>Contact details</p>
+       <table border="1" color="gray">
+              {% for data in datas %}
+              <tr>
+                <td>
+                  name
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>{{ data['name'] }}</td>
+              </tr>
+              <tr>
+                <td>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td>{{ data['email'] }}</td>
+              </tr>
+              <tr>
+                <td>
+                  Phone
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>{{ data['phone'] }}</td>
+              </tr>
+              <tr>
+                <td>Address &nbsp;&nbsp;</td>
+                <td>{{ data['address'] }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </form>
+        </div>
+      </div>
+      </div>
     </div>
 
-    <!------ {% if messages %}
-            {% for message in messages %}
-            {{message}}
-        {% endfor %}
-    {% endif %}
 
-    <div class="contactdts">
-
-        <form action="/admindashboard">
-        <table border="1" >
-            <p>contact details</p>
-                {% for data in datas %}
-                <tr>
-                    <td>name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['name'] }}</td>
-                </tr>
-                <tr>
-                    <td>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td><td>{{ data['email'] }}</td>
-                </tr>
-                <tr>
-                    <td>Phone &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['phone'] }}</td>
-                </tr>
-                <tr>
-                    <td> Address &nbsp;&nbsp;: </td><td>{{ data['address'] }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-         <ion-icon name="logo-linkedin"></ion-icon>
-        </form>
-    </div>---->
   </body>
 </html>

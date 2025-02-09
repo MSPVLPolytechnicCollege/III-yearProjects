@@ -1,172 +1,208 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Registerpage</title>
   </head>
-   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+  ></script>
 
   <style>
-    * {
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family:'poppins',san-serif;
+        * {
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'poppins',san-serif;
+        }
+         body {
+        display:flex;
+          height: 100vh;
+          justify-content:center;
+          align-items:center;
+         background-color:  #f9479a;;
+    padding:10px;
+
+        }
+         .container {
+         max-width:700px;
+          width: 100%;
+          background:white;
+          padding:25px 30px;
+          border-radius:20px;
+
+        }
+
+     .container .title{
+            font-size:40px;
+            font-weight:500;
+            position:relative;
+        }
+
+        .container .title::before{
+            content:'';
+            position:absolute;
+            left:0;
+            bottom:0;
+            height:3px;
+            background: #ff3091;
+        }
+          .container form .user-details{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-between;
+         margin:20px 0 12px 0;
+
+        }
+        form .user-details .input-box{
+        width:calc(100% / 2 - 20px);
+        margin-bottom:15px;
+
+
+
+        }
+         .user-details .input-box .details{
+         display:block;
+         font-weight:500;
+         margin-bottom:5px;
+         }
+
+
+        .user-details .input-box input
+        {
+        height:35px;
+        width:100%;
+        outline:none;
+        border-radius:5px;
+        border: 1px solid #ccc;
+        padding-left:15px;
+        font-size:16px;
+        border-bottom-width:2px
+        transition: all 0.3s ease;
+        }
+       .user-details .input-box input:focus,
+       .user-details .input-box input:valid{
+        border-color:#9b59b6;
+        }
+
+    .input-box span{
+         font-size:20px;
+          font-weight:900;
+        }
+    form .button{
+        height:45px;
+        margin:45px 0;
     }
-     body {
+    .button{
     display:flex;
-      height: 100vh;
-      justify-content:center;
-      align-items:center;
-      background: rgb(255,71,235);
-background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
-padding:10px;
+     justify-content:space-between;
+    }
+        form .button input{
+        height:40px;
+        width:250px;
+        outline:none;
+        color:#fff;
+      background:#ff3091;
+        border: 1px solid #ff3091;
+          outline:none;
+         border-radius:5px;
+         font-size:18px;
+         margin-left:50px
+         }
+
+
+
+    .link a button{
+        height:40px;
+        width:200px;
+        outline:none;
+        color:#fff;
+         background:#ff3091;
+        border: 1px solid #ff3091;
+          outline:none;
+         border-radius:5px;
+         font-size:18px;
+         margin-right:20px;
 
     }
-     .container {
-     max-width:700px;
-      width: 100%;
-      background:white;
-      padding:25px 30px;
-      border-radius:20px;
+       .button .b1:hover{
+           color: #f92288;
+      background: white;
 
-    }
+        }
 
- .container .title{
-        font-size:40px;
-        font-weight:500;
-        position:relative;
-    }
+         .link a button:hover {
 
-    .container .title::before{
-        content:'';
-        position:absolute;
-        left:0;
-        bottom:0;
-        height:3px;
-        background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
-    }
-      .container form .user-details{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-     margin:20px 0 12px 0;
-
-    }
-    form .user-details .input-box{
-    width:calc(100% / 2 - 20px);
-    margin-bottom:15px;
-
-
-
-    }
-     .user-details .input-box .details{
-     display:block;
-     font-weight:500;
-     margin-bottom:5px;
-     }
-
-
-    .user-details .input-box input
-    {
-    height:35px;
-    width:100%;
-    outline:none;
-    border-radius:5px;
-    border: 1px solid #ccc;
-    padding-left:15px;
-    font-size:16px;
-    border-bottom-width:2px
-    transition: all 0.3s ease;
-    }
-   .user-details .input-box input:focus,
-   .user-details .input-box input:valid{
-    border-color:#9b59b6;
-    }
-
-.input-box span{
-     font-size:20px;
-      font-weight:900;
-    }
-form .button{
-    height:45px;
-    margin:45px 0;
-}
-.button{
-display:flex;
- justify-content:space-between;
-}
-    form .button input{
-    height:40px;
-    width:250px;
-    outline:none;
-    color:#fff;
-  background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
-    border: 1px solid #ccc;
-      outline:none;
-     border-radius:5px;
-     font-size:18px;
-     margin-left:50px
-     }
-
-
-
-.link a button{
-    height:40px;
-    width:200px;
-    outline:none;
-    color:#fff;
-     background: linear-gradient(349deg, rgba(255,71,235,1) 13%, rgba(20,242,255,1) 86%);
-    border: 1px solid #ccc;
-      outline:none;
-     border-radius:5px;
-     font-size:18px;
-     margin-right:20px;
-}
-    .b1:hover{
-     transform: scale(1.1);
-
-    }
-
-     .link a button:hover {
-      transform: scale(1.1);
-    }
+          color: #f92288;
+      background: white;
+        }
   </style>
 
   <body>
+    <div class="container">
+      <div class="title">Registeration</div>
+      <form action="/register" method="POST">
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details"
+              >Name <ion-icon name="person-add"></ion-icon
+            ></span>
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="Enter your name"
+            />
+          </div>
 
+          <div class="input-box">
+            <span class="details">Email <ion-icon name="mail"></ion-icon></span>
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
 
-         <div class="container">
-      <div class="title"> Registeration </div>
-           <form action="/register" method="POST">
-           <div class="user-details">
-             <div class="input-box">
-               <span class="details">Name <ion-icon name="person-add"></ion-icon></span>
-                  <input type="text"  name="name"  required placeholder="Enter your name"/></div>
+          <div class="input-box">
+            <span class="details"
+              >Mobile Number <ion-icon name="call"></ion-icon
+            ></span>
+            <input
+              type="text"
+              name="mobile"
+              required
+              placeholder="Enter your number"
+            />
+          </div>
 
-               <div class="input-box">
-               <span class="details">Email <ion-icon name="mail"></ion-icon></span>
-                 <input type="email"  name="email"  required placeholder="Enter your email"/></div>
-
-                 <div class="input-box">
-               <span class="details">Mobile Number <ion-icon name="call"></ion-icon></span>
-                 <input type="text"  name="mobile"  required placeholder="Enter your number"/></div>
-
-              <div class="input-box">
-               <span class="details">password <ion-icon name="lock-closed"></ion-icon> </span>
-                 <input type="password"  name="password"  required placeholder="Enter your password"/></div>
-              </div>
-                    <div class="button">
-                      <div class="b1">
-                    <input type="submit" value="Register" /></div>
-                      <div class="link">
-                    <a href="loginpage"><button type="button">Cancel</button></a></div>
-                      </div>
-
+          <div class="input-box">
+            <span class="details"
+              >password <ion-icon name="lock-closed"></ion-icon>
+            </span>
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+        </div>
+        <div class="button">
+          <div class="b1">
+            <input type="submit" value="Register" />
+          </div>
+          <div class="link">
+            <a href="loginpage"><button type="button">Cancel</button></a>
+          </div>
+        </div>
       </form>
-
     </div>
   </body>
 </html>
