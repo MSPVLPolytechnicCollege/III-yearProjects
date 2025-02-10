@@ -135,6 +135,10 @@ header{
 }
 .user-wrapper{
     display: flex;
+    color: #007BFF;
+}
+.user-wrapper a{
+    color: #007BFF;
 }
 .search{
     margin-top: 10px;
@@ -194,6 +198,9 @@ input:focus {
 }
 
 /*-----Admin Box-----*/
+.box{
+    display: flex;
+}
 .box .box1{
     height: 150px;
     width: 250px;
@@ -203,27 +210,64 @@ input:focus {
     box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
     border-radius: 20px;
     background-color: #007BFF;
+    font-family: 'Roboto',sans-serif;
+    letter-spacing: 1px;
+    font-weight: 500;
 }
-.box1{
-    position: relative;
+.request1{
+    display: flex;
+    margin-top: 60px;
+    margin-left: 60px;
 }
-.box1 .icon{
-    font-size: 30px;
+.request2 a{
+    font-size: 26px;   
     color: white;
-    padding-left: 110px;
-    padding-top: 80px;
+
 }
-.box1 a{
-    font-size: 24px;
+.icon{
     color: white;
-    padding-left:80px;
-    position: absolute;
-    top: 40px; /* Adjust this to move the link down */
-    font-family: 'Lato';
-    font-weight: 600;
+    font-size: 44px;
+    margin-bottom: 50px;
+    margin-left: 10px;
+    display: inline-block; /* Ensures margin-bottom works */
+    line-height: 0; /* Ensures there's no extra space around the icon */
+}
+/* Hover effect on .box1 */
+.box1:hover{
+    background-color: white;
+    transition: 0.2s linear;
+    color: #007BFF; /* Text inside the box changes to blue */
+    outline: 3px solid #007BFF;
 }
 
-.box1:hover{
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-    transform: scale(1.04);
+/* Apply hover color to anchor and icon inside .box1 */
+.box1:hover .request2 a,
+.box1:hover .icon {
+    color: #007BFF; /* Change anchor and icon color to blue on hover */
+}
+.box .box2{
+    height: 150px;
+    width: 250px;
+    background-color: white;
+    margin-left: 50px;
+    margin-top: 35px;
+    box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
+    border-radius: 20px;
+    background-color: #007BFF;
+    font-family: 'Roboto',sans-serif;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+/* Hover effect on .box1 */
+.box2:hover{
+    background-color: white;
+    transition: 0.2s linear;
+    color: #007BFF; /* Text inside the box changes to blue */
+    outline: 3px solid #007BFF;
+}
+
+/* Apply hover color to anchor and icon inside .box1 */
+.box2:hover .request2 a,
+.box2:hover .icon {
+    color: #007BFF; /* Change anchor and icon color to blue on hover */
 }
