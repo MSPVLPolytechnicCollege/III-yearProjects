@@ -1,7 +1,7 @@
 const products = [
     {
       name: 'Apple iPhone 13',
-      image: '/images/iphone.jpg',
+      image: '/iphone.jpg',
       description: 'Latest iPhone with advanced features and stunning display.',
       brand: 'Apple',
       category: 'Smartphones',
@@ -12,7 +12,7 @@ const products = [
     },
     {
       name: 'Samsung Galaxy S21',
-      image: '/images/samsung.jpg',
+      image: '/samsung.jpg',
       description: 'High-resolution camera and sleek design for Samsung lovers.',
       brand: 'Samsung',
       category: 'Smartphones',
@@ -23,7 +23,7 @@ const products = [
     },
     {
       name: 'Vivo v30e',
-      image: '/images/vivo.jpg',
+      image: '/vivo.jpg',
       description: 'High-resolution camera and sleek design for Samsung lovers.',
       brand: 'Vivo',
       category: 'Smartphones',
@@ -34,7 +34,7 @@ const products = [
     },
     {
       name: 'Motorola Edge 50',
-      image: '/images/moto.jpg',
+      image: '/moto.jpg',
       description: 'High-resolution camera and sleek design for Samsung lovers.',
       brand: 'motorola',
       category: 'Smartphones',
@@ -45,7 +45,7 @@ const products = [
     },
     {
       name: 'Oneplus 12r',
-      image: '/images/oneplus.jpg',
+      image: '/oneplus.jpg',
       description: 'High-resolution camera and sleek design for Samsung lovers.',
       brand: 'Oneplus',
       category: 'Smartphones',

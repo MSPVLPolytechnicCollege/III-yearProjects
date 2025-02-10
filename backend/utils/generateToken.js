@@ -4,9 +4,9 @@ const generateToken = async (res,userId) => {
     const token = jwt.sign({userId}, "secret", { expiresIn: '30d' });
 
     res.cookie("jwt", token, {
-        httpOnly: true,
+        // httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 30 * 24 * 60 * 60 * 1000
     });
 }

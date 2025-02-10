@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import { ToastContainer } from 'react-toastify';
 
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Navbar />
         <Outlet />
         {/* <img src="/iphone.jpg" alt="" /> */}
+        <ToastContainer />
       </div>  
     </>
   )

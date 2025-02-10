@@ -2,6 +2,7 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 
 // authUser
@@ -223,6 +224,18 @@ const updateUser = asyncHandler(async (req, res) => {
     res.status(200).json(user);
   });
 
+
+  
+const checkUser = asyncHandler(async(req, res) => {
+    const token = req.cookies.jwt;
+    // console.log(token);
+    if (token) {
+        res.json({ isLoggedIn: true });
+    } else {
+        res.json({ isLoggedIn: false });
+    }
+});
+
 export {
     authUser,
     registerUser,
@@ -232,5 +245,6 @@ export {
     getUsers,
     getUserByID,
     deleteUser,
-    updateUser
+    updateUser,
+    checkUser
 }
