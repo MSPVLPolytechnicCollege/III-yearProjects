@@ -38,7 +38,13 @@
                         <a href="#" class="sub-item"><i class="fas fa-user"></i>Student</a>
                     </div>
                 </div>
-                <div class="item"><a href="#"><i class="fas fa-info-circle"></i>About</a></div>
+                <div class="item">
+                    <a class="sub-btn" ><i class="fas fa-layer-group"></i>Details <i class="fas fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="#" class="sub-item"><i class="fas fa-user"></i>Student Details</a>
+                        <a href="#" class="sub-item"><i class="fas fa-users"></i>Alumni Details</a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="main-content">
@@ -66,15 +72,36 @@
         </div>
         <div class="box">
             <div class="box1">
-                <a href="{{url_for('view_contact')}}">Request</a>
-                <div class="request">
-                    <div class="icon">
-                        <i class="fas fa-message"></i>
-                    </div>
-                    
+                <div class="request1">
+                    <div class="request2">
+                    <a href="{{url_for('view_contact')}}">Request</a>
+                </div>    
+                <div class="icon">
+                    <i class="fas fa-comments"></i>
                 </div>
-                
+                </div>
             </div>
+            <div class="box2">
+                <div class="request1">
+                    <div class="request2">
+                    <a href="{{url_for('view_contact')}}">Request</a>
+                </div>    
+                <div class="icon">
+                    <i class="fas fa-message"></i>
+                </div>
+                </div>
+            </div>
+            <div class="box2">
+                <div class="request1">
+                    <div class="request2">
+                    <a href="{{url_for('view_contact')}}">Request</a>
+                </div>    
+                <div class="icon">
+                    <i class="fas fa-message"></i>
+                </div>
+                </div>
+            </div>
+           
         </div>
         <script>
             $(document).ready(function(){
