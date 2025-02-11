@@ -31,13 +31,42 @@ body{
 }
 /*-------Dashboard start--------*/
 
+/*-------Admin start--------*/
+.admin1{
+    height:120px; 
+    background-color: #006efe;
+    color: white;
+}
+.admin2{
+    display: flex;
+
+}
+.admin-icon img{
+    height: 90px;
+}
+.admin-icon span{
+    font-size: 56px;
+    margin-left: 26px;
+    margin-top: 20px;
+    display: inline-block; /* Ensures margin-bottom works */
+    line-height: 0; /* Ensures there's no extra space around the icon */
+}
+.admin-content{
+    margin-top: 40px;
+    margin-left: 10px;
+}
+.email{
+    margin-top: 10px;
+    color: #000300;
+}
+/*-------Admin End--------*/
 .side-bar{
     background: #007BFF;
     position: fixed;
     backdrop-filter: blur(15px);
     width: 300px;
     height: 100vh;
-    box-shadow: 10px 5px 5px rgb(177, 177, 177);
+    
     
 }
 
@@ -115,7 +144,6 @@ body{
     text-align: center;
     margin-left: 280px;
     background-color: var(--clr-white);
-    box-shadow: 10px 6px 3px rgb(177, 177, 177);
 }
 header{
     display: flex;
@@ -202,72 +230,58 @@ input:focus {
     display: flex;
 }
 .box .box1{
-    height: 150px;
+    height: 240px;
     width: 250px;
     background-color: white;
     margin-left: 340px;
     margin-top: 35px;
-    box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
     border-radius: 20px;
-    background-color: #007BFF;
     font-family: 'Roboto',sans-serif;
-    letter-spacing: 1px;
-    font-weight: 500;
+    outline: 2px solid #007BFF;
 }
 .request1{
-    display: flex;
-    margin-top: 60px;
-    margin-left: 60px;
-}
-.request2 a{
-    font-size: 26px;   
-    color: white;
-
+    text-align: center;
 }
 .icon{
+    font-size: 70px;
+    color: #007BFF;
+    margin-top: 15px;
+}
+.count p{
+    font-size: 26px;
+    color: black;
+    margin-top: 10px;
+}
+.content{
+    margin-top: 10px;
+    font-size: 19px;
+}
+.view-details{
+    margin-top: 15px;
+    margin-left: 65px;
+    padding: 5px 12px;
+    width: 100px;
+    background-color: #007BFF;
+    border-radius: 7px;
+}
+.view-details a{
     color: white;
-    font-size: 44px;
-    margin-bottom: 50px;
-    margin-left: 10px;
-    display: inline-block; /* Ensures margin-bottom works */
-    line-height: 0; /* Ensures there's no extra space around the icon */
 }
-/* Hover effect on .box1 */
-.box1:hover{
-    background-color: white;
-    transition: 0.2s linear;
-    color: #007BFF; /* Text inside the box changes to blue */
-    outline: 3px solid #007BFF;
-}
-
-/* Apply hover color to anchor and icon inside .box1 */
-.box1:hover .request2 a,
-.box1:hover .icon {
-    color: #007BFF; /* Change anchor and icon color to blue on hover */
+.view-details:hover{
+    background-color: #0bc427;
+    transition: 0.ss linear;
+    outline: 1px solid #0bc427;
+    scale: 1.04;
 }
 .box .box2{
-    height: 150px;
+    height: 240px;
     width: 250px;
     background-color: white;
     margin-left: 50px;
     margin-top: 35px;
-    box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
     border-radius: 20px;
-    background-color: #007BFF;
     font-family: 'Roboto',sans-serif;
-    letter-spacing: 1px;
-    font-weight: 500;
-}
-/* Hover effect on .box1 */
-.box2:hover{
-    background-color: white;
-    transition: 0.2s linear;
-    color: #007BFF; /* Text inside the box changes to blue */
-    outline: 3px solid #007BFF;
-}
-
-/* Apply hover color to anchor and icon inside .box1 */
-.box2:hover .request2 a,
-.box2:hover .icon {
-    color: #007BFF; /* Change anchor and icon color to blue on hover */
+    outline: 2px solid #007BFF;
 }
