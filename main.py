@@ -116,7 +116,7 @@ def create_class():
         in_classteacher = request.form['classteacher'] 
         con = sqlite3.connect('data_base.db')
         cur = con.cursor()
-        query = f"CREATE TABLE {in_classname} (rollno integer,name varchar(50),m1 integer,m2 integer,m3 integer)"
+        query = f"CREATE TABLE {in_classname} (slno integer,rollno integer,name varchar(50),p1 integer,p2 integer,p3 integer,p4 integer,p5 integer,p6 integer,p7 integer,p8 integer,present integer, absent integer,date varchar(50))"
         cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
         cur.execute(query)
         con.commit()
