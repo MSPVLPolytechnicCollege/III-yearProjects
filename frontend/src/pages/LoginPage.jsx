@@ -20,7 +20,7 @@ const LoginPage = () => {
       
       await navigate("/");
 
-      toast.success("Login Successfull!")
+      toast.success("Login Successful !!")
 
       setTimeout(() => {
         window.location.reload();  

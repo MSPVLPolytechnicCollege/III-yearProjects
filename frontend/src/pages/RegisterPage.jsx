@@ -32,6 +32,7 @@ const RegisterPage = () => {
         toast.success("Registered Successfull!")
       }
     } catch (err) {
+      console.log(err);
       setError('Something went wrong. Please try again.');
     }
   };

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart } from 'lucide-react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
+
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,6 +30,7 @@ const Navbar = () => {
         navigate('/');
       })
       .catch(error => console.error('Logout failed:', error));
+    toast.success("Logged Out Successful !!")
   };
 
   const handleSelectChange = (event) => {
