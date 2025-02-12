@@ -292,7 +292,17 @@ def eventdetail():
     res = cursor.fetchall()
     return render_template("event-details.html", datas=res)
 
-
+'''
+#event to be view on the student
+@app.route('/event_details_alumni')
+def event_details_alumni():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template("alumni.html", datas=res)
+'''
 #Event to be add
 @app.route('/add-event',methods=['GET','POST'])
 def addevent():
