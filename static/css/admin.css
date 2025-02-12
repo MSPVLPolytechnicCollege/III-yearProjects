@@ -226,9 +226,7 @@ input:focus {
 }
 
 /*-----Admin Box-----*/
-.box{
-    display: flex;
-}
+
 .box .box1{
     height: 240px;
     width: 250px;
@@ -245,8 +243,26 @@ input:focus {
 }
 .icon{
     font-size: 70px;
-    color: #007BFF;
+    color: darkviolet;
     margin-top: 15px;
+}
+#envelope{
+    color: #ffbb00;
+}
+#checkbox{
+    color: #007BFF;
+}
+#ban{
+    color: red;
+}
+#file{
+    color: rgb(255, 0, 128);
+}
+#users{
+    color:darkblue;
+}
+#book{
+    color: rgb(197, 41, 41);
 }
 .count p{
     font-size: 26px;
@@ -274,6 +290,11 @@ input:focus {
     outline: 1px solid #0bc427;
     scale: 1.04;
 }
+.box{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+
 .box .box2{
     height: 240px;
     width: 250px;
