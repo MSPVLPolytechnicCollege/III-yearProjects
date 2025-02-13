@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/products", productRoutes); // route link - http://localhost:5000/api/products/
 app.use("/api/users/", authRoutes);
-app.use("/api/cart/", cartRoutes)
+app.use("/api/cart", cartRoutes);
 
 
 // Error Handler

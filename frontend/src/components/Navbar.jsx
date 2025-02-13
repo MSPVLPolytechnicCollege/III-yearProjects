@@ -74,7 +74,7 @@ const Navbar = () => {
           ) : (
             // Show Login button if user is not logged in
             <Link to='/login'>
-              <button className="btn btn-success text-white px-4 py-2 rounded-pill">
+              <button className="btn btn-primary text-white px-4 py-2 rounded-pill fw-semibold">
                 Login
               </button>
             </Link>

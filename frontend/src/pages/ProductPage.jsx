@@ -2,17 +2,17 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 
 const ProductPage = () => {
 
-  const { id } = useParams();  // Extract the 'id' parameter from the URL
+  const { id } = useParams();
   const [products, setProducts] = useState([]);
 
-  const { qty } = 1;
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
-    // Define an async function inside useEffect
     const fetchProduct = async () => {
       try {
         const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
@@ -22,9 +22,27 @@ const ProductPage = () => {
       }
     };
 
-    // Call the async function
     fetchProduct();
   }, [id]);
+
+
+  const addToCartHandler = async (e) => {
+    e.preventDefault();
+    // console.log(id);
+    // console.log(localStorage.getItem("userInfo"))
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userID = userInfo._id
+    console.log(qty);
+
+
+    try {
+      const { data } = await axios.post("http://localhost:5000/api/cart/", { productId: id, userId: userID, qty }, { withCredentials: true });
+      // console.log(data);
+      toast.success("Successfully Added to Cart!")
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="container py-5 mt-5">
@@ -87,7 +105,7 @@ const ProductPage = () => {
                   </div>
 
                   <button 
-                    // onClick={addToCartHandler} 
+                    onClick={addToCartHandler} 
                     className="btn btn-primary w-100"
                   >
                     Add to cart

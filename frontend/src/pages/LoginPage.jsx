@@ -11,72 +11,38 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const { data } = await axios.post("http://localhost:5000/api/users/login", { email, password }, { withCredentials: true });
-
       localStorage.setItem("userInfo", JSON.stringify(data));
-
-      
-      await navigate("/");
-
-      toast.success("Login Successful !!")
-
+      toast.success("Login Successful!");
       setTimeout(() => {
-        window.location.reload();  
-      }, 5000);
-      
+        window.location.reload();
+      }, 1500);
+      navigate("/");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Try again.");
     }
   };
 
   return (
-    <div className="d-flex align-items-center justify-content-center bg-info-subtle" style={{ height: "100vh" }}>
-      <div className="bg-white p-5 rounded shadow-lg" style={{ width: "100%", maxWidth: "500px" }}>
-        <h2 className="fw-semibold text-center mb-4">Login Page</h2>
-
-        {error && <div className="alert alert-danger">{error}</div>}
-
+    <div className="d-flex align-items-center justify-content-center vh-100" style={{ background: "linear-gradient(135deg, #667eea, #764ba2)" }}>
+      <div className="bg-white p-5 rounded-4 shadow-lg" style={{ width: "100%", maxWidth: "400px" }}>
+        <h2 className="fw-bold text-center text-primary mb-4">Login</h2>
+        {error && <div className="alert alert-danger text-center">{error}</div>}
         <form onSubmit={handleSubmit}>
-          {/* Email */}
           <div className="mb-3">
             <label htmlFor="email" className="form-label fw-semibold">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <input type="email" id="email" className="form-control shadow-sm" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
-
-          {/* Password */}
           <div className="mb-3">
             <label htmlFor="password" className="form-label fw-semibold">Password</label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <input type="password" id="password" className="form-control shadow-sm" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-
-          {/* Login Button */}
-          <button type="submit" className="btn btn-primary w-100 fw-semibold mb-3">Login</button>
+          <button type="submit" className="btn btn-primary w-100 fw-semibold py-2">Login</button>
         </form>
-
-        {/* Register Link */}
-        <Link to="/register">
-          <p className="text-center text-decoration-underline text-primary cursor-pointer">
-            Don't have an account? Click here to Register
-          </p>
-        </Link>
+        <div className="text-center mt-3">
+          <Link to="/register" className="text-decoration-none text-primary fw-semibold">Don't have an account? Register</Link>
+        </div>
       </div>
     </div>
   );
