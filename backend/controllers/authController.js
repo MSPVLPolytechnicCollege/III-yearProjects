@@ -186,7 +186,8 @@ const getUserByID = asyncHandler(async (req, res) => {
     }
   
     res.status(200).json(user);
-  });
+});
+
 
 // @Access Private
 // /api/users/:id
@@ -226,15 +227,30 @@ const updateUser = asyncHandler(async (req, res) => {
 
 
   
-const checkUser = asyncHandler(async(req, res) => {
+  const checkUser = asyncHandler(async (req, res) => {
     const token = req.cookies.jwt;
     // console.log(token);
     if (token) {
-        res.json({ isLoggedIn: true });
+        try {
+            const decoded = jwt.verify(token, "secret"); // Verify the token
+            // console.log(decoded);
+            const user = await User.findById(decoded.userId); // Assuming you are checking user info
+            // console.log(user);
+
+            if (user) {
+                res.json({ isLoggedIn: true, user });
+            } else {
+                res.status(401).json({ isLoggedIn: false });
+            }
+        } catch (error) {
+            console.error('Token verification failed:', error);
+            res.status(401).json({ isLoggedIn: false });
+        }
     } else {
         res.json({ isLoggedIn: false });
     }
 });
+
 
 export {
     authUser,

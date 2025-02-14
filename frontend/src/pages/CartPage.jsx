@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
+import { ArrowLeft } from 'lucide-react';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -104,7 +105,13 @@ const CartPage = () => {
 
   return (
     <div className="container my-5">
+      <div className="d-flex flex-wrap justify-content-between">
       <h1 className="text-center text-primary mb-4">Your Cart</h1>
+      <Link to="/" className="btn btn-link text-decoration-none mb-4">
+        <ArrowLeft className="me-2" />
+        <span>Go back</span>
+      </Link>
+      </div>
 
       <div className="row">
         {/* Cart Items */}
