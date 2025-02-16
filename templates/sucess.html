@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>sucess page</title>
+
+    <head>
+        <title>Sucesspage</title>
   </head>
 
   <style>
@@ -74,38 +74,46 @@
       font-size: 40px;
     }
 
-    .container {
+    .gallery{
+      width: 900px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 20px 0 20px;
+      overflow-x: scroll;
     }
-    .container .box {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .container .box .dream {
-      display: flex;
-      flex-direction: column;
-      width: 32.5%;
-    }
-    .container .box .dream img {
+    .gallery div{
       width: 100%;
-      height: 50%;
-      margin-top: 20px;
-      border: solid gray 4px;
-      border-radius: 20px;
-    }
-    .container .box .dream img:hover {
-      transform: scale(1.1);
-    }
+      display: grid;
+      grid-template-columns: auto auto auto;
+      grid-gap: 20px;
+      padding: 10px;
+      flex: none;
 
-    .dream h1 {
-      margin-left: 30px;
     }
+    .gallery div img{
+      width: 300px;
+      height:300px ;
+      margin-top: 50px;
+       filter:grayscale(100%);
+       transition: transform 0.5s;
+    }
+.gallery::-webkit-scrollbar{
+  display: none;
+}
+.gallery-wrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10% auto;
+}
+#backbtn,#nextbtn{
+  cursor: pointer;
+  margin: 40px;
+}
+ .gallery div img:hover{
+  filter:grayscale(0);
+  cursor: pointer;
+  transform: scale(1.1);
+ }
+
   </style>
   <body>
     <header>
@@ -133,36 +141,58 @@
       </h1>
     </div>
 
-    <!--------------------->
     <div class="middle">
       <img src="static/images/dns1.jpg" width="1500" height="700px" />
     </div>
-    <!--------------------->
 
-    <div class="container">
-      <div class="heading">
-        <div class="box">
-          <div class="dream">
-            <img src="static/images/c1.jpg" height="300px" width="300px" />
-          </div>
 
-          <div class="dream">
-            <img src="static/images/c5.jpg" height="300px" width="300px" />
-            <img src="static/images/c2.jpg" height="300px" width="300px" />
-          </div>
+    <!---------------->
+    <div class="gallery-wrap">
+         <img src="static/images/ab2.png" id="backbtn" height="100px" width="100px">                                     
+      <div class="gallery">
+      <div>
+        <span><img src="static/images/c5.jpg" width="400" ></span>
+         <span><img src="static/images/c5.jpg" width="400" ></span>
+          <span><img src="static/images/c5.jpg" width="400"></span>
+      </div>
 
-          <div class="dream">
-            <h1>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam,
-              unde eum numquam dignissimos natus rem officia exercitationem
-              repudiandae facere accusamus, consectetur iusto reiciendis
-              excepturi tempora vero suscipit eligendi asperiores perferendis.
-            </h1>
-          </div>
-        </div>
+       <div>
+        <span><img src="static/images/c3.jpg" width="400" ></span>
+         <span><img src="static/images/c3.jpg" width="400" ></span>
+          <span><img src="static/images/c3.jpg" width="400"></span>
+      </div>
+
+       <div>
+        <span><img src="static/images/c2.jpg" width="400" ></span>
+         <span><img src="static/images/c2.jpg" width="400" ></span>
+          <span><img src="static/images/c2.jpg" width="400"></span>
       </div>
     </div>
+  <img src="static/images/ab1.png" id="nextbtn" height="100px" width="100px">    
+    </div>
+    <script>
+      let scrollcontainer =document.querySelector(".gallery");
+      let backbtn = document.getElementById("backbtn");
+      let nextbtn = document.getElementById("nextbtn");
 
-    <ion-icon name="logo-linkedin"></ion-icon>
-  </body>
+
+      scrollcontainer.addEventListener("Wheel",(evt) =>  {
+        evt.preventDefault();
+         scrollcontainer.scrollLeft += evt.deltaY;
+          scrollcontainer.style.scrollBehavior ="smooth";
+      });
+
+      nextbtn.addEventListener("click",()=>{
+        scrollcontainer.style.scrollBehavior ="smoth";
+        scrollcontainer.scrollLeft += 900;
+      });
+
+       backbtn.addEventListener("click",()=>{
+         scrollcontainer.style.scrollBehavior ="smoth";
+        scrollcontainer.scrollLeft -= 900;
+      });
+
+    </script>
+
+ </body>
 </html>
