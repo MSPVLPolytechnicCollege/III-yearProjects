@@ -84,14 +84,14 @@
     </style>
 </head>
 <body>
-    <form action="/insert_student" method="post">
-        <h2>ADD STUDENT</h2>
-        <label for="roll_no">ROLL NO :</label>
-        <input type="number" required name="roll_no">
-         <label for="attendance_name">Attendance Name :</label>
-        <input type="text" required name="attendance_name" value="{{ name }}">
-        <label for="stud_name">NAME :</label>
-        <input type="text" name="stud_name" required>
+    <form action="/update_class" method="post">
+        <h2>UPDATE CLASS</h2>
+        <label for="classname">CLASS NAME :</label>
+        <input type="text" required name="classname" value={{data["classname"]}}>
+        <label for="classteacher">CLASS TEACHER :</label>
+        <input type="text" required name="classteacher" value={{data["classteacher"]}}>
+        <label for="classid">CLASS ID</label>
+        <input type="number" name="classid"  value={{data["classid"]}}>
 
         <div class="btn_group">
             <input type="submit" value="ADD">

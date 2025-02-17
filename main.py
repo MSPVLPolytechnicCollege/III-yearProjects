@@ -166,8 +166,31 @@ def del_attendance(classname):
     return "Deleted successfully"
 
 
+@app.route('/edit_class/<string:classid>', methods=["POST", "GET"])
+def edit_class(classid):
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("SELECT * FROM all_classes WhERE classid=?",(classid,))
+    data = cur.fetchone()
+    con.close()
+    return render_template('admin/add_student_form.html', data=data)
 
- 
+
+@app.route('/update_class', methods=["POST", "GET"])
+def update_class():
+    if request.method == 'POST':
+        in_classname = request.form['classname']
+        in_classid = request.form['classid']
+        in_classteacher = request.form['classteacher']
+        con = sqlite3.connect('data_base.db')
+        cur = con.cursor()
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                    (in_classname, in_classteacher, in_classid)) 
+        con.commit()
+        con.close()
+        return "Updated Successfully"
+    
 @app.route('/staff_view_attendance/<string:classname>', methods=["POST", "GET"])
 def staff_view_attendance(classname):
     con = sqlite3.connect("data_base.db")

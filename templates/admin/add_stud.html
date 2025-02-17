@@ -31,10 +31,10 @@
                 <input type="file" name="file" accept=".xlsx, .xls" class="file-upload">
                 <label for="classname">Class Name :</label>
                 <input type="text" name="classname" value="{{ classname }}" readonly>
-                <button type="submit">Upload File</button>
+                <button type="submit">Upload Filee</button>
             </form>
         </div>
-
+    <div class="all-attendance-table">
         <div class="all-attendance-table">
             <h1>ATTENDANCE</h1>
             <div class="search-box">
@@ -44,7 +44,8 @@
                     <button>search</button>
                 </form>
             </div>
-
+        
+        
             <table>
                 <thead>
                     <tr>
@@ -89,7 +90,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    
 <script>
     const dateInput = document.getElementById('date');
     const currentDate = new Date().toISOString().slice(0,10);
