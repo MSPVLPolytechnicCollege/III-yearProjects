@@ -11,7 +11,7 @@ import CartPage from "./pages/CartPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx"
-import AdminPanel from "./pages/AdminPanel.jsx"
+import AdminPanel from "./pages/admin/AdminPanel.jsx"
 
 const router = createBrowserRouter(
 

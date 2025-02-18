@@ -56,6 +56,8 @@ const Navbar = () => {
       navigate('/settings');
     } else if (selectedOption === 'logout') {
       handleLogout();
+    } else if (selectedOption === 'home') {
+      <Link to='/'></Link>
     }
   };
 
@@ -71,7 +73,7 @@ const Navbar = () => {
               {/* Show Admin Panel button if user is admin */}
               {isAdmin && (
                 <Link to='/admin'>
-                  <button className="btn btn-warning text-dark rounded-pill px-4 py-2 shadow-sm">
+                  <button className="btn btn-warning text-dark rounded-pill px-4 py-2 shadow-sm hover-scale">
                     Admin Panel
                   </button>
                 </Link>
@@ -100,6 +102,7 @@ const Navbar = () => {
                 onChange={handleSelectChange}
               >
                 <option defaultValue>Menu</option>
+                <option value="home">Home</option>
                 <option value="settings">Settings</option>
                 <option value="logout">Logout</option>
               </select>
