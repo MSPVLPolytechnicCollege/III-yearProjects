@@ -25,6 +25,11 @@ body {
 }
 
 .sidebar img {
+    position:sticky;
+    top:0;
+    left:0;
+    height:100vh;
+    z-index:1;
     width: 150px;
     height: 150px;
     margin: 5px;

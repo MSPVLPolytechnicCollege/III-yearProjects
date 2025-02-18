@@ -9,6 +9,7 @@
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
 
     <div class="sidebar">
@@ -24,20 +25,22 @@
     </div>
 
     <div class="img_container">
+
         <form action="/create_class" class="create-class-form" method="post">
             <h1>CREATE CLASS</h1>
 
-                <label for="classname">Class Name</label>
-                <input type="text" name="classname" placeholder="Class Name"  required>
-                <label for="classteacher">Class Teacher</label>
-                <input type="text" name="classteacher" placeholder="Class Teacher"  required>
-                <label for="classid">Class Id</label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<input type="text" name="classid" placeholder="Class Id"  required>
-            &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Create</button>
+            <label for="classname">Class Name</label>
+            <input type="text" name="classname" placeholder="Class Name"  required>
+            <label for="classteacher">Class Teacher</label>
+            <input type="text" name="classteacher" placeholder="Class Teacher"  required>
+            <label for="classid">Class Id</label>
+            <input type="text" name="classid" placeholder="Class Id"  required>
+            <button type="submit">Create</button>
         </form>
 
         <div class="all-attendance-table">
             <h1>ALL CLASSES</h1>
+
             <div class="search-box">
                 <form>
                     <input type="search" name="search" required placeholder="Search">

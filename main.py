@@ -113,17 +113,42 @@ def create_class():
     try:
         in_classname = request.form['classname']
         in_classid = request.form['classid']
-        in_classteacher = request.form['classteacher'] 
+        in_classteacher = request.form['classteacher']
+        
         con = sqlite3.connect('data_base.db')
         cur = con.cursor()
-        query = f"CREATE TABLE {in_classname} (slno integer,rollno integer,name varchar(50),p1 integer,p2 integer,p3 integer,p4 integer,p5 integer,p6 integer,p7 integer,p8 integer,present integer, absent integer,date varchar(50))"
-        cur.execute("INSERT INTO all_classes(classname,classid,classteacher) VALUES(?,?,?)",(in_classname,in_classid,in_classteacher))
-        cur.execute(query)
+        
+   
+        cur.execute("SELECT COUNT(*) FROM all_classes WHERE classid = ?", (in_classid,))
+        if cur.fetchone()[0] > 0:
+            return "Class ID already exists."
+
+        
+        cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES(?, ?, ?)",
+                    (in_classname, in_classid, in_classteacher))
+    
+        create_table_query = f"""
+        CREATE TABLE IF NOT EXISTS {in_classname} (
+            slno INTEGER PRIMARY KEY,
+            rollno INTEGER,
+            name VARCHAR(50),
+            p1 INTEGER, p2 INTEGER, p3 INTEGER, p4 INTEGER, p5 INTEGER, p6 INTEGER, p7 INTEGER, p8 INTEGER,
+            present INTEGER, absent INTEGER,
+            date VARCHAR(50)
+        )
+        """
+        cur.execute(create_table_query)
+        
+      
         con.commit()
-        con.close()
-        return "class created and inserted successfully"
-    except:
-        return "Class name or Id already exist"
+        
+        return "Class created and inserted successfully"
+    except sqlite3.Error as e:
+        con.rollback() 
+        return f"Error occurred: {e}"
+    finally:
+        con.close()  
+
 
 
 
@@ -183,10 +208,14 @@ def update_class():
         in_classname = request.form['classname']
         in_classid = request.form['classid']
         in_classteacher = request.form['classteacher']
+        in_oldclassname = request.form['oldclassname']
         con = sqlite3.connect('data_base.db')
         cur = con.cursor()
+        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
+        cur.execute(query)
         cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
                     (in_classname, in_classteacher, in_classid)) 
+        
         con.commit()
         con.close()
         return "Updated Successfully"
