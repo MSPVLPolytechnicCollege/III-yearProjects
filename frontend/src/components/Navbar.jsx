@@ -70,6 +70,9 @@ const Navbar = () => {
         <div className="d-flex align-items-center gap-3">
           {isLoggedIn ? (
             <>
+              <Link to='/sell'>
+                <button className='btn btn-primary text-white rounded-pill px-4 py-2 shadow-sm hover-scale'>Sell</button>
+              </Link>
               {/* Show Admin Panel button if user is admin */}
               {isAdmin && (
                 <Link to='/admin'>

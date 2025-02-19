@@ -7,9 +7,11 @@ import users from "./data/users.js";
 
 import { connectDB } from "./db/config.js";
 
-connectDB();
 
 const importData = async () => {
+
+    await connectDB();
+
 
     try{
 

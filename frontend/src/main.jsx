@@ -11,7 +11,8 @@ import CartPage from "./pages/CartPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx"
-import AdminPanel from "./pages/admin/AdminPanel.jsx"
+import AdminPanel from "./pages/admin/AdminPanel.jsx";
+import SellingPage from "./pages/SellingPage.jsx"
 
 const router = createBrowserRouter(
 
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
        <Route path='/settings' element={<SettingsPage />}/>
        <Route path='/register' element={<RegisterPage />}/>
        <Route path='/admin' element={<AdminPanel />}/>
+       <Route path='/sell' element={<SellingPage />}/>
     </Route>
   )
   
