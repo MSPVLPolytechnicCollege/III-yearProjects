@@ -1,168 +1,236 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify styles
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { Pencil, Trash, Box, Users } from "lucide-react";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
-  const [email, setEmail] = useState('');
-  const [updatedData, setUpdatedData] = useState({ name: '', email: '' });
-  const [error, setError] = useState('');
-  const [selectedUser, setSelectedUser] = useState(null); // For selected user to update or delete
+  const [products, setProducts] = useState([]);
+  const [activeTab, setActiveTab] = useState("users");
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [updatedUserData, setUpdatedUserData] = useState({ name: "", email: "" });
+  const [updatedProductData, setUpdatedProductData] = useState({
+    name: "",
+    description: "",
+    brand: "",
+    price: "",
+    countInStock: "",
+  });
 
-  const apiUrl = 'http://localhost:5000/api/users';
+  const userApiUrl = "http://localhost:5000/api/users";
+  const productApiUrl = "http://localhost:5000/api/products";
 
-  // Fetch all users (admin only)
-  const getUsers = async () => {
-    try {
-      const response = await axios.get(apiUrl, { withCredentials: true });
-      setUsers(response.data);
-    } catch (err) {
-      setError('Failed to fetch users.');
-    }
-  };
-
-  // Update user by email
-  const updateUser = async (email) => {
-    try {
-      const response = await axios.put(
-        `${apiUrl}/${selectedUser._id}`,
-        updatedData,
-        { withCredentials: true }
-      );
-      setUsers(users.map(user => user._id === selectedUser._id ? response.data : user)); // Update the users list
-      toast.success('User updated successfully');
-    } catch (err) {
-      setError('Failed to update user');
-      toast.error('Failed to update user');
-    }
-  };
-
-  // Delete user by ID
-  const deleteUser = async (userId) => {
-    try {
-      await axios.delete(`${apiUrl}/${userId}`, { withCredentials: true });
-      setUsers(users.filter(user => user._id !== userId)); // Remove the deleted user from the list
-      toast.success('User deleted successfully');
-    } catch (err) {
-      setError('Failed to delete user');
-      toast.error('Failed to delete user');
-    }
-  };
-
-  // Select a user from the list to update
-  const selectUser = (user) => {
-    setSelectedUser(user);
-    setUpdatedData({ name: user.name, email: user.email });
-  };
-
-  // Handle input change for update form
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUpdatedData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
-  // Fetch all users on component mount
   useEffect(() => {
-    getUsers();
+    fetchUsers();
+    fetchProducts();
   }, []);
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(userApiUrl, { withCredentials: true });
+      setUsers(response.data);
+    } catch (err) {
+      toast.error("Failed to fetch users.");
+    }
+  };
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(productApiUrl, { withCredentials: true });
+      setProducts(response.data);
+    } catch (err) {
+      toast.error("Failed to fetch products.");
+    }
+  };
+
+  const deleteUser = async (userId) => {
+    try {
+      await axios.delete(`${userApiUrl}/${userId}`, { withCredentials: true });
+      setUsers(users.filter((user) => user._id !== userId));
+      toast.success("User deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete user");
+    }
+  };
+
+  const deleteProduct = async (productId) => {
+    try {
+      await axios.delete(`${productApiUrl}/${productId}`, { withCredentials: true });
+      setProducts(products.filter((product) => product._id !== productId));
+      toast.success("Product deleted successfully");
+    } catch (err) {
+      toast.error("Failed to delete product");
+    }
+  };
+
+  const updateUser = async () => {
+    try {
+      await axios.put(`${userApiUrl}/${selectedUser._id}`, updatedUserData, {withCredentials: true});
+      toast.success("User updated successfully");
+      setSelectedUser(null);
+      fetchUsers();
+    } catch (err) {
+      toast.error("Failed to update user");
+    }
+  };
+
+  const updateProduct = async () => {
+    try {
+      await axios.put(`${productApiUrl}/${selectedProduct._id}`, updatedProductData, {withCredentials: true});
+      toast.success("Product updated successfully");
+      setSelectedProduct(null);
+      fetchProducts();
+    } catch (err) {
+      toast.error("Failed to update product");
+    }
+  };  
+
+
+  const handleUserEdit = (user) => {
+    setSelectedUser(user);
+    setUpdatedUserData({ name: user.name, email: user.email });
+  };
+
+  const handleProductEdit = (product) => {
+    setSelectedProduct(product);
+    setUpdatedProductData({
+      name: product.name,
+      description: product.description,
+      brand: product.brand,
+      price: product.price,
+      countInStock: product.countInStock,
+    });
+  };
+
   return (
-    <div className="container">
-      <h2 className="text-center text-primary mt-4">Admin Panel</h2>
+    <div className="container mt-4">
+      <h2 className="text-center text-primary">Admin Panel</h2>
 
-      {/* Display any error messages */}
-      {error && <div className="alert alert-danger text-center mt-3">{error}</div>}
-
-      {/* Display all users */}
-      <div className="mt-4">
-        <div className="d-flex flex-wrap align-items-center justify-content-around w-auto">
-          <h4 className="text-center mb-3">All Users</h4>
-          <Link to="/" className="btn btn-link text-decoration-none mb-4">
-            <ArrowLeft className="me-2" />
-            <span>Go back</span>
-          </Link>
-        </div>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td className='d-flex flex-wrap gap-2'>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => selectUser(user)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="btn btn-danger ml-2"
-                    onClick={() => deleteUser(user._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Toggle Buttons */}
+      <div className="d-flex justify-content-center gap-3 mt-3">
+        <button className={`btn ${activeTab === "users" ? "btn-primary" : "btn-secondary"}`} onClick={() => setActiveTab("users")}>
+          <Users size={18} /> Manage Users
+        </button>
+        <button className={`btn ${activeTab === "products" ? "btn-primary" : "btn-secondary"}`} onClick={() => setActiveTab("products")}>
+          <Box size={18} /> Manage Products
+        </button>
       </div>
 
-      {/* User update form */}
+      {/* USERS SECTION */}
+      {activeTab === "users" && (
+        <div className="mt-4">
+          <h4 className="text-center mb-3">Users List</h4>
+          <table className="table table-bordered text-center">
+            <thead className="table-dark">
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleUserEdit(user)}>
+                      <Pencil size={16} />
+                    </button>
+                    <button className="btn btn-sm btn-danger" onClick={() => deleteUser(user._id)}>
+                      <Trash size={16} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* PRODUCTS SECTION */}
+      {activeTab === "products" && (
+        <div className="mt-4">
+          <h4 className="text-center mb-3">Products List</h4>
+          <div className="row">
+            {products.map((product) => (
+              <div key={product._id} className="col-md-4">
+                <div className="card shadow-lg p-3 mb-4">
+                  <img src={product.image} className="card-img-top" alt={product.name} />
+                  <div className="card-body">
+                    <h5 className="card-title">{product.name}</h5>
+                    <p className="text-muted">{product.brand}</p>
+                    <p>{product.description}</p>
+                    <p className="fw-bold text-success">${product.price}</p>
+                    <p>Stock: {product.countInStock}</p>
+                    <button className="btn btn-sm btn-warning me-2" onClick={() => handleProductEdit(product)}>
+                      <Pencil size={16} />
+                    </button>
+                    <button className="btn btn-sm btn-danger" onClick={() => deleteProduct(product._id)}>
+                      <Trash size={16} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* USER UPDATE MODAL */}
       {selectedUser && (
-        <div className="card mt-4 p-4 shadow">
-          <h4 className="text-center mb-3">Update User</h4>
-          <form>
-            <div className="mb-3">
-              <label className="form-label">Name</label>
-              <input
-                type="text"
-                name="name"
-                className="form-control"
-                placeholder="Update Name"
-                value={updatedData.name}
-                onChange={handleChange}
+        <div className="modal show d-block bg-dark bg-opacity-50">
+          <div className="modal-dialog">
+            <div className="modal-content p-4">
+              <h4 className="text-center">Update User</h4>
+              <input type="text" className="form-control my-2" placeholder="Name" 
+                value={updatedUserData.name} 
+                onChange={(e) => setUpdatedUserData({ ...updatedUserData, name: e.target.value })} 
               />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                placeholder="Update Email"
-                value={updatedData.email}
-                onChange={handleChange}
+              <input type="email" className="form-control my-2" placeholder="Email" 
+                value={updatedUserData.email} 
+                onChange={(e) => setUpdatedUserData({ ...updatedUserData, email: e.target.value })} 
               />
+              <div className="d-flex justify-content-between">
+                <button className="btn btn-success" onClick={updateUser}>Update</button>
+                <button className="btn btn-secondary" onClick={() => setSelectedUser(null)}>Close</button>
+              </div>
             </div>
-            <div className="d-flex flex-wrap justify-content-between">
-              <button
-                type="button"
-                onClick={() => updateUser(selectedUser.email)}
-                className="btn btn-success"
-              >
-                Update User
-              </button>
-              <button
-                type="button"
-                onClick={() => deleteUser(selectedUser._id)}
-                className="btn btn-danger"
-              >
-                Delete User
-              </button>
+          </div>
+        </div>
+      )}
+
+
+      {/* PRODUCT UPDATE MODAL */}
+      {selectedProduct && (
+        <div className="modal show d-block bg-dark bg-opacity-50">
+          <div className="modal-dialog">
+            <div className="modal-content p-4">
+              <h4 className="text-center">Update Product</h4>
+              <input type="text" className="form-control my-2" placeholder="Name" 
+                value={updatedProductData.name} 
+                onChange={(e) => setUpdatedProductData({ ...updatedProductData, name: e.target.value })} 
+              />
+              <textarea className="form-control my-2" placeholder="Description" 
+                value={updatedProductData.description} 
+                onChange={(e) => setUpdatedProductData({ ...updatedProductData, description: e.target.value })} 
+              />
+              <input type="text" className="form-control my-2" placeholder="Brand" 
+                value={updatedProductData.brand} 
+                onChange={(e) => setUpdatedProductData({ ...updatedProductData, brand: e.target.value })} 
+              />
+              <input type="number" className="form-control my-2" placeholder="Price" 
+                value={updatedProductData.price} 
+                onChange={(e) => setUpdatedProductData({ ...updatedProductData, price: e.target.value })} 
+              />
+              <div className="d-flex justify-content-between">
+                <button className="btn btn-success" onClick={updateProduct}>Update</button>
+                <button className="btn btn-secondary" onClick={() => setSelectedProduct(null)}>Close</button>
+              </div>
             </div>
-          </form>
+          </div>
         </div>
       )}
     </div>

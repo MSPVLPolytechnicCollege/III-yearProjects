@@ -5,7 +5,8 @@ const users = [
         name: "Poorana",
         email: "poorana@gmail.com",
         password: await bcrypt.hash("123456", 10),
-        isAdmin: true
+        isAdmin: true,
+        isSeller: true
     },
     {
         name: "Test User",

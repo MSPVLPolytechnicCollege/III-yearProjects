@@ -21,7 +21,8 @@ const authUser = asyncHandler(async (req, res) => {
         _id:user._id,
         name:user.name,
         email:user.email,
-        isAdmin:user.isAdmin
+        isAdmin:user.isAdmin,
+        isSeller:user.isSeller
         });
     } else{
         res.status(401);
@@ -54,7 +55,8 @@ const registerUser = asyncHandler(async (req, res) => {
             _id:user._id,
             name:user.name,
             email:user.email,
-            isAdmin:user.isAdmin
+            isAdmin:user.isAdmin,
+            isSeller:user.isSeller
         });
     } else{
         res.status(400);
@@ -86,7 +88,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
             name:user.name,
             email:user.email,
             // password:user.password,
-            isAdmin:user.isAdmin
+            isAdmin:user.isAdmin,
+            isSeller:user.isSeller
         })
     }else {
         res.status(404);
