@@ -3,6 +3,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Pencil, Trash, Box, Users } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -106,7 +108,13 @@ const AdminPanel = () => {
 
   return (
     <div className="container mt-4">
-      <h2 className="text-center text-primary">Admin Panel</h2>
+      <div className="d-flex align-items-baseline">
+        <Link to="/" className="btn btn-link text-decoration-none mb-4">
+          <ArrowLeft className="me-2" />
+          <span>Go back</span>
+        </Link>
+      </div>
+      <h2 className="text-center">Admin Panel</h2>
 
       {/* Toggle Buttons */}
       <div className="d-flex justify-content-center gap-3 mt-3">

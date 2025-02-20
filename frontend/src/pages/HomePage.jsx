@@ -32,7 +32,7 @@ const HomePage = () => {
 
   return (
     <div className="bg-light">
-      <div className="container py-5">
+      <div className="container py-3">
         <div className="row mb-4 align-items-center">
           <div className="col">
             <h2 className="display-4 fw-bold">All Products</h2>

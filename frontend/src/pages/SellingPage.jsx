@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
 
 const SellingPage = () => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -41,6 +43,12 @@ const SellingPage = () => {
 
   return (
     <div className="container mt-5">
+      <div className="d-flex align-items-baseline">
+        <Link to="/" className="btn btn-link text-decoration-none mb-4">
+          <ArrowLeft className="me-2" />
+          <span>Go back</span>
+        </Link>
+      </div>
       <h2 className="text-center">Upload New Product</h2>
       <form onSubmit={handleSubmit} className="shadow p-4 rounded">
         <div className="mb-3">
