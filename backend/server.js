@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorHandler.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import cors from "cors";
+import { v2 as cloudinary } from 'cloudinary';
 
 
 // express declaration
@@ -26,8 +27,17 @@ app.use(cors({
      credentials: true
 }));
 
+
+ // Configure Cloudinary
+ cloudinary.config({ 
+     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+     api_key: process.env.CLOUDINARY_API_KEY, 
+     api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+export default cloudinary;
+
 // PORT
-const PORT = 5000; // port to run a server.
+const PORT = process.env.PORT || 5000; // port to run a server.
 
 app.get("/", (req, res) => {
      res.send("Hello World!");

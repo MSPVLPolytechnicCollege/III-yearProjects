@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -8,32 +8,73 @@ import { ArrowLeft } from 'lucide-react';
 const SellingPage = () => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [countInStock, setCountInStock] = useState("");
+  const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  // console.log(user.isSeller);
   if (!user?.isSeller) {
     navigate("/");
     return null;
   }
 
+  // Handle Image Upload to Cloudinary
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "e-com images"); // Replace with your Cloudinary upload preset
+
+    try {
+      const res = await axios.post(
+        `https://api.cloudinary.com/v1_1/dssvk1cxy/image/upload`,
+        formData
+      );
+      setImage(res.data.secure_url);
+      setUploading(false);
+      toast.success("Image uploaded successfully!");
+    } catch (error) {
+      console.error("Image upload failed", error);
+      setUploading(false);
+      toast.error("Image upload failed");
+    }
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!image) {
+      toast.error("Please upload an image first.");
+      return;
+    }
+
     try {
-      await axios.post("http://localhost:5000/api/products", {
-        name,
-        description,
-        brand,
-        category,
-        price,
-        countInStock,
-        isSeller: user.isSeller,
-        userId: user._id
-      }, { withCredentials: true });
+      await axios.post(
+        "http://localhost:5000/api/products",
+        {
+          name,
+          description,
+          brand,
+          category,
+          price,
+          countInStock,
+          image, // Send image URL from Cloudinary
+          isSeller: user.isSeller,
+          userId: user._id
+        },
+        { withCredentials: true }
+      );
+
       toast.success("Product added successfully!");
       navigate("/");
     } catch (err) {
@@ -74,6 +115,12 @@ const SellingPage = () => {
         <div className="mb-3">
           <label className="form-label">Count In Stock</label>
           <input type="number" className="form-control" value={countInStock} onChange={(e) => setCountInStock(e.target.value)} required />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Product Image</label>
+          <input type="file" className="form-control" accept="image/*" onChange={handleImageUpload} required />
+          {uploading && <p>Uploading...</p>}
+          {image && <img src={image} alt="Product Preview" width="100" />}
         </div>
         <button type="submit" className="btn btn-primary w-100">Upload Product</button>
       </form>
