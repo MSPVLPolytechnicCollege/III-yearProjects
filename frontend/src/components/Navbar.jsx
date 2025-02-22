@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
-import axios from "axios";
 import { toast } from "react-toastify";
+import axiosInstance from "../axiosInstance.js";
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,8 +13,8 @@ const Navbar = () => {
 
   useEffect(() => {
     // Fetch user data
-    axios
-      .get("http://localhost:5000/api/users/auth", { withCredentials: true })
+    axiosInstance
+      .get("/users/auth", { withCredentials: true })
       .then((response) => {
         setIsLoggedIn(response.data.isLoggedIn);
         setIsSeller(response.data.user?.isSeller || false);
@@ -26,8 +26,8 @@ const Navbar = () => {
       });
 
     // Get cart count
-    axios
-      .get("http://localhost:5000/api/cart", { withCredentials: true })
+    axiosInstance
+      .get("/cart", { withCredentials: true })
       .then((response) => {
         setCartCount(response.data.cartItems.length || 0);
       })
@@ -37,8 +37,8 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    axios
-      .post("http://localhost:5000/api/users/logout", {}, { withCredentials: true })
+    axiosInstance
+      .post("/users/logout", {}, { withCredentials: true })
       .then(() => {
         setIsLoggedIn(false);
         setIsAdmin(false);
@@ -103,6 +103,11 @@ const Navbar = () => {
                     Menu
                   </button>
                   <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/order-history">
+                        Orders
+                      </Link>
+                    </li>
                     <li>
                       <Link className="dropdown-item" to="/settings">
                         Settings

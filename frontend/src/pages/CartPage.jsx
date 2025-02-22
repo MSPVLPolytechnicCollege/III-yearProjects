@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 import { ArrowLeft } from 'lucide-react';
+import axiosInstance from "../axiosInstance.js";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const userID = userInfo?._id;
@@ -23,8 +25,8 @@ const CartPage = () => {
       }
 
       try {
-        const { data } = await axios.get(
-          `http://localhost:5000/api/cart?userId=${userID}`,
+        const { data } = await axiosInstance.get(
+          `/cart?userId=${userID}`,
           {
             withCredentials: true,
           }
@@ -52,8 +54,8 @@ const CartPage = () => {
         [id]: value,
       }));
 
-      await axios.put(
-        `http://localhost:5000/api/cart?userId=${userInfo._id}`,
+      await axiosInstance.put(
+        `/cart?userId=${userInfo._id}`,
         { productId: id, qty: value },
         {
           headers: {
@@ -72,7 +74,7 @@ const CartPage = () => {
 
   const removeFromCartHandler = async (productId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/cart/`, {
+      await axiosInstance.delete(`/cart/`, {
         data: { productId, userId: userID },
         withCredentials: true,
       });
@@ -85,7 +87,7 @@ const CartPage = () => {
   };
 
   const checkOutHandler = () => {
-    alert("Still Under Development..");
+    navigate("/shipping");
   };
 
   if (loading) {

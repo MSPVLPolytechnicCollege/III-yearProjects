@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
+import axiosInstance from '../axiosInstance.js';
 
 
 const ProductPage = () => {
@@ -15,7 +15,7 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const { data } = await axiosInstance.get(`/products/${id}`);
         setProducts(data);
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -36,7 +36,7 @@ const ProductPage = () => {
 
 
     try {
-      const { data } = await axios.post("http://localhost:5000/api/cart/", { productId: id, userId: userID, qty }, { withCredentials: true });
+      const { data } = await axiosInstance.post("/cart/", { productId: id, userId: userID, qty }, { withCredentials: true });
       // console.log(data);
       toast.success("Successfully Added to Cart!")
     } catch(err) {

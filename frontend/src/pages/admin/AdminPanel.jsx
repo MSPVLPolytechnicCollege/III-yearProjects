@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Pencil, Trash, Box, Users } from "lucide-react";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from 'lucide-react';
+import axiosInstance from "../../axiosInstance.js";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -21,8 +21,8 @@ const AdminPanel = () => {
     countInStock: "",
   });
 
-  const userApiUrl = "http://localhost:5000/api/users";
-  const productApiUrl = "http://localhost:5000/api/products";
+  const userApiUrl = `/users`;
+  const productApiUrl = "/products";
 
   useEffect(() => {
     fetchUsers();
@@ -31,7 +31,7 @@ const AdminPanel = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(userApiUrl, { withCredentials: true });
+      const response = await axiosInstance.get(userApiUrl, { withCredentials: true });
       setUsers(response.data);
     } catch (err) {
       toast.error("Failed to fetch users.");
@@ -40,7 +40,7 @@ const AdminPanel = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(productApiUrl, { withCredentials: true });
+      const response = await axiosInstance.get(productApiUrl, { withCredentials: true });
       setProducts(response.data);
     } catch (err) {
       toast.error("Failed to fetch products.");
@@ -49,7 +49,7 @@ const AdminPanel = () => {
 
   const deleteUser = async (userId) => {
     try {
-      await axios.delete(`${userApiUrl}/${userId}`, { withCredentials: true });
+      await axiosInstance.delete(`${userApiUrl}/${userId}`, { withCredentials: true });
       setUsers(users.filter((user) => user._id !== userId));
       toast.success("User deleted successfully");
     } catch (err) {
@@ -59,7 +59,7 @@ const AdminPanel = () => {
 
   const deleteProduct = async (productId) => {
     try {
-      await axios.delete(`${productApiUrl}/${productId}`, { withCredentials: true });
+      await axiosInstance.delete(`${productApiUrl}/${productId}`, { withCredentials: true });
       setProducts(products.filter((product) => product._id !== productId));
       toast.success("Product deleted successfully");
     } catch (err) {
@@ -69,7 +69,7 @@ const AdminPanel = () => {
 
   const updateUser = async () => {
     try {
-      await axios.put(`${userApiUrl}/${selectedUser._id}`, updatedUserData, {withCredentials: true});
+      await axiosInstance.put(`${userApiUrl}/${selectedUser._id}`, updatedUserData, {withCredentials: true});
       toast.success("User updated successfully");
       setSelectedUser(null);
       fetchUsers();
@@ -80,7 +80,7 @@ const AdminPanel = () => {
 
   const updateProduct = async () => {
     try {
-      await axios.put(`${productApiUrl}/${selectedProduct._id}`, updatedProductData, {withCredentials: true});
+      await axiosInstance.put(`${productApiUrl}/${selectedProduct._id}`, updatedProductData, {withCredentials: true});
       toast.success("Product updated successfully");
       setSelectedProduct(null);
       fetchProducts();

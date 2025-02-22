@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Product from '../components/Product';
+import axiosInstance from '../axiosInstance.js';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -8,7 +8,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/products/');
+        const { data } = await axiosInstance.get('/products/');
         // console.log('API Response:', data);
   
         if (Array.isArray(data)) {

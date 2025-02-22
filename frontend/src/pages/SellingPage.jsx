@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from 'lucide-react';
+import axiosInstance from "../axiosInstance.js";
 
 const SellingPage = () => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -59,8 +60,8 @@ const SellingPage = () => {
     }
 
     try {
-      await axios.post(
-        "http://localhost:5000/api/products",
+      await axiosInstance.post(
+        "/products",
         {
           name,
           description,

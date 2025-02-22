@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from 'lucide-react';
+import axiosInstance from "../axiosInstance.js";
 
 const SettingsPage = () => {
   const [user, setUser] = useState({ name: "", email: "" });
@@ -14,7 +15,7 @@ const SettingsPage = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/users/profile", {
+        const { data } = await axiosInstance.get("/users/profile", {
           withCredentials: true,
         });
         setUser({ name: data.name, email: data.email });
@@ -37,8 +38,8 @@ const SettingsPage = () => {
     setMessage("");
 
     try {
-      const { data } = await axios.put(
-        "http://localhost:5000/api/users/profile",
+      const { data } = await axiosInstance.put(
+        "/users/profile",
         updatedUser,
         { withCredentials: true }
       );

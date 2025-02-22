@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from 'react-toastify';
+import axiosInstance from "../axiosInstance";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:5000/api/users/login", { email, password }, { withCredentials: true });
+      const { data } = await axiosInstance.post("/users/login", { email, password }, { withCredentials: true });
       localStorage.setItem("userInfo", JSON.stringify(data));
       toast.success("Login Successful!");
       setTimeout(() => {

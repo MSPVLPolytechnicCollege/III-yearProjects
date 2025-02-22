@@ -27,7 +27,7 @@ const Product = ({ products }) => {
             {/* <Rating value={products.rating} text={products.numReviews} /> */}
           </div>
           <p className="card-text text-primary fs-4 fw-semibold mb-2">
-            ${products.price}
+            ₹{products.price}
           </p>
           <p className="card-text small text-muted mb-2" style={{
             display: '-webkit-box',
