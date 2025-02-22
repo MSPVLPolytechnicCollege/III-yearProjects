@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   // baseURL: "http://localhost:5000/api",
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: "https://e-com-backend-vev8.onrender.com/api",
   withCredentials: true,
 });
 
