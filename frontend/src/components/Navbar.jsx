@@ -12,6 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(axiosInstance);
     // Fetch user data
     axiosInstance
       .get("/users/auth", { withCredentials: true })

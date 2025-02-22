@@ -38,11 +38,7 @@ const SettingsPage = () => {
     setMessage("");
 
     try {
-      const { data } = await axiosInstance.put(
-        "/users/profile",
-        updatedUser,
-        { withCredentials: true }
-      );
+      const { data } = await axiosInstance.put("/users/profile", updatedUser,{ withCredentials: true });
 
       setMessage("Profile updated successfully!");
       setUser({ name: data.name, email: data.email });
