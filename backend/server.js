@@ -12,7 +12,6 @@ import shippingRoutes from "./routes/shippingRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import Razorpay from 'razorpay';
-import path from "path";
 
 
 // express declaration
@@ -23,14 +22,12 @@ const app = express();
 dotenv.config();
 
 
-const __dirname = path.resolve();
-
 // url data encoded
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(cors({
-     origin: process.env.NODE_ENV === 'production' ? 'http://localhost:5000' : 'http://localhost:5173',
+     origin: process.env.NODE_ENV || 'http://localhost:5173',
      credentials: true
 }));
 
