@@ -12,7 +12,7 @@ body{
 .register{
     margin-top: 3%;
     margin-left: 30%;
-
+    margin-bottom: 50px;
 }
 .register H1{
     padding-left: 140px;
@@ -27,14 +27,15 @@ body{
     color:#005cd5
 }
 .box{
-    height: 520px;
-    width: 600px;
+    height: 580px;
+    width: 640px;
     background-color:white;
     padding-left: 80px;
     font-size: 18px;
     font-family: 'Roboto',sans-serif;
-    border-radius: 10px;
+    border-radius:30px;
     padding-right: 20px;
+    margin-bottom: 50px;
 }
 .box table{
     align-items: center;
@@ -56,7 +57,7 @@ body{
 }
 .box table tr td select{
     height: 30px;
-    width: 350px;
+    width: 360px;
     color: black;
     border-radius: 10px;
     padding-left: 10px;
@@ -102,6 +103,7 @@ body{
     font-weight: 500;
 }
 .box table tr td button:hover{
-    box-shadow: 0 0 9px 5px rgba(0,0,0,0.4);
-    transform: scale(1.2);
+    background-color: #003b88;
+    outline: 3px solid #003b88;
+    transition: 0.2s linear;
 }

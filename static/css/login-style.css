@@ -77,14 +77,16 @@ body, html{
 .input input,.pass input{
     height: 30px;
     width: 250px;
-    padding-left: 10px;
+    padding-left: 12px;
     background-color:var(--clr-grey-3);
     border-radius: 10px;
     border: none;
     box-shadow: 0 0 3px 1px var(--clr-grey-2);
+    outline: none;
 }
 input:hover{
     box-shadow: 0 0 5px 2px var(--clr-grey-2);
+    outline: none;
 }
 
 .input, .pass {

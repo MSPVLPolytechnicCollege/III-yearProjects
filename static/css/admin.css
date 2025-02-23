@@ -208,8 +208,16 @@ input:focus {
 }
 
 .user-wrapper{
-    margin-right: 100px;
+    margin-right: 50px;
     margin-top: 10px;
+}
+.user-wrapper2 a{
+    display: inline-block;
+    margin-right: 50px;
+    margin-top: 20px;
+    color: #007BFF;
+    font-family: 'Roboto',sans-serif;
+    font-weight: 500;
 }
 .image{
     margin-top:7px;
@@ -262,7 +270,10 @@ input:focus {
     color:darkblue;
 }
 #book{
-    color: rgb(197, 41, 41);
+    color: rgb(72, 5, 91);
+}
+#calendar{
+    color: rgb(241, 39, 80);
 }
 .count p{
     font-size: 26px;
