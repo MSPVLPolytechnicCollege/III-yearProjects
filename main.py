@@ -1,4 +1,5 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
+from datetime import datetime
 import sqlite3
 import pandas as pd
 
@@ -9,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("login.html")
+    return render_template("admin/index.html")
 
 
 
@@ -179,6 +180,7 @@ def excel_to_table():
 
     return render_template("admin/add_stud.html",data=data)
 
+
 @app.route('/del_attendance/<string:classname>', methods=["POST", "GET"])
 def del_attendance(classname):
     con = sqlite3.connect("data_base.db")
@@ -232,5 +234,137 @@ def staff_view_attendance(classname):
     return render_template("staff/add_stud.html",data=data)
 
 
+
+
+
+# Update attendance data (including present and absent columns)
+def update_attendance(slno, present, absent, current_date,in_classname):
+    conn = sqlite3.connect('data_base.db')
+ 
+    cursor = conn.cursor()
+    
+    # Fetch the current present and absent values from the database
+    select_query = f"SELECT present, absent FROM {in_classname} WHERE slno = {slno}"
+    cursor.execute(select_query)
+    current_data = cursor.fetchone()
+    
+    if current_data:
+        current_present, current_absent = current_data
+        # Debugging: Print current values
+        print(f"Current Data for SL.NO {slno}: Present = {current_present}, Absent = {current_absent}")
+
+        # Add the new values to the current values
+        new_present = current_present + present
+        new_absent = current_absent + absent
+
+        # Debugging: Print new values
+        print(f"New Data for SL.NO {slno}: Present = {new_present}, Absent = {new_absent}")
+
+        # Update the database with the new totals
+        query = f"UPDATE {in_classname} SET present = {new_present}, absent = {new_absent}, date = {current_date} WHERE slno = {slno}"
+        #cursor.execute('''UPDATE class1 SET present = ?, absent = ?, date = ? WHERE slno = ?''', 
+         #              (new_present, new_absent, current_date, slno))
+        cursor.execute(query)
+        conn.commit()
+    else:
+        print(f"No data found for SL.NO: {slno}")
+    
+    conn.close()
+
+@app.route('/save_attendance', methods=['POST'])
+def save_attendance():
+    current_date = datetime.now().strftime('%Y-%m-%d')  
+    in_classname = request.form['classname']
+    print(f"Form Data: {request.form}")  #Debugging: Print form data
+
+    # Track which students have already been processed
+    processed_students = set()
+
+    # Iterate over each student and check attendance for periods P1 to P8
+    for slno in request.form:
+        if slno.startswith('p'):  # Only process keys representing periods (e.g., p1_1, p2_1)
+            try:
+                student_slno = slno.split('_')[1]  # Extract the student SL.NO
+                student_slno = int(student_slno)  # Convert to integer
+
+                # Skip if this student has already been processed
+                if student_slno in processed_students:
+                    continue
+
+                # Initialize the present and absent counts
+                present = 0
+                absent = 0
+
+                # Loop through each period (P1 to P8) and count attendance
+                for period in range(1, 9):
+                    # Check if the student attended this period (checkbox is checked)
+                    if f'p{period}_{student_slno}' in request.form:
+                        present += 1  # Period attended
+                    else:
+                        absent += 1  # Period absent
+
+                # Debugging: Print the calculated attendance
+                print(f"SL.NO {student_slno}: Present = {present}, Absent = {absent}")
+
+                # Update the attendance in the database
+                update_attendance(student_slno, present, absent, current_date, in_classname)
+
+                # Mark this student as processed
+                processed_students.add(student_slno)
+
+            except IndexError:
+                print(f"Error processing attendance for form field: {slno}")
+                continue
+
+    return "Attendance updated successfully!"
+
 if(__name__ == '__main__'):
     app.run()
+
+
+
+
+"""def get_db():
+    conn = sqlite3.connect('data_base.db')
+    return conn
+
+# Update attendance data in the database
+def update_attendance(slno, present, absent,current_date):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('''UPDATE class1 SET present = ?, absent = ? ,date = ? WHERE slno = ?''', (present, absent, current_date,slno))
+    conn.commit()
+    conn.close()
+
+@app.route('/save_attendance', methods=['POST'])
+def save_attendance():
+    current_date = datetime.now().strftime('%d-%m-%Y')
+    # Iterate over each student and check attendance for periods P1 to P8
+    for slno in request.form:
+        if slno.startswith('p'):  # Only process keys representing periods (e.g., p1_1, p2_1)
+            try:
+                student_slno = slno.split('_')[1]  # Extract the student SL.NO
+                student_slno = int(student_slno)  # Convert to integer
+
+                # Initialize the present and absent counts
+                present = 0
+                absent = 0
+
+                # Loop through each period (P1 to P8) and count attendance
+                for period in range(1, 9):
+                    # Check if the student attended this period (checkbox is checked)
+                    if f'p{period}_{student_slno}' in request.form:
+                        present += 1  # Period attended
+                    else:
+                        absent += 1  # Period absent
+
+                # Update the attendance in the database (only present and absent columns)
+                update_attendance(student_slno, present, absent,current_date)
+            except IndexError:
+                print(f"Error processing attendance for form field: {slno}")
+                continue
+
+    return "Attendance updated successfully!"
+
+if(__name__ == '__main__'):
+    app.run()"""

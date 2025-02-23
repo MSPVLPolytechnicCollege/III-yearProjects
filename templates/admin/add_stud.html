@@ -38,14 +38,15 @@
         <div class="all-attendance-table">
             <h1>ATTENDANCE</h1>
             <div class="search-box">
-                <input type="date" id="date" readonly >
+                <input type="date" id="dateInput">
                 <form>
                     <input type="search" name="search" required placeholder="Search">
                     <button>search</button>
                 </form>
             </div>
         
-            <form action="#" method="post" class="table-form">
+            <form action="/save_attendance" method="post" class="table-form">
+                <input type="text" name="classname" value="{{ classname }}" readonly style="display:none;">
                 <table>
                     <thead>
                         <tr>
@@ -53,7 +54,7 @@
                             <th>ROLL.NO</th>
                             <th>NAME</th>
                             <th>All</th>
-                            <th>P1 </th>
+                            <th>P1</th>
                             <th>P2</th>
                             <th>P3</th>
                             <th>P4</th>
@@ -63,79 +64,63 @@
                             <th>P8</th>
                             <th>PRESENT</th>
                             <th>ABSENT</th>
-
                         </tr>
                     </thead>
-
                     <tbody>
                         {% for row in data %}
-                       
-                            <tr>
-                                <td> {{row["slno"]}}</td>
-                                <td> {{row["rollno"]}}</td>
-                                <td> {{row["name"]}}</td>
-                                <td><input type="checkbox" class="all-checkbox" data-row={{row["slno"]}} value="all"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="1"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="2"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="3"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="4"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="5"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="6"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="7"></td>
-                                <td><input type="checkbox" class="period-checkbox" data-row={{row["slno"]}} value="8"></td>
-
-                                <td ><input type="number" value="0" class="how-present" data-row={{row["slno"]}} readonly></td>
-                                <td ><input type="number" value="0" class="how-absent" data-row={{row["slno"]}} readonly></td>
-                            </tr>
-
+                        <tr>
+                            <td>{{ row["slno"] }}</td>
+                            <td>{{ row["rollno"] }}</td>
+                            <td>{{ row["name"] }}</td>
+                            <td><input type="checkbox" class="all-checkbox" data-row="{{ row['slno'] }}" value="all"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p1_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="1"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p2_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="2"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p3_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="3"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p4_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="4"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p5_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="5"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p6_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="6"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p7_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="7"></td>
+                            <td><input type="checkbox" class="period-checkbox" name="p8_{{ row['slno'] }}" data-row="{{ row['slno'] }}" value="8"></td>
+                            <td><input type="number" value="0" class="how-present" data-row="{{ row['slno'] }}" readonly name="present"></td>
+                            <td><input type="number" value="0" class="how-absent" data-row="{{ row['slno'] }}" readonly name="absent"></td>
+                        </tr>
                         {% endfor %}
                     </tbody>
-
-                    
                 </table>
-
                 <div class="btn-group">
-                    <button type="submit" onclick = "submitForm()">SAVE</button>
-                    <button type="reset" onclick = "clearForm()">CLEAR </button>
+               
+                    <button type="submit">SAVE</button>
+                    <button type="button" onclick="clearForm()">CLEAR</button>
                 </div>
-                
             </form>
         </div>
     </div>
 
 
-    <script>
-        const dateInput = document.getElementById('date');
-        const currentDate = new Date().toISOString().slice(0,10);
-        dateInput.value= currentDate;
-        dateInput.min = currentDate;
-        dateInput.max = currentDate;
-        const dateInput = document.getElementById('date');
-        const currentDate = new Date().toISOString().slice(0,10);
-        dateInput.value= currentDate;
-        dateInput.min = currentDate;
-        dateInput.max = currentDate;
-    </script>
 
 
 
 
 
     <script>
-        
+
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        // Set the value of the input field to today's date
+        document.getElementById('dateInput').value = currentDate;
+
         const periodCheckboxes = document.querySelectorAll('.period-checkbox');
         const allCheckboxes = document.querySelectorAll('.all-checkbox');
     
         periodCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateAttendance);
+            checkbox.addEventListener('change', updateAttendance);
         });
     
         allCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', toggleAllPeriods);
+            checkbox.addEventListener('change', toggleAllPeriods);
         });
     
         function updateAttendance() {
-            
             const row = this.getAttribute('data-row');
             const allCheckbox = document.querySelector(`input[data-row="${row}"][value="all"]`);
             const checkboxes = document.querySelectorAll(`input[data-row="${row}"]:not([value="all"])`);
@@ -143,19 +128,18 @@
             const howAbsentCell = document.querySelector(`.how-absent[data-row="${row}"]`);
     
             if (allCheckbox.checked) {
-                checkboxes.forEach(checkbox => checkbox.checked = true); // Check all periods
-                howPresentCell.value = '8';  // All periods present
-                howAbsentCell.value = '0';  // None absent
-            }   
-            else {
+                checkboxes.forEach(checkbox => checkbox.checked = true);
+                howPresentCell.value = '8';
+                howAbsentCell.value = '0';
+            } else {
                 let presentCount = 0;
                 checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    presentCount++;
-                }
-            });
-            howPresentCell.value = presentCount;  // Present count
-            howAbsentCell.value = 8 - presentCount;  // Remaining are absent
+                    if (checkbox.checked) {
+                        presentCount++;
+                    }
+                });
+                howPresentCell.value = presentCount;
+                howAbsentCell.value = 8 - presentCount;
             }
         }
     
@@ -171,13 +155,8 @@
             updateAttendance.call(this);
         }
     
-        function submitForm() {
-            alert('Form submitted!');
-                // Add your submit logic here
-        }
-    
+        
         function clearForm() {
-            // Clear all checkboxes and reset attendance counts
             periodCheckboxes.forEach(checkbox => {
                 checkbox.checked = false;
             });
@@ -186,8 +165,8 @@
             });
             const allPresentCells = document.querySelectorAll('.how-present');
             const allAbsentCells = document.querySelectorAll('.how-absent');
-            allPresentCells.forEach(cell => cell.textContent = '0');
-            allAbsentCells.forEach(cell => cell.textContent = '8');
+            allPresentCells.forEach(cell => cell.value = '0');
+            allAbsentCells.forEach(cell => cell.value = '8');
         }
     </script>
             
