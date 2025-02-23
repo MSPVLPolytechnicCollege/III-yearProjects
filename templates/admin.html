@@ -38,8 +38,7 @@
                 <div class="item">
                     <a class="sub-btn" ><i class="fas fa-image"></i>Gallery <i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
-                        <a href="#" class="sub-item"><i class="fas fa-eye"></i>View Gallery</a>
-                        <a href="#" class="sub-item"><i class="fas fa-add"></i>Update Gallery</a>
+                        <a href="{{url_for('gallery')}}" class="sub-item"><i class="fas fa-eye"></i>View Gallery</a>
                     </div>
                 </div>
                 <div class="item"><a href="#"><i class="fas fa-th"></i>Job Posting</a></div>
@@ -69,10 +68,14 @@
                     <input class='text' type="text" name="search" id="" placeholder="Search here">
                 </div>
                 <div class="user-wrapper">
-                    <a href="#" class="image"><i class="fas fa-circle-user"></i></a>
+                    <a href="{{url_for('stuhome')}}" class="image"><i class="fas fa-circle-user"></i></a>
                     <div class="user-content">
-                        <p class="name">Admin</p>
+                        <p class="name">Go to Student</p>
+                       
                     </div>
+                </div>
+                <div class="user-wrapper2">
+                    <a href="{{url_for('admin_dashboard')}}">Logout</a>
                 </div>
             </header>
         </div>
@@ -83,7 +86,7 @@
                         <i class="fas fa-clipboard-list"></i>
                     </div>
                     <div class="count">
-                        <p>5</p>
+                        <p>{{ total_events }}</p>
                     </div>
                     <div class="content">
                         <p>Total Events</p>
@@ -179,18 +182,58 @@
                         <i class="fas fa-book"></i>
                     </div>
                     <div class="count">
-                        <p>5</p>
+                        <p>7</p>
                     </div>
                     <div class="content">
                         <p>Manage Course</p>
                     </div>
                     <div class="view-details">
-                        <a href="">View Details</a>
+                        <a href="{{url_for('course')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box2">
+                <div class="request1">
+                    <div class="icon" id="calendar">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="count">
+                        <p>{{ total_contact }}</p>
+                    </div>
+                    <div class="content">
+                        <p>Student Request</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('view_contact')}}">View Details</a>
                     </div>
                 </div>
             </div>
            
+           
         </div>
+        <!---script for auto update the event-->
+        <script>
+            setInterval(function () {
+                fetch('/get_total_events')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-events').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+           <!---script for auto update the contact-->
+           <script>
+            setInterval(function () {
+                fetch('/get_total_contact')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-contact').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+
         <script>
             $(document).ready(function(){
                 //jquery for toggle sub menus

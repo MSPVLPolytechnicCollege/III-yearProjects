@@ -24,6 +24,7 @@
                     <p>mspvl@mspvl.com</p>
                 </div>
                 <div class="admin-login">
+                    <a href="{{url_for('stucontact')}}">Admin Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="{{url_for('admin')}}">Admin Login</a>
                 </div>
             </div>
@@ -33,11 +34,11 @@
                 </div>
                 <div class="menu">
                     <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Gallery</a>
-                    <a href="#">Events</a>
+                    <a href="#about">About</a>
+                    <a href="{{url_for('stu_gallery')}}">Gallery</a>
+                    <a href="#event">Events</a>
                     <a href="#">Job Posted</a>
-                    <a href="{{url_for('stucontact')}}">Contact</a>
+                    <a href="#">Alumni Contact</a>
                 </div>
             </div>
         </header>
@@ -46,7 +47,7 @@
                 <img src="/static/images/alumin-2-crop.jpg" alt="">
             </div>
         </section>
-        <section class="welcome">
+        <section class="welcome" id="about">
             <div class="center">
                 
             </div>
@@ -59,7 +60,7 @@
                 </p>
             </div>
         </section>
-        <section class="event">
+        <section class="event" id="event">
             <div class="event-head">
                 <p>Events</p>
             </div>
@@ -100,6 +101,6 @@
 
 
 
-    <script src="static/script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>
