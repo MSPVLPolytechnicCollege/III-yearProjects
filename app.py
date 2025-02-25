@@ -31,7 +31,6 @@ def stuhome():
 
 @app.route('/success')
 def success():
-    message = request.args.get('message', 'Operation Successful!')  # Default msg if not provided
     return render_template('success.html')
 
 con = sqlite3.connect('alumini_db.db')
@@ -105,6 +104,46 @@ con=sqlite3.connect('alumini_db.db')
 con.execute("create table if not exists admin1(username text primary key,password text);")
 con.close()
 
+#request-job table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS job_request (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        company  text,
+        job_location TEXT,
+        job_title text,
+        qualification TEXT,
+        description TEXT,
+        key_skills TEXT,
+        job_package TEXT,
+        experience TEXT,
+        num_vacancy TEXT,
+        reference_email TEXT,
+        last_date integer
+    );
+""")
+
+#table for the accepted job after click the accept button
+con = sqlite3.connect("alumini_db.db")
+cursor = con.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS accepted_jobs1 (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        company TEXT,
+        job_location TEXT,
+        job_title TEXT,
+        qualification TEXT,
+        description TEXT,
+        key_skills TEXT,
+        job_package TEXT,
+        experience TEXT,
+        num_vacancy INTEGER,
+        reference_email TEXT,
+        last_date TEXT
+    )
+''')
+con.commit()
+con.close()
 
 
 #Register the student details
@@ -562,7 +601,96 @@ def get_total_contact():
 def get_total_contact_json():
     return jsonify({'total': get_total_contact()})  # JSON format la return pannum
 
+#alumni can add a job request for the admin redirect
+@app.route('/redirect_request_job_admin',methods=['GET','POST'])
+def redirect_request_job_admin():
+    return render_template('job-posting-alumni.html')
 
+
+#alumni can add a job request for the admin
+@app.route('/request_job_admin',methods=['GET','POST'])
+def request_job_admin():
+    if request.method=='POST':
+        company=request.form['company-name']
+        job_location=request.form['job-location']
+        job_title=request.form['job-title']
+        job_qualification=request.form['job-qualification']
+        job_description=request.form['job-description']
+        key_skill=request.form['key-skill']
+        job_package=request.form['job-package']
+        job_experience=request.form['job-experience']
+        job_vacancy=request.form['job-vacancy']
+        job_email=request.form['job-email']
+        job_date=request.form['job-date']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into job_request(company,job_location,job_title,qualification,description,key_skills,job_package,experience, num_vacancy,reference_email,last_date) values(?,?,?,?,?,?,?,?,?,?,?) ',(company,job_location,job_title,job_qualification,job_description,key_skill,job_package,job_experience,job_vacancy,job_email,job_date))
+        con.commit()
+        con.close()
+    return render_template('job-posting-alumni.html')
+
+@app.route('/request_job_show')
+def request_job_show():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('job-request-admin.html',datas=res)
+
+
+#job-request  count dynamic ka update in the admin page
+@app.route('/get_total_job_request')
+def get_total_job_request():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    #COUNT(*) → Table la ethana row iruku nu count pannum.
+    cursor.execute("SELECT COUNT(*) FROM job_request")
+
+    #cursor.fetchone() → One row fetch pannum (Database la result ah eduthukum).
+    #[0] → First column value ah eduthukum (COUNT result ah eduthukum).
+    total_job_request = cursor.fetchone()[0]  # Event count return pannum
+
+    conn.close()
+    return jsonify({'total': total_job_request}) #if namaluku flask api error vanthuchina itha use panalam
+
+#javascript or ajax request pana json format the data va return panro
+@app.route('/get_total_jobrequest_json')
+def get_total_contact_jobrequest_json():
+    return jsonify({'total': get_total_job_request()})  # JSON format la return pannum
+
+
+# 🔹 Accept panna data new table la insert panna route
+@app.route('/save_job', methods=['POST'])
+def save_job():
+    data = request.json  # JSON data receive pannrom
+    conn = sqlite3.connect("alumini_db.db")
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        INSERT INTO accepted_jobs1 (sno, company, job_location, job_title, qualification, description, key_skills, job_package, experience, num_vacancy, reference_email, last_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        data['sno'], data['company'], data['job_location'], data['job_title'], 
+        data['qualification'], data['description'], data['key_skills'], 
+        data['job_package'], data['experience'], data['num_vacancy'], 
+        data['reference_email'], data['last_date']
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Job request saved successfully!"})  # Success message
+
+@app.route('/job_approved')
+def job_approved():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from accepted_jobs1')
+    res = cursor.fetchall()
+    return render_template('approved-job.html',datas=res)
 
 if __name__=='__main__':
     app.secret_key = '1234'

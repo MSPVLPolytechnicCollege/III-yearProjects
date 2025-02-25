@@ -86,7 +86,7 @@
                         <i class="fas fa-clipboard-list"></i>
                     </div>
                     <div class="count">
-                        <p>{{ total_events }}</p>
+                        <p id="total-event">{{ total_events }}</p>
                     </div>
                     <div class="content">
                         <p>Total Events</p>
@@ -102,13 +102,13 @@
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="count">
-                        <p>5</p>
+                        <p id="total-job-request">{{ total_job_request }}</p>
                     </div>
                     <div class="content">
                         <p>New Job Posted Request</p>
                     </div>
                     <div class="view-details">
-                        <a href="">View Details</a>
+                        <a href="{{url_for('request_job_show')}}">View Details</a>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@
                         <p>Approved Job Post</p>
                     </div>
                     <div class="view-details">
-                        <a href="">View Details</a>
+                        <a href="{{url_for('job_approved')}}">View Details</a>
                     </div>
                 </div>
             </div>
@@ -144,23 +144,8 @@
                     </div>
                 </div>
             </div>
+            
             <div class="box1">
-                <div class="request1">
-                    <div class="icon" id="file">
-                        <i class="fas fa-file"></i>
-                    </div>
-                    <div class="count">
-                        <p>5</p>
-                    </div>
-                    <div class="content">
-                        <p>Total Job request</p>
-                    </div>
-                    <div class="view-details">
-                        <a href="">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="box2">
                 <div class="request1">
                     <div class="icon" id="users">
                         <i class="fas fa-users"></i>
@@ -198,7 +183,7 @@
                         <i class="fas fa-calendar"></i>
                     </div>
                     <div class="count">
-                        <p>{{ total_contact }}</p>
+                        <p id="total-contact">{{ total_contact }}</p>
                     </div>
                     <div class="content">
                         <p>Student Request</p>
@@ -231,6 +216,17 @@
                         document.getElementById('total-contact').innerText = data.total;
                     });
             }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+         <!---script for auto update the job-request-->
+         <script>
+            setInterval(function () {
+                fetch('/get_total_job_request')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-job-request').innerText = data.total;
+                    });
+            }, 500);  // 5 seconds ku oru thadava update aagum
         </script>
 
 
