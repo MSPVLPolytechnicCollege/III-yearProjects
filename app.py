@@ -61,6 +61,20 @@ con.execute("""
     );
 """)
 
+
+# alumni contact table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS alumni_contact (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        stu_name  text,
+        stu_email TEXT,
+        stu_contact integer,
+        subject TEXT,
+        message TEXT
+    );
+""")
+
 #course table
 con = sqlite3.connect('alumini_db.db')
 con.execute("""
@@ -214,6 +228,25 @@ def alumni_register():
     return render_template('register-alumni.html')
 
 
+@app.route('/total_alumni')
+def total_alumni():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from alumni1')
+    res = cursor.fetchall()
+    return render_template("total-alumni.html", datas=res)
+
+#student data are go to the admin page
+@app.route('/total_student')
+def total_student():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from student')
+    res = cursor.fetchall()
+    return render_template("total-student.html", datas=res)
+
 #alumni login page to verify
 @app.route('/alumni_login',methods=['GET','POST'])
 def alumni_login():
@@ -239,13 +272,22 @@ def alumni_login():
 
 @app.route('/admin')
 def admin_dashboard():
-    total_events=get_total_events() #get total events count edukka
-    total_contact=get_total_contact() #get total contact count 
+    total_events = get_total_events().json['total']  # **Extract integer value from JSON**
+    total_contact = get_total_contact().json['total']  
+    total_job_request = get_total_job_request().json['total']  
+    total_jobs = get_total_jobs_json().json['total']  
 
     print("Total Events:", total_events)  # Debugging
     print("Total Contact:", total_contact)  # Debugging
+    print("Total Job Request:", total_job_request)  # Debugging
+    print("Total Job:", total_jobs)  # Debugging
 
-    return render_template('admin.html',total_events=total_events,total_contact=total_contact)
+    return render_template('admin.html',
+        total_events=total_events, 
+        total_contact=total_contact, 
+        total_request_job=total_job_request, 
+        total_jobs=total_jobs
+    )
 
 
 #admin login page to verify
@@ -293,9 +335,6 @@ def login():
 @app.route('/signup')
 def signup():
     return render_template('register-stu.html')
-
-
-
 
 
 #Update the password
@@ -404,34 +443,6 @@ def deleteevent(sno):
     con.close()
     return redirect(url_for('updateevent'))
 
-'''
-#update the event by admin
-@app.route('/editevent/<string:sno>',methods=['GET','POST'])
-def editevent(sno):
-    if request.method=="POST":
-        date=request.form['event-date']
-        location=request.form['event-location']
-        time=request.form['event-time']
-        des=request.form['event-des']
-        con=sqlite3.connect('alumini_db.db')
-        cursor=con.cursor()
-        cursor.execute('update event set date=?,location=?,time=?,des=? where sno=?',(date,location,time,des,sno))
-        con.commit()
-        con.close()
-        return redirect('updateevent')
-    con = sqlite3.connect('alumini_db.db')
-    con.row_factory = sqlite3.Row  # Enables dictionary-style access
-    cursor=con.cursor()
-    cursor.execute('select * from event where sno=?', (sno,))
-    res = cursor.fetchall()
-    return render_template('event.html',datas=res)
-
-
-#student can be contact
-@app.route('/stu-contact')
-def contact():
-    return render_template('contact.html')
-'''
 
 @app.route('/stu-contact',methods=['POST','GET'])
 def stucontact():
@@ -459,6 +470,36 @@ def view_contact():
     cursor.execute('select * from contact1')
     res = cursor.fetchall()
     return render_template('contact-view.html',datas=res)
+
+
+@app.route('/alumni_contact',methods=['POST','GET'])
+def alumni_contact():
+    if request.method=='POST':
+        name=request.form['contact-name']
+        email = request.form['contact-email']
+        contact = request.form['contact-number']
+        subject = request.form['contact-subject']
+        message = request.form['contact-message']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into alumni_contact(stu_name,stu_email,stu_contact,subject,message) values(?,?,?,?,?)',(name,email,contact,subject,message))
+        con.commit()
+        con.close()
+        return redirect(url_for('stuhome'))
+    return render_template('contact-alumni.html')
+
+
+#contact to be view on the alumni
+@app.route('/view_contact_alumni')
+def view_contact_alumni():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from alumni_contact')
+    res = cursor.fetchall()
+    return render_template('contact-view-alumni.html',datas=res)
+
+
 
 #delete the contact by the admin
 @app.route('/deleteevent/<string:sno>',methods=['GET','POST'])
@@ -565,20 +606,11 @@ def get_total_events():
     conn = sqlite3.connect('alumini_db.db')
     cursor = conn.cursor()
 
-    #COUNT(*) → Table la ethana row iruku nu count pannum.
     cursor.execute("SELECT COUNT(*) FROM event")
-
-    #cursor.fetchone() → One row fetch pannum (Database la result ah eduthukum).
-    #[0] → First column value ah eduthukum (COUNT result ah eduthukum).
-    total_events = cursor.fetchone()[0]  # Event count return pannum
+    total_events = cursor.fetchone()[0]  # Event count fetch pannum
 
     conn.close()
-    return total_events
-
-#javascript or ajax request pana json format the data va return panro
-@app.route('/get_total_events_json')
-def get_total_events_json():
-    return jsonify({'total': get_total_events()})  # JSON format la return pannum
+    return jsonify({'total': total_events})  # **Direct JSON return**
 
 #contact  count dynamic ka update in the admin page
 @app.route('/get_total_contact')
@@ -586,20 +618,11 @@ def get_total_contact():
     conn = sqlite3.connect('alumini_db.db')
     cursor = conn.cursor()
 
-    #COUNT(*) → Table la ethana row iruku nu count pannum.
     cursor.execute("SELECT COUNT(*) FROM contact1")
-
-    #cursor.fetchone() → One row fetch pannum (Database la result ah eduthukum).
-    #[0] → First column value ah eduthukum (COUNT result ah eduthukum).
-    total_contact = cursor.fetchone()[0]  # Event count return pannum
+    total_contact = cursor.fetchone()[0]  # Count fetch pannum
 
     conn.close()
-    return total_contact
-
-#javascript or ajax request pana json format the data va return panro
-@app.route('/get_total_contact_json')
-def get_total_contact_json():
-    return jsonify({'total': get_total_contact()})  # JSON format la return pannum
+    return jsonify({'total': total_contact})  # **Direct JSON return**
 
 #alumni can add a job request for the admin redirect
 @app.route('/redirect_request_job_admin',methods=['GET','POST'])
@@ -645,20 +668,11 @@ def get_total_job_request():
     conn = sqlite3.connect('alumini_db.db')
     cursor = conn.cursor()
 
-    #COUNT(*) → Table la ethana row iruku nu count pannum.
     cursor.execute("SELECT COUNT(*) FROM job_request")
-
-    #cursor.fetchone() → One row fetch pannum (Database la result ah eduthukum).
-    #[0] → First column value ah eduthukum (COUNT result ah eduthukum).
-    total_job_request = cursor.fetchone()[0]  # Event count return pannum
+    total_job_request = cursor.fetchone()[0]  # Job request count fetch pannum
 
     conn.close()
-    return jsonify({'total': total_job_request}) #if namaluku flask api error vanthuchina itha use panalam
-
-#javascript or ajax request pana json format the data va return panro
-@app.route('/get_total_jobrequest_json')
-def get_total_contact_jobrequest_json():
-    return jsonify({'total': get_total_job_request()})  # JSON format la return pannum
+    return jsonify({'total': total_job_request})  # JSON format la return pannum
 
 
 # 🔹 Accept panna data new table la insert panna route
@@ -691,6 +705,20 @@ def job_approved():
     cursor.execute('select * from accepted_jobs1')
     res = cursor.fetchall()
     return render_template('approved-job.html',datas=res)
+
+
+#approval job request count dynamic ka update in the admin page
+@app.route('/get_total_jobs_json')
+def get_total_jobs_json():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM accepted_jobs1")
+    total_jobs = cursor.fetchone()[0]
+
+    conn.close()
+    return jsonify({'total': total_jobs})  # JSON format la return pannu
+
 
 if __name__=='__main__':
     app.secret_key = '1234'
