@@ -52,7 +52,7 @@ body{
     line-height: 0; /* Ensures there's no extra space around the icon */
 }
 .admin-content{
-    margin-top: 40px;
+    margin-top: 60px;
     margin-left: 10px;
 }
 .email{

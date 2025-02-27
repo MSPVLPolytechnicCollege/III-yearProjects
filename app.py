@@ -438,6 +438,16 @@ def deleteevent(sno):
     con.close()
     return redirect(url_for('updateevent'))
 
+#view the event by alumni
+@app.route('/viewevent')
+def viewevent():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template("event-alumni.html", datas=res)
+
 
 @app.route('/stu-contact',methods=['POST','GET'])
 def stucontact():
