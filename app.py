@@ -247,7 +247,7 @@ def total_student():
     res = cursor.fetchall()
     return render_template("total-student.html", datas=res)
 
-#alumni login page to verify
+#alumni login page to verif
 @app.route('/alumni_login',methods=['GET','POST'])
 def alumni_login():
     if request.method=='POST':
