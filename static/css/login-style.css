@@ -133,6 +133,7 @@ input:hover{
 }
 .button button:hover{
     box-shadow: 0 0 10px 5px rgba(0,0,0,0.3);
+    transition:2s linear;
     
 }
 .register{
@@ -151,7 +152,7 @@ input:hover{
     border-bottom: 1px solid blue;
 }
 .box2 img{
-    height: 410px;
+    height: 460px;
     width: 400px;
     margin-top: 2px;
     margin-right: 2px;

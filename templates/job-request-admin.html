@@ -131,7 +131,7 @@
                         <td>{{ data['reference_email'] }}</td>
                         <td>{{ data['last_date'] }}</td>
                         <td><a class='link3' onclick="saveData(this)" href="">Accept</a></td>
-                        <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="">Delete</a></td>
+                        <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="{{url_for('deletejob',sno=data.sno)}}">Delete</a></td>
                         </tr>
                         {% endfor %}
                     </table>

@@ -17,7 +17,7 @@
                 {{message}}
             {% endfor %}
         {% endif %}
-<form action="/admin">
+<form action="">
     <div class="admin">
         <div class="side-bar">
             <div class="menu">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="user-wrapper2">
-                    <a href="#">Logout</a>
+                    <a href="{{url_for('alumni_login')}}">Logout</a>
                 </div>
             </header>
         </div>
@@ -90,7 +90,7 @@
                     100 worldwide events a year, you have a wealth of alumni networking opportunities.
                 </p>
             </div>
-            <div class="event-box">
+             <div class="event-box">
                 <div class="event-box">
                     {% for data in datas %}
                         <div class="event-row">

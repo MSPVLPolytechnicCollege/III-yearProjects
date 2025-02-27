@@ -301,6 +301,28 @@ input:focus {
     font-family: var(--ff-secondary);
     line-height: 30px;
 }
+/* event */
+.event{
+    margin-top: 100px;
+}
+.event-head p{
+    font-size: 40px;
+    text-align: center;
+    color: var(--clr-gold);
+    font-family: 'lora',sans-serif;
+    font-weight: 500;
+}
+.event-content p{
+    font-size: 18px;
+    opacity: 1.4;
+    max-width: 1000px;
+    text-align: center;
+    margin-left: 250px;
+    margin-top: 30px;
+    opacity: 0.5;
+    font-family: var(--ff-secondary);
+    line-height: 30px;
+}
 /* Event Box*/
 .event-box{
     margin-left: 200px;

@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="user-wrapper2">
-                    <a href="{{url_for('admin_dashboard')}}">Logout</a>
+                    <a href="{{url_for('admin')}}">Logout</a>
                 </div>
             </header>
         </div>
@@ -136,13 +136,13 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="count">
-                        <p>5</p>
+                        <p id="total-alumni">{{total_alumni}}</p>
                     </div>
                     <div class="content">
                         <p>Total Alumni Reg</p>
                     </div>
                     <div class="view-details">
-                        <a href="">View Details</a>
+                        <a href="{{url_for('total_alumni')}}">View Details</a>
                     </div>
                 </div>
             </div>
@@ -221,6 +221,17 @@
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('total-jobs').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+         <!---script for auto update the total alumni-->
+        <script>
+            setInterval(function () {
+                fetch('/get_total_alumni_json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-alumni').innerText = data.total;
                     });
             }, 5000);  // 5 seconds ku oru thadava update aagum
         </script>

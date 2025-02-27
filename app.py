@@ -275,18 +275,21 @@ def admin_dashboard():
     total_events = get_total_events().json['total']  # **Extract integer value from JSON**
     total_contact = get_total_contact().json['total']  
     total_job_request = get_total_job_request().json['total']  
-    total_jobs = get_total_jobs_json().json['total']  
+    total_jobs = get_total_jobs_json().json['total']
+    total_alumni = get_total_alumni_json().json['total']
 
     print("Total Events:", total_events)  # Debugging
     print("Total Contact:", total_contact)  # Debugging
     print("Total Job Request:", total_job_request)  # Debugging
     print("Total Job:", total_jobs)  # Debugging
+    print("Total Alumni:", total_alumni)  # Debugging
 
     return render_template('admin.html',
         total_events=total_events, 
         total_contact=total_contact, 
         total_request_job=total_job_request, 
-        total_jobs=total_jobs
+        total_jobs=total_jobs,
+        total_alumni=total_alumni
     )
 
 
@@ -394,17 +397,7 @@ def eventdetail():
     res = cursor.fetchall()
     return render_template("event-details.html", datas=res)
 
-'''
-#event to be view on the student
-@app.route('/event_details_alumni')
-def event_details_alumni():
-    con = sqlite3.connect('alumini_db.db')
-    con.row_factory = sqlite3.Row  # Enables dictionary-style access
-    cursor = con.cursor()
-    cursor.execute('select * from event')
-    res = cursor.fetchall()
-    return render_template("alumni.html", datas=res)
-'''
+
 #Event to be add
 @app.route('/add-event',methods=['GET','POST'])
 def addevent():
@@ -661,6 +654,15 @@ def request_job_show():
     res = cursor.fetchall()
     return render_template('job-request-admin.html',datas=res)
 
+#Delete the job by admin
+@app.route('/deletejob/<string:sno>',methods=['GET','POST'])
+def deletejob(sno):
+    con=sqlite3.connect('alumini_db.db')
+    cursor=con.cursor()
+    cursor.execute('delete from job_request where sno=?',(sno,))
+    con.commit()
+    con.close()
+    return redirect(url_for('admin_dashboard'))
 
 #job-request  count dynamic ka update in the admin page
 @app.route('/get_total_job_request')
@@ -719,6 +721,17 @@ def get_total_jobs_json():
     conn.close()
     return jsonify({'total': total_jobs})  # JSON format la return pannu
 
+#total alumni count dynamic ka update in the admin page
+@app.route('/get_total_alumni_json')
+def get_total_alumni_json():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM alumni1")
+    total_alumni = cursor.fetchone()[0]
+
+    conn.close()
+    return jsonify({'total': total_alumni})  # JSON format la return pannu
 
 if __name__=='__main__':
     app.secret_key = '1234'
