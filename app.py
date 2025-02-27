@@ -133,7 +133,8 @@ con.execute("""
         experience TEXT,
         num_vacancy TEXT,
         reference_email TEXT,
-        last_date integer
+        last_date integer,
+        contact text
     );
 """)
 
@@ -153,7 +154,8 @@ cursor.execute('''
         experience TEXT,
         num_vacancy INTEGER,
         reference_email TEXT,
-        last_date TEXT
+        last_date TEXT,
+        contact text
     )
 ''')
 con.commit()
@@ -638,9 +640,10 @@ def request_job_admin():
         job_vacancy=request.form['job-vacancy']
         job_email=request.form['job-email']
         job_date=request.form['job-date']
+        contact=request.form['contact']
         con = sqlite3.connect('alumini_db.db')
         cursor = con.cursor()
-        cursor.execute('insert into job_request(company,job_location,job_title,qualification,description,key_skills,job_package,experience, num_vacancy,reference_email,last_date) values(?,?,?,?,?,?,?,?,?,?,?) ',(company,job_location,job_title,job_qualification,job_description,key_skill,job_package,job_experience,job_vacancy,job_email,job_date))
+        cursor.execute('insert into job_request(company,job_location,job_title,qualification,description,key_skills,job_package,experience, num_vacancy,reference_email,last_date,contact) values(?,?,?,?,?,?,?,?,?,?,?,?) ',(company,job_location,job_title,job_qualification,job_description,key_skill,job_package,job_experience,job_vacancy,job_email,job_date,contact))
         con.commit()
         con.close()
     return render_template('job-posting-alumni.html')
@@ -653,6 +656,16 @@ def request_job_show():
     cursor.execute('select * from job_request')
     res = cursor.fetchall()
     return render_template('job-request-admin.html',datas=res)
+
+@app.route('/alumni_view_job')
+def alumni_view_job():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('alumini-view-job.html',datas=res)
+
 
 #Delete the job by admin
 @app.route('/deletejob/<string:sno>',methods=['GET','POST'])
@@ -685,13 +698,13 @@ def save_job():
     cursor = conn.cursor()
 
     cursor.execute('''
-        INSERT INTO accepted_jobs1 (sno, company, job_location, job_title, qualification, description, key_skills, job_package, experience, num_vacancy, reference_email, last_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO accepted_jobs1 (sno, company, job_location, job_title, qualification, description, key_skills, job_package, experience, num_vacancy, reference_email, last_date,contact)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
     ''', (
         data['sno'], data['company'], data['job_location'], data['job_title'], 
         data['qualification'], data['description'], data['key_skills'], 
         data['job_package'], data['experience'], data['num_vacancy'], 
-        data['reference_email'], data['last_date']
+        data['reference_email'], data['last_date'], data['contact']
     ))
 
     conn.commit()

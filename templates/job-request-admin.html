@@ -37,33 +37,33 @@
         th,td{
            padding: 5px 5px;
         }
-        table td:nth-child(13) a{
+        table td:nth-child(14) a{
             color: white;
             border-radius: 10px;
             background:#0bc427;
             text-decoration:none;
             padding:5px 30px 5px 30px ;
         }
-        table td:nth-child(13) a:hover{
+        table td:nth-child(14) a:hover{
             transition: 0.2s linear;
             background:#028916 ;
             transition: 0.2S ease;
         }
         
-        table td:nth-child(14) a{
+        table td:nth-child(15) a{
             color: white;
             border-radius: 10px;
             background:#e20303;
             text-decoration:none;
             padding:5px 30px 5px 30px ;
         }
-        table td:nth-child(14) a:hover{
+        table td:nth-child(15) a:hover{
             transition: 0.2s linear;
             background:#ff0000 ;
             transition: 0.2S ease;
         }
         table{
-            margin-left:145px;
+            margin-left:115px;
 	        width:80%;
 	        border-collapse:collapse;
 	        margin-top:25px;
@@ -113,6 +113,7 @@
                             <th>Vacancy</th>
                             <th>Job Email</th>
                             <th>Last Date</th>
+                            <th>Contact</th>
                             <th>Accept</th>
                             <th>Delete</th>
                         </tr>
@@ -130,6 +131,7 @@
                         <td>{{ data['num_vacancy'] }}</td>
                         <td>{{ data['reference_email'] }}</td>
                         <td>{{ data['last_date'] }}</td>
+                        <td>{{data['contact']}}</td>
                         <td><a class='link3' onclick="saveData(this)" href="">Accept</a></td>
                         <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="{{url_for('deletejob',sno=data.sno)}}">Delete</a></td>
                         </tr>
@@ -154,7 +156,8 @@
                 experience: row.cells[8].innerText,
                 num_vacancy: row.cells[9].innerText,
                 reference_email: row.cells[10].innerText,
-                last_date: row.cells[11].innerText
+                last_date: row.cells[11].innerText,
+                contact: row.cells[12].innerText
             };
 
             fetch("http://127.0.0.1:5000/save_job", {

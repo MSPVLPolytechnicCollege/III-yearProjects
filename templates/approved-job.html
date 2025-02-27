@@ -78,9 +78,21 @@
             border:1px solid #4682B4;
             color:white;
         }
-        .icon i{
+        .icon {
             color: black;
             font-size: 26px;
+            margin-top:30px;
+        }
+        a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:26px;
+            text-decoration:none;
+            font-weight:700px;
+        }
+         a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
         }
     </style>
 </head>
@@ -93,11 +105,11 @@
     <form action="/request_job_show" method="post">
         <div class="course">
             <div class="icon">
-                <i class="fas fa-xmark"></i>
+                <a href="{{url_for('stuhome')}}">X</a>
             </div>
             
             <div class="big-box">
-                <p>JOB REQUEST FOR STUDENT</p>
+                <p>JOB VACANCY</p>
                 <div class="data">
                     <table>
                         <tr>
@@ -113,6 +125,7 @@
                             <th>Vacancy</th>
                             <th>Job Email</th>
                             <th>Last Date</th>
+                            <th>Contact</th>
                         </tr>
                         {% for data in datas %}
                         <tr>
@@ -128,6 +141,7 @@
                         <td>{{ data['num_vacancy'] }}</td>
                         <td>{{ data['reference_email'] }}</td>
                         <td>{{ data['last_date'] }}</td>
+                        <td>{{ data['contact'] }}</td>
                         {% endfor %}
                     </table>
                 </div>

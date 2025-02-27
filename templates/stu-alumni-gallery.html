@@ -84,6 +84,22 @@
             font-size: 20px;
             text-align: center;
         }
+         .icon {
+            color: black;
+            font-size: 26px;
+            margin-top:30px;
+        }
+        a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:26px;
+            text-decoration:none;
+            font-weight:700px;
+        }
+        a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
+        }
     </style>
 </head>
 <body>
@@ -94,6 +110,9 @@
     {% endif %}
     <form action="/stu_gallery">
         <div class="gallery">
+             <div class="icon">
+                <a href="{{url_for('stuhome')}}">X</a>
+            </div>
             <div class="college-images">
                 <div class="clg-img">
                     <p>College Gallery</p>

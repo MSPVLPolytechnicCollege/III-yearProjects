@@ -34,9 +34,15 @@
                 </div>
                 <div class="item"><a href="#" class="desk"><i class="fas fa-desktop"></i>Home</a></div>
                 <div class="item"><a href="#about"><i class="fas fa-file"></i>About</a></div>
-                <div class="item"><a href="#event"><i class="fas fa-clipboard"></i>Event</a></div>
+                <div class="item"><a href="{{url_for('updateevent')}}"><i class="fas fa-clipboard"></i>Event</a></div>
                 <div class="item"><a href="{{url_for('stu_gallery')}}"><i class="fas fa-image"></i>Gallery</a></div>
-                <div class="item"><a href="{{url_for('request_job_admin')}}"><i class="fas fa-th"></i>Job Posting</a></div>
+                 <div class="item">
+                    <a class="sub-btn" ><i class="fas fa-table"></i>Job Posting <i class="fas fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="{{url_for('request_job_admin')}}" class="sub-item"><i class="fas fa-add"></i>Add Job</a>
+                        <a href="{{url_for('alumni_view_job')}}" class="sub-item"><i class="fas fa-eye"></i>View Job</a>
+                    </div>
+                </div>
                 <div class="item"><a href="{{url_for('view_contact_alumni')}}"><i class="fas fa-bell"></i>Student Request</a></div>
                 <div class="item"><a href="#"><i class="fas fa-circle-info"></i>Report</a></div>
             </div>
@@ -65,7 +71,7 @@
             </header>
         </div>
         <div class="center-content">
-            <img src="/static/images/alumini.jpg" alt="">
+
             
         </div>
         <section class="welcome" id="about">
@@ -121,6 +127,26 @@
                 
     </div>
     <script src="/static/script.js"></script>
+     <script>
+            $(document).ready(function(){
+                //jquery for toggle sub menus
+                $('.sub-btn').click(function(){
+                    $(this).next('.sub-menu').slideToggle();
+                    $(this).find('.dropdown').toggleClass('rotate');
+                });
+
+                //jquery for expand and collapse the slidebar
+                $('.menu-btn').click(function(){
+                    $('.side-bar').addClass('active');
+                    $('.menu-bar').css('visibility','hidden');
+                });
+
+                $('.close-btn').click(function(){
+                    $('.side-bar').removeClass('active');
+                    $('.menu-bar').css('visibility','visible');
+                });
+            });
+        </script>
 </form>
 
 </body>

@@ -14,9 +14,9 @@
         }
         .contact{
             margin-top: 85px;
-            margin-left: 260px;
-            height: 550px;
-            width: 1000px;
+            margin-left: 500px;
+            height: 600px;
+            width: 600px;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
@@ -69,6 +69,9 @@
             color: black;
             font-family: 'Roboto',sans-serif;
         }
+        .left-content{
+            margin-left:60px;
+        }
         input:hover{
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: 0.2s linear;
@@ -95,28 +98,30 @@
             outline: 3px solid #003b88;
             transition: 0.2s linear;
         }
-        .right-content{
-            margin-right: 30px;
+        .icon {
+            color: black;
+            font-size: 26px;
+            margin-top:30px;
         }
-        .right-content .address1{
-            font-family: 'lucida Calligraphy';
-            color: #005cd5;
-            font-weight: 700;
-            font-size: 22px;
+        a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:26px;
+            text-decoration:none;
+            font-weight:700px;
         }
-        .icon{
-            color: #005cd5;
-            font-size: 23px;
-        }
-        .word p{
-            font-size: 18px;
-
+         a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
         }
     </style>
 
 </head>
 <body>
 <form action="/alumni_contact" method="post">
+    <div class="icon">
+                <a href="{{url_for('stuhome')}}">X</a>
+            </div>
     <div class="contact">
         <p class="p">Contact Us</p>
         <div class="box">
@@ -138,36 +143,6 @@
                 </div>
                 <div class="submit">
                     <button type="submit">Submit</button>
-                </div>
-            </div>
-            <div class="right-content">
-                <p class="address1">Address</p>
-                <div class="details">
-                    <div class="address2">
-                        <div class="icon">
-                            <ion-icon name="phone-portrait-outline"></ion-icon>
-                        </div>
-                        <div class="word">
-                            <p>044-3456-89023</p>
-                        </div>
-                    </div>
-                    <div class="address2">
-                        <div class="icon">
-                            <ion-icon name="send-outline"></ion-icon>
-                        </div>
-                        <div class="word">
-                            <p>MSPVL POLYTECHNIC COLLEGE PAVOORCHATRAM</p>
-                        </div>
-                    </div>
-                    <div class="address2">
-                        <div class="icon">
-                            <ion-icon name="mail-outline"></ion-icon>
-                        </div>
-                        <div class="word">
-                            <p>mspvlalumni@mspvl.com</p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
