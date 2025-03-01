@@ -238,16 +238,15 @@ def staff_view_attendance(classname):
 
 
 # Update attendance data (including present and absent columns)
-def update_attendance(slno, present, absent, current_date,in_classname):
+def update_attendance(slno, present, absent, current_date, in_classname):
     conn = sqlite3.connect('data_base.db')
- 
     cursor = conn.cursor()
-    
+
     # Fetch the current present and absent values from the database
     select_query = f"SELECT present, absent FROM {in_classname} WHERE slno = {slno}"
     cursor.execute(select_query)
     current_data = cursor.fetchone()
-    
+
     if current_data:
         current_present, current_absent = current_data
         # Debugging: Print current values
@@ -260,22 +259,24 @@ def update_attendance(slno, present, absent, current_date,in_classname):
         # Debugging: Print new values
         print(f"New Data for SL.NO {slno}: Present = {new_present}, Absent = {new_absent}")
 
-        # Update the database with the new totals
-        query = f"UPDATE {in_classname} SET present = {new_present}, absent = {new_absent}, date = {current_date} WHERE slno = {slno}"
-        #cursor.execute('''UPDATE class1 SET present = ?, absent = ?, date = ? WHERE slno = ?''', 
-         #              (new_present, new_absent, current_date, slno))
-        cursor.execute(query)
+        # Debugging: Print current_date to ensure it's correct
+        print(f"Current Date for SL.NO {slno}: {current_date}")
+
+        # Use parameterized query to avoid issues and ensure correct formatting
+        query = '''UPDATE {0} SET present = ?, absent = ?, date = ? WHERE slno = ?'''.format(in_classname)
+        cursor.execute(query, (new_present, new_absent, current_date, slno))
         conn.commit()
     else:
         print(f"No data found for SL.NO: {slno}")
     
     conn.close()
 
+
 @app.route('/save_attendance', methods=['POST'])
 def save_attendance():
-    current_date = datetime.now().strftime('%Y-%m-%d')  
+    current_date = datetime.now().strftime('%d-%m-%Y')  # Format current date as 'YYYY-MM-DD'
     in_classname = request.form['classname']
-    print(f"Form Data: {request.form}")  #Debugging: Print form data
+    print(f"Form Data: {request.form}")  # Debugging: Print form data
 
     # Track which students have already been processed
     processed_students = set()
@@ -317,6 +318,19 @@ def save_attendance():
                 continue
 
     return "Attendance updated successfully!"
+
+
+@app.route("/report_attendance/<string:classname>", methods=["POST", "GET"])
+def report_attendance(classname):
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    query = f"SELECT * FROM {classname}"
+    cur.execute(query)
+    data = cur.fetchall()
+    con.close()
+    return render_template("admin/report1.html",data=data)
+
 
 if(__name__ == '__main__'):
     app.run()
