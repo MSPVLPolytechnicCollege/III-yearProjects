@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("other/index.html")
+    return render_template("admin/index.html")
 
 
 
@@ -201,7 +201,7 @@ def edit_class(classid):
     cur.execute("SELECT * FROM all_classes WhERE classid=?",(classid,))
     data = cur.fetchone()
     con.close()
-    return render_template('admin/add_student_form.html', data=data)
+    return render_template('admin/update_class.html', data=data)
 
 
 @app.route('/update_class', methods=["POST", "GET"])
