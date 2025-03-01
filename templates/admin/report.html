@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="\static\css\report.css">
-    <title>Student Attendance Report</title>
+    <title>Report Table</title>
+    <style>
+
+    </style>
 </head>
 <body>
 
@@ -29,7 +32,6 @@
                 <td>{{row['absent']}}</td>
                 <td>    </td>
             </tr>
-
             {% endfor %}
         </tbody>
     </table>
@@ -42,10 +44,10 @@
         function printTable() {
             var table = document.getElementById("attendanceTable");
             var printWindow = window.open('', '', 'height=500, width=800');
-            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<html><head><title>Student Attendance Report</title>');
             printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { padding: 10px; text-align: center; border: 1px solid #ddd; } th { background-color: #4CAF50; color: white; } tr:nth-child(even) { background-color: #f2f2f2; }</style></head><body>');
-            printWindow.document.write("STUDENTS ATTENDANCE REPORT");
-            printWindow.document.write('</body></html>');
+            printWindow.document.write(table.outerHTML);
+            //printWindow.document.write('</body></html>');
             printWindow.document.close();
             printWindow.print();
         }

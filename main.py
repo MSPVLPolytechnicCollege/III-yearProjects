@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("admin/index.html")
+    return render_template("other/index.html")
 
 
 
@@ -329,7 +329,63 @@ def report_attendance(classname):
     cur.execute(query)
     data = cur.fetchall()
     con.close()
-    return render_template("admin/report1.html",data=data)
+    return render_template("admin/report.html",data=data)
+
+@app.route('/staffs_search_class')
+def staffs_search_class():
+    return render_template("staff/search_report.html")
+
+
+@app.route("/generate_report", methods=["POST", "GET"])
+def generate_report():
+    in_classname = request.form['classname']
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",(in_classname,))
+    result = cur.fetchone()
+    if result == None:
+        con.close()
+        return "Give Valid class Name"
+    
+    else:
+        query = f"SELECT * FROM {in_classname}"
+        cur.execute(query)
+        data = cur.fetchall()
+        con.close()
+        return render_template("admin/report.html",data=data)
+
+
+@app.route('/others_search_class')
+def others_search_class():
+    return render_template("other/search_report.html")    
+
+@app.route("/others_generate_report", methods=["POST", "GET"])
+def others_generate_report():
+    in_classname = request.form['classname']
+    in_rollno    = request.form['rollno']
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name = ?",(in_classname,))
+    result = cur.fetchone()
+    
+    if result == None:
+        con.close()
+        return "Give Valid class Name"
+    
+    
+    else:
+        query = f"SELECT * FROM {in_classname} WHERE rollno={in_rollno}"
+        cur.execute(query)
+        data = cur.fetchone()
+        if data == None:
+            con.close()
+            return "Give valid Rollno"
+        else:
+            con.close()
+            return render_template("other/report.html",data=data)
+
 
 
 if(__name__ == '__main__'):

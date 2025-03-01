@@ -61,75 +61,15 @@
                 <th>NAME</th>
                 <th>PRESENT</th>
                 <th>ABSENT</th>
-                <th>STUDENT SIGN</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>30</td>
-                <td>nantha</td>
-                <td>90</td>
-                <td>89</td>
-                <td></td>
+                <td>{{data['slno']}}</td>
+                <td>{{data['rollno']}}</td>
+                <td>{{data['name']}}</td>
+                <td>{{data['present']}}</td>
+                <td>{{data['absent']}}</td>
             </tr>
         </tbody>
     </table>
@@ -142,10 +82,10 @@
         function printTable() {
             var table = document.getElementById("attendanceTable");
             var printWindow = window.open('', '', 'height=500, width=800');
-            printWindow.document.write('<html><head><title>Print Table</title>');
+            printWindow.document.write('<html><head><title>Student Attendance Report</title>');
             printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { padding: 10px; text-align: center; border: 1px solid #ddd; } th { background-color: #4CAF50; color: white; } tr:nth-child(even) { background-color: #f2f2f2; }</style></head><body>');
             printWindow.document.write(table.outerHTML);
-            printWindow.document.write('</body></html>');
+            //printWindow.document.write('</body></html>');
             printWindow.document.close();
             printWindow.print();
         }
