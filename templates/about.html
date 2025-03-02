@@ -1,34 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>About</title>
-</head>
+  </head>
 
-<style>
-    .para{
-        width:500px;
+  <style>
+    /* About */
+    .sectiontitle {
+      width: 300px;
+      border-bottom: 3px solid #f92288;
+      text-align: center;
+      font-size: 2em;
+      font-weight: bolder;
+      margin: 0 auto 50px;
+      position: relative;
+      padding: 10px 0;
+      text-transform: uppercase;
+    }
+    .sectiontitle::after {
+      /* design a diamond */
+      display: inline-block;
+      content: "";
+      height: 15px;
+      width: 15px;
+      background-color: #f92288;
+      position: absolute;
+      left: calc(50% - 10px);
+      top: calc(75% - 7px);
+      transform: rotate(45deg) translate(50%, 50%);
+      border: 3px solid #fff;
+    }
+    .container h3 {
+      margin-left: 80px;
+      font-size: larger;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-</style>
+    .section {
+      padding: 100px 0;
+      position: relative;
+    }
+    #about .cards {
+      /* box a design */
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 50px;
+      position: relative;
+      height: 245px;
+      margin-left: 50px;
+    }
 
+    #about .cards > div {
+      width: 350px;
+      background-color: #b8b6b6;
+      padding: 35px;
+      color: black;
+      text-align: center;
+      border-radius: 15px;
+      height: 215px;
+      border: 1px solid #ccc;
+      transition: 0.2ms;
+    }
+    #about .cards > div .title {
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
 
+    #about .cards > div p {
+      font-size: 14px;
+      margin-top: 15px;
+    }
+    #about .cards > div button {
+      border: 1px solid #f92288;
+      outline: none;
+      padding: 7px 15px;
+      margin-top: 15px;
+      font-size: 12px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    #about .cards > div button:hover {
+      background-color: #f92288;
+      color: white;
+    }
+    #about .cards > div:hover {
+      width: 400px;
+      margin-top: -20px;
+      border-color: #f92288;
+      padding: 55px;
+      height: auto;
+    }
+  </style>
 
+  <body>
+    <section class="full" id="about">
+      <div class="container">
+        <h2 class="sectiontitle">About Us</h2>
+        <h3>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+          veritatis ex, sint tenetur facilis consectetur architecto molestiae
+          maxime commodi, facere placeat voluptate quos, libero assumenda
+          deserunt! Exercitationem veniam doloribus laudantium qui, ipsa
+          officia! Officia accusantium omnis, maiores repudiandae quidem
+          doloribus autem, excepturi corrupti rerum iusto dolorem. Rerum aliquam
+          temporibus nesciunt?, ipsum dolor sit amet consectetur adipisicing
+          elit. Est ipsa ea sequi, ratione quas, molestiae explicabo sapiente
+          autem facere vero ad voluptatum laudantium cupiditate pariatur non
+          eligendi, aspernatur accusantium architecto?
+        </h3>
 
-<body>
-<div class="para" >
+        <div class="cards">
+          <div class="donationbox">
+            <div class="title">Give donation</div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
+              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
+              maxime soluta
+            </p>
+            <button>Donate now</button>
+          </div>
+          <!----donation boxend-->
+
+          <div class="volutersbox">
+            <div class="title">Become a voluterrs</div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
+              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
+              maxime soluta
+            </p>
+            <button>Become now</button>
+          </div>
+          <!----donation boxend-->
+
+          <div class="ScholarshipBox">
+            <div class="title">Give a scholarship</div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
+              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
+              maxime soluta
+            </p>
+            <button>Give immediately</button>
+          </div>
+          <!----donation boxend-->
+        </div>
+      </div>
+    </section>
+    <!---end-->
+
+    <!---<div class="para" >
 <p>Our Mission
-The Desai Foundation is a nonprofit organization dedicated to empowering women and children through community programs and initiatives. Our mission is simple yet powerful: to create lasting change and provide opportunities for growth and development.
-
-We focus on empowering women by providing vocational skills training and support to help them become self-reliant. From vocational skill training to entrepreneurship programs, we aim to foster independence and create a sustainable future.
-
-We believe in action. We believe in making a difference, one step at a time. Through our various projects, we strive to improve access to health, livelihood, and menstrual equity for those who need it most.
-
-But we don’t stop there. Our commitment extends to children as well. We believe that every child deserves a chance to succeed. That’s why we provide educational support which includes real time exposure and foundational building blocks, alongside health support and mentoring programs to help them cultivate dignity and reach their full potential.
-
-We are driven by a sense of purpose and guided by our core values: compassion, integrity, and collaboration. Our dedicated team works tirelessly to create a real, tangible impact in the communities we serve.</p>
 
 </div>
-
-</body>
+--->
+  </body>
 </html>

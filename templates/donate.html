@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Donate</title>
-</head>
-<body>
+  </head>
+  <style>
+    body {
+    }
+    .box {
+      background: #f92288;
+      height: 400px;
+      width: 300px;
+      margin-left: 600px;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+  </style>
+  <body>
     <div class="form">
-        <form action="/donate" method="POST">
-            <h1> Donate</h1>
-            <label>Name</label>
-           <input type="text" name="name"><br><br>
-            <label>Email</label>
-           <input type="text" name="email" required><br><br>
-            <label>Phone</label>
-           <input type="text" name="phone" required><br><br>
-            <label>Address</label>
-            <input type="text" name="address" required><br><br>
-            <label>Payment</label>
-            <input type="text" name="payment" required><br><br>
-            <div class="b1">
-                <input type="submit" value="pay">
-            </div>
-        </form>
+      <form action="/donate" method="POST">
+        <div class="box">
+          <h1>Donate</h1>
+          <label>Name</label>
+          <input type="text" name="name" /><br /><br />
+          <label>Email</label>
+          <input type="text" name="email" required /><br /><br />
+          <label>Phone</label>
+          <input type="text" name="phone" required /><br /><br />
+          <label>Address</label>
+          <input type="text" name="address" required /><br /><br />
+          <label>Payment</label>
+          <input type="text" name="payment" required /><br /><br />
+          <div class="b1">
+            <input type="submit" value="pay" />
+          </div>
+        </div>
+      </form>
     </div>
-</body>
+  </body>
 </html>
