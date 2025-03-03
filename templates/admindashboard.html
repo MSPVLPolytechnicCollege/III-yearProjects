@@ -173,6 +173,11 @@
       color: #f92288;
     }
 
+
+.donatedeatils th{
+        color: #f92288;
+        background-color:;
+    }
     
   </style>
 
@@ -250,7 +255,7 @@
           </div>
         </div>
       </div>
-
+<!----table for donation details--->
       <div class="table">
         <p>Donate details</p>
         {% if messages %} {% for message in messages %} {{message}} {% endfor %}
@@ -260,30 +265,17 @@
             <table border="1" color="gray">
               {% for data in datas %}
               <tr>
-                <td>
-                  Name
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </td>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone  </th>
+                <th>Address</th>
+                <th>payments</th>
+              </tr>
+              <tr>
                 <td>{{ data['name'] }}</td>
-              </tr>
-              <tr>
-                <td>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                 <td>{{ data['email'] }}</td>
-              </tr>
-              <tr>
-                <td>
-                  Phone
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </td>
                 <td>{{ data['phone'] }}</td>
-              </tr>
-              <tr>
-                <td>Address &nbsp;&nbsp;</td>
                 <td>{{ data['address'] }}</td>
-              </tr>
-
-               <tr>
-                <td>payments &nbsp;&nbsp;</td>
                 <td>{{ data['payment'] }}</td>
               </tr>
               {% endfor %}
@@ -291,33 +283,23 @@
           </form>
         </div>
       </div>
-
+<!----table for contact details---->
       <div class="t2">
           <p>Contact details</p>
        <table border="1" color="gray">
               {% for data in datas %}
-              <tr>
-                <td>
-                  name
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </td>
-                <td>{{ data['name'] }}</td>
+         <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone  </th>
+                <th>Address</th>
               </tr>
-              <tr>
-                <td>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td>{{ data['email'] }}</td>
-              </tr>
-              <tr>
-                <td>
-                  Phone
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </td>
-                <td>{{ data['phone'] }}</td>
-              </tr>
-              <tr>
-                <td>Address &nbsp;&nbsp;</td>
-                <td>{{ data['address'] }}</td>
-              </tr>
+          <tr>
+            <td>{{ data['name'] }}</td>
+            <td>{{ data['email'] }}</td>
+            <td>{{ data['phone'] }}</td>
+            <td>{{ data['address'] }}</td>
+          </tr>
               {% endfor %}
             </table>
           </form>

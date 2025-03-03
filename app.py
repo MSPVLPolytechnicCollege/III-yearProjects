@@ -23,9 +23,6 @@ def about():
     return render_template("about.html")
 
 #ourimpact page
-@app.route('/ourimpact',methods=['GET','POST'])
-def ourimpact():
-    return render_template("ourimpact.html")
 
 
 #adminpage
@@ -77,21 +74,19 @@ def admindashboard():
 
 
 # call the route
-@app.route('/adboard',methods=['GET','POST'])
-def adboard():
-    return render_template("adboard.html")
 
 # contact the route
 @app.route('/contact',methods=['GET','POST'])
 def contact():
     if request.method=="POST":
-        n = request.form['name']
+        n1 = request.form['name1']
+        n2 = request.form['name2']
         e = request.form['email']
-        m = request.form['phone']
-        pw = request.form['address']
+        ph = request.form['phone']
+        msg = request.form['msg']
         con = sqlite3.connect('charity.db')
         cursor = con.cursor()
-        cursor.execute("insert into contact(name,email,phone,address) values(?,?,?,?);", (n, e, m, pw))
+        cursor.execute("insert into contact(name1,name2,email,phone,msg) values(?,?,?,?,?);", (n1,n2,e,ph,msg))
         con.commit()
         con.close()
     return render_template("contact.html")
@@ -157,7 +152,10 @@ def login():
 @app.route('/sucess',methods=['GET','POST'])
 def sucess():
     return render_template("sucess.html")
-
+#gallery
+@app.route('/gallery',methods=['GET','POST'])
+def gallery():
+    return render_template("gallery.html")
 
 @app.route('/loginpage',methods=['GET','POST'])
 def loginpage():
