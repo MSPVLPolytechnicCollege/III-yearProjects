@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MSPVL GALLERY</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style>
         *{
             margin: 0;
@@ -92,13 +94,19 @@
         a{
             margin-left:1520px;
             padding-top:20px;
-            font-size:26px;
+            font-size:32px;
             text-decoration:none;
             font-weight:700px;
+            color: black;
         }
-        a:hover{
+         a:hover{
             transition:0.2s ease;
             color:#005cd5;
+        }
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -111,7 +119,7 @@
     <form action="/stu_gallery">
         <div class="gallery">
              <div class="icon">
-                <a href="{{url_for('stuhome')}}">X</a>
+                <a href="{{url_for('stuhome')}}"><ion-icon name="close-outline"></ion-icon></a>
             </div>
             <div class="college-images">
                 <div class="clg-img">

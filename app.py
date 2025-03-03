@@ -559,7 +559,7 @@ def gallery():
     return render_template('add-gallery.html', images=image_list)
 
 
-#student and alumni gallery
+#student gallery
 @app.route('/stu_gallery')
 def stu_gallery():
     con = sqlite3.connect('alumini_db.db')
@@ -578,6 +578,24 @@ def stu_gallery():
     ]
     return render_template('stu-alumni-gallery.html', images=image_list)
 
+# alumni gallery
+@app.route('/alumni_gallery')
+def alumni_gallery():
+    con = sqlite3.connect('alumini_db.db')
+    cursor = con.cursor()
+    cursor.execute('SELECT image,description FROM image1')  # Fetching image data
+    images = cursor.fetchall()
+    con.close()
+
+     # Convert images to Base64 format for display
+    image_list = [
+        {
+            'data': f"data:image/jpeg;base64,{base64.b64encode(img[0]).decode('utf-8')}",
+            'description':img[1]
+        }
+        for img in images
+    ]
+    return render_template('alumni-gallery.html', images=image_list)
 
 #gallery - data to be add
 @app.route('/insert_image',methods=['GET','POST'])
@@ -722,6 +740,7 @@ def save_job():
 
     return jsonify({"message": "Job request saved successfully!"})  # Success message
 
+#job approved for student to be view
 @app.route('/job_approved')
 def job_approved():
     con = sqlite3.connect('alumini_db.db')
@@ -731,6 +750,15 @@ def job_approved():
     res = cursor.fetchall()
     return render_template('approved-job.html',datas=res)
 
+#job approved for alumni to be view
+@app.route('/job_approved2')
+def job_approved2():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from accepted_jobs1')
+    res = cursor.fetchall()
+    return render_template('approved-job2.html',datas=res)
 
 #approval job request count dynamic ka update in the admin page
 @app.route('/get_total_jobs_json')

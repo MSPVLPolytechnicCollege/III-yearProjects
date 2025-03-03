@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Contact</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
         *{
@@ -66,15 +68,19 @@
             border:1px solid #4682B4;
             color:white;
         }
-        .box1 i{
-            margin-top: 10px;
-            margin-left: 1500px;
-            font-size: 28px;
+        .icon a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
             color: black;
         }
-        .box1 i:hover{
-            color: #005cd5;
+        .icon a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
         }
+       
     </style>
 </head>
 <body>
@@ -85,9 +91,11 @@
     {% endif %}
     <form action="/view_contact_alumni" method="">
         <div class="box1">
-            <a href="{{url_for('alumni_dashboard')}}"><i class="fas fa-close"></i></a>
+            <div class="icon">
+                <a href="{{url_for('alumni_dashboard')}}"><ion-icon name="close-outline"></ion-icon></a>
+            </div>
             <div class="box2">
-                <p>Contact to be View</p>
+                <p>To View the Contact</p>
                 <table border="1">
                     <tr>
                         <th>Sno</th>
