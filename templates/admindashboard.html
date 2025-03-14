@@ -65,14 +65,14 @@
       background: white;
       color: #f92288;
     }
-    .container {
+    .container1 {
       position: absolute;
       right: 0;
       width: 80vw;
       height: 400vh;
       background: #f1f1f1;
     }
-    .container .header {
+    .container1 .header {
       position: fixed;
       top: 0;
       right: 0;
@@ -84,16 +84,16 @@
       justify-content: center;
       box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
     }
-    .container .header .nav {
+    .container1 .header .nav {
       width: 90%;
       display: flex;
       align-items: center;
     }
-    .container .header .nav .search {
+    .container1 .header .nav .search {
       flex: 3;
     }
 
-    .container .header .nav .search input[type="text"] {
+    .container1 .header .nav .search input[type="text"] {
       border: none;
       background: #f1f1f1;
       padding: 10px;
@@ -119,19 +119,19 @@
       /* border: 2px solid #f92288; */
     }
 
-    .container .content {
+    .container1 .content {
       position: relative;
       margin-top: 10vh;
       min-height: 50vh;
     }
-    .container .content .cards {
+    .container1 .content .cards {
       padding: 20px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
     }
-    .container .content .cards .card {
+    .container1 .content .cards .card {
       width: 250px;
       height: 200px;
       background: white;
@@ -205,7 +205,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container1">
       <div class="header">
         <div class="nav">
           <div class="search">
@@ -255,8 +255,8 @@
           </div>
         </div>
       </div>
-<!----table for donation details--->
-      <div class="table">
+<!----table for donation details-->
+    <div class="table">
         <p>Donate details</p>
         {% if messages %} {% for message in messages %} {{message}} {% endfor %}
         {% endif %}
@@ -284,7 +284,7 @@
         </div>
       </div>
 <!----table for contact details---->
-      <div class="t2">
+       <div class="t2">
           <p>Contact details</p>
        <table border="1" color="gray">
               {% for data in datas %}
@@ -307,7 +307,6 @@
       </div>
       </div>
     </div>
-
 
   </body>
 </html>
