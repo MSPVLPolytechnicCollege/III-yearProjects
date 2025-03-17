@@ -52,22 +52,22 @@ def admipage():
 
 
 #donate details
-@app.route('/admindashboard')
-def admindashboard():
+@app.route('/view')
+def view():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
     cursor.execute('select * from donate')
     res = cursor.fetchall()
-    return render_template("admindashboard.html", datas=res)
+    return render_template("view.html", datas=res)
 
-def admindashboard():
+def view():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
     cursor.execute('select * from contact')
     res = cursor.fetchall()
-    return render_template("admindashboard.html", datas=res)
+    return render_template("view.html", datas=res)
 
 
 
@@ -157,16 +157,19 @@ def sucess():
 def gallery():
     return render_template("gallery.html")
 
+# login page
 @app.route('/loginpage',methods=['GET','POST'])
 def loginpage():
     return render_template("loginpage.html")
 
+#payment page
+@app.route('/payment',methods=['GET','POST'])
+def payment():
+    return render_template("payment.html")
 
-
-
-
-
-
+@app.route('/admindashboard',methods=['GET','POST'])
+def admindashboard():
+    return render_template("admindashboard.html")
 
 
 #Main  file

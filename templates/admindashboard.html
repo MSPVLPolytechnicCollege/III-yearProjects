@@ -180,7 +180,6 @@
     }
     
   </style>
-
   <body>
     <div class="side-menu">
       <div class="brand-name">
@@ -204,13 +203,12 @@
         ></a>
       </div>
     </div>
-
     <div class="container">
       <div class="header">
         <div class="nav">
           <div class="search">
             <div class="user">
-              <a href="#" class="btn">view more </a>
+              <a href="view" class="btn">view more </a><!----redirect the page into view page--->
             </div>
           </div>
           <div class="img">
@@ -255,59 +253,6 @@
           </div>
         </div>
       </div>
-<!----table for donation details--->
-      <div class="table">
-        <p>Donate details</p>
-        {% if messages %} {% for message in messages %} {{message}} {% endfor %}
-        {% endif %}
-
-        <div class="donatedeatils">
-            <table border="1" color="gray">
-              {% for data in datas %}
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone  </th>
-                <th>Address</th>
-                <th>payments</th>
-              </tr>
-              <tr>
-                <td>{{ data['name'] }}</td>
-                <td>{{ data['email'] }}</td>
-                <td>{{ data['phone'] }}</td>
-                <td>{{ data['address'] }}</td>
-                <td>{{ data['payment'] }}</td>
-              </tr>
-              {% endfor %}
-            </table>
-          </form>
-        </div>
-      </div>
-<!----table for contact details---->
-      <div class="t2">
-          <p>Contact details</p>
-       <table border="1" color="gray">
-              {% for data in datas %}
-         <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone  </th>
-                <th>Address</th>
-              </tr>
-          <tr>
-            <td>{{ data['name'] }}</td>
-            <td>{{ data['email'] }}</td>
-            <td>{{ data['phone'] }}</td>
-            <td>{{ data['address'] }}</td>
-          </tr>
-              {% endfor %}
-            </table>
-          </form>
-        </div>
-      </div>
-      </div>
     </div>
-
-
   </body>
 </html>
