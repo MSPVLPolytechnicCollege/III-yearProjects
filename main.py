@@ -122,7 +122,12 @@ def create_class():
    
         cur.execute("SELECT COUNT(*) FROM all_classes WHERE classid = ?", (in_classid,))
         if cur.fetchone()[0] > 0:
-            return "Class ID already exists."
+            return "Class ID already exists, Give Valid class name and id"
+        
+        cur.execute("SELECT COUNT(*) FROM all_classes WHERE classname = ?", (in_classname,))
+        if cur.fetchone()[0] > 0:
+            return "Class Name already exists, Give Valid class name and id"
+        
 
         
         cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES(?, ?, ?)",
@@ -206,21 +211,75 @@ def edit_class(classid):
 
 @app.route('/update_class', methods=["POST", "GET"])
 def update_class():
-    if request.method == 'POST':
-        in_classname = request.form['classname']
-        in_classid = request.form['classid']
-        in_classteacher = request.form['classteacher']
-        in_oldclassname = request.form['oldclassname']
-        con = sqlite3.connect('data_base.db')
-        cur = con.cursor()
-        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
-        cur.execute(query)
+    in_classname = request.form['classname']
+    in_classid = request.form['classid']
+    in_classteacher = request.form['classteacher']
+    
+    in_oldclassname = request.form['oldclassname']
+    in_oldclassteacher = request.form['oldclassteacher']
+    con = sqlite3.connect('data_base.db')
+    cur = con.cursor()
+    if in_oldclassname == in_classname and in_oldclassteacher == in_classteacher:
+        return "No changes"
+    elif in_oldclassname == in_classname and  in_oldclassteacher != in_classteacher:
         cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
-                    (in_classname, in_classteacher, in_classid)) 
+                (in_classname, in_classteacher, in_classid)) 
+        con.commit()
+        con.close()
+        return "Class Teacher Updated Successfully !!"
+    
+    elif in_oldclassname != in_classname and  in_oldclassteacher == in_classteacher:
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                (in_classname, in_classteacher, in_classid)) 
+        
+        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
+        
+        cur.execute(query)
         
         con.commit()
         con.close()
-        return "Updated Successfully"
+        return "Class Name Updated Successfully !!"
+    else:
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                (in_classname, in_classteacher, in_classid)) 
+        
+        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
+        
+        cur.execute(query)
+        con.commit()
+        con.close()
+        return "Class Name and Teacher Name Updated Successfully !!"
+        
+        
+        
+    '''elif in_oldclassname == in_classname and in_oldclassteacher != in_classteacher:
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                (in_classname, in_classteacher, in_classid)) 
+        
+        con.commit()
+        con.close()
+        return "Teacher name updated successfully"
+    elif in_oldclassname != in_classname and in_oldclassteacher == in_classteacher:
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                (in_classname, in_classteacher, in_classid)) 
+        
+        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
+        
+        cur.execute(query)
+        con.commit()
+        con.close()
+        return "Updated the class name Successfully !!"
+        
+    elif in_oldclassname != in_classname and in_oldclassteacher != in_classteacher:
+        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
+                (in_classname, in_classteacher, in_classid)) 
+                        
+        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
+        cur.execute(query)
+        con.commit()
+        con.close()
+        return "Updated the class name and teacher name  Successfully"
+    '''
     
 @app.route('/staff_view_attendance/<string:classname>', methods=["POST", "GET"])
 def staff_view_attendance(classname):
@@ -328,8 +387,11 @@ def report_attendance(classname):
     query = f"SELECT * FROM {classname}"
     cur.execute(query)
     data = cur.fetchall()
-    con.close()
-    return render_template("admin/report.html",data=data)
+    if data == None:
+        return "No data available"
+    else:
+        con.close()
+        return render_template("admin/report.html",data=data)
 
 @app.route('/staffs_search_class')
 def staffs_search_class():
