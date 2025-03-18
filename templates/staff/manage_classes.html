@@ -15,8 +15,8 @@
         <img src="\static\images\logo.jpg">
         <ul>
             <li><a href="{{url_for('home')}}">Home</a></li>
-            <li><a href="{{url_for('manage_classes')}}">Manage Classes</a></li>
-            <li><a href="#">Manage Reports</a></li>
+            <li><a href="{{url_for('manage_classes_staff')}}">Manage Classes</a></li>
+            <li><a href="{{url_for('staffs_search_class')}}">Manage Reports</a></li>
             <li><a href="{{url_for('login')}}">Logout</a></li>
         </ul>
     </div>
@@ -48,7 +48,7 @@
                             <td> {{row["classid"]}}</td>
                             <td> {{row["classname"]}}</td>
                             <td> {{row["classteacher"]}}</td>
-                            <td><a href="{{url_for('staff_view_attendance',classname = row['classname'])}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
+                            <td><a href="{{url_for('staff_view_attendance_sheet',classname = row['classname'])}}"><button class="btn-attendance">ATTENDANCE</button></a></td>
                            
                         </tr>
                     {% endfor %}

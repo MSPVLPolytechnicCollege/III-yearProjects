@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request
 from datetime import datetime
 import sqlite3
 import pandas as pd
@@ -10,8 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("admin/index.html")
-
+    return render_template("login.html")
 
 
 #sign up
@@ -25,8 +24,6 @@ def signup():
 @app.route("/login",methods=["POST","GET"])
 def login():
     return render_template("login.html")
-
-
 
 
 
@@ -55,7 +52,6 @@ def insert_users():
             return render_template("login.html")
 
     else:
-
         return "password not match"
 
 
@@ -83,7 +79,8 @@ def login_users():
     
 
 
-
+#admin process 
+#manage class = create class, update class, delete class, report class
 @app.route("/manage_classes",methods=["POST", "GET"])
 def manage_classes():
     con = sqlite3.connect("data_base.db")
@@ -93,21 +90,10 @@ def manage_classes():
     data = cur.fetchall()
     con.close()
     return render_template("admin/manage_classes.html", data=data)
-    
-
-@app.route("/manage_classes_staff",methods=["POST", "GET"])
-def manage_classes_staff():
-    con = sqlite3.connect("data_base.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    cur.execute("Select * from all_classes")
-    data = cur.fetchall()
-    con.close()
-    return render_template("staff/manage_classes.html", data=data)
 
 
 
-
+#create class
 
 @app.route("/create_class", methods=["POST", "GET"])
 def create_class():
@@ -115,24 +101,30 @@ def create_class():
         in_classname = request.form['classname']
         in_classid = request.form['classid']
         in_classteacher = request.form['classteacher']
+        file = request.files.get('file')
+        if not file:
+            return "No file uploaded, please upload the student details Excel file."
         
+     
         con = sqlite3.connect('data_base.db')
         cur = con.cursor()
         
-   
-        cur.execute("SELECT COUNT(*) FROM all_classes WHERE classid = ?", (in_classid,))
-        if cur.fetchone()[0] > 0:
-            return "Class ID already exists, Give Valid class name and id"
-        
-        cur.execute("SELECT COUNT(*) FROM all_classes WHERE classname = ?", (in_classname,))
-        if cur.fetchone()[0] > 0:
-            return "Class Name already exists, Give Valid class name and id"
-        
+        cur.execute("SELECT * FROM all_classes WHERE classname = ?", (in_classname,))
+        data = cur.fetchone()
+        if data:
+            return "Class Name already exists, give a valid class name."
 
+        cur.execute("SELECT * FROM all_classes WHERE classid = ?", (in_classid,))
+        data = cur.fetchone()
+        if data:
+            return "Class ID already exists, give a valid class ID."
         
+      
+        
+      
         cur.execute("INSERT INTO all_classes(classname, classid, classteacher) VALUES(?, ?, ?)",
                     (in_classname, in_classid, in_classteacher))
-    
+
         create_table_query = f"""
         CREATE TABLE IF NOT EXISTS {in_classname} (
             slno INTEGER PRIMARY KEY,
@@ -145,47 +137,19 @@ def create_class():
         """
         cur.execute(create_table_query)
         
-      
+        df = pd.read_excel(file)
+        df.to_sql(in_classname, con, if_exists='append', index=False)
         con.commit()
-        
-        return "Class created and inserted successfully"
+        return "Class created successfully"
+
     except sqlite3.Error as e:
-        con.rollback() 
         return f"Error occurred: {e}"
+
     finally:
-        con.close()  
+        con.close()
 
 
-
-
-@app.route("/attendance/<string:classname>",methods=["POST", "GET"])
-def attendance(classname):
-    con = sqlite3.connect("data_base.db")
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    query = f"SELECT * FROM {classname}"
-    cur.execute(query)
-    data = cur.fetchall()
-    con.close()
-    return render_template("admin/add_stud.html",data=data,classname=classname)
-
-@app.route('/excel_to_table',methods=["POST", "GET"])
-def excel_to_table():
-    in_classname = request.form['classname']
-    file = request.files['file']
-    df = pd.read_excel(file)
-    conn = sqlite3.connect("data_base.db")
-    df.to_sql(in_classname, conn, if_exists='append', index=False)
-    conn.commit()
-    conn.row_factory = sqlite3.Row
-    cur = conn.cursor()
-    query = f"SELECT * FROM {in_classname}"
-    cur.execute(query)
-    data = cur.fetchall()
-
-    return render_template("admin/add_stud.html",data=data)
-
-
+#delete class 
 @app.route('/del_attendance/<string:classname>', methods=["POST", "GET"])
 def del_attendance(classname):
     con = sqlite3.connect("data_base.db")
@@ -198,6 +162,7 @@ def del_attendance(classname):
     return "Deleted successfully"
 
 
+#edit class
 @app.route('/edit_class/<string:classid>', methods=["POST", "GET"])
 def edit_class(classid):
     con = sqlite3.connect("data_base.db")
@@ -249,40 +214,12 @@ def update_class():
         con.commit()
         con.close()
         return "Class Name and Teacher Name Updated Successfully !!"
-        
-        
-        
-    '''elif in_oldclassname == in_classname and in_oldclassteacher != in_classteacher:
-        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
-                (in_classname, in_classteacher, in_classid)) 
-        
-        con.commit()
-        con.close()
-        return "Teacher name updated successfully"
-    elif in_oldclassname != in_classname and in_oldclassteacher == in_classteacher:
-        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
-                (in_classname, in_classteacher, in_classid)) 
-        
-        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
-        
-        cur.execute(query)
-        con.commit()
-        con.close()
-        return "Updated the class name Successfully !!"
-        
-    elif in_oldclassname != in_classname and in_oldclassteacher != in_classteacher:
-        cur.execute("UPDATE all_classes SET classname= ?, classteacher=? WHERE classid=?", 
-                (in_classname, in_classteacher, in_classid)) 
-                        
-        query = F"ALTER TABLE {in_oldclassname} RENAME TO {in_classname}"
-        cur.execute(query)
-        con.commit()
-        con.close()
-        return "Updated the class name and teacher name  Successfully"
-    '''
     
-@app.route('/staff_view_attendance/<string:classname>', methods=["POST", "GET"])
-def staff_view_attendance(classname):
+    
+#created class attendance sheets    
+
+@app.route("/attendance/<string:classname>",methods=["POST", "GET"])
+def attendance(classname):
     con = sqlite3.connect("data_base.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
@@ -290,54 +227,52 @@ def staff_view_attendance(classname):
     cur.execute(query)
     data = cur.fetchall()
     con.close()
-    return render_template("staff/add_stud.html",data=data)
+    return render_template("admin/attendance_sheet.html",data=data,classname=classname)
+    
+#report generation
+@app.route("/report_attendance/<string:classname>", methods=["POST", "GET"])
+def report_attendance(classname):
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    query = f"SELECT * FROM {classname}"
+    cur.execute(query)
+    data = cur.fetchall()
+    if data == None:
+        return "No data available"
+    else:
+        con.close()
+        return render_template("admin/report.html",data=data)
 
 
+#save attendance daily
 
-
-
-# Update attendance data (including present and absent columns)
 def update_attendance(slno, present, absent, current_date, in_classname):
     conn = sqlite3.connect('data_base.db')
     cursor = conn.cursor()
 
-    # Fetch the current present and absent values from the database
     select_query = f"SELECT present, absent FROM {in_classname} WHERE slno = {slno}"
     cursor.execute(select_query)
     current_data = cursor.fetchone()
 
     if current_data:
         current_present, current_absent = current_data
-        # Debugging: Print current values
-        print(f"Current Data for SL.NO {slno}: Present = {current_present}, Absent = {current_absent}")
 
-        # Add the new values to the current values
         new_present = current_present + present
         new_absent = current_absent + absent
-
-        # Debugging: Print new values
-        print(f"New Data for SL.NO {slno}: Present = {new_present}, Absent = {new_absent}")
-
-        # Debugging: Print current_date to ensure it's correct
-        print(f"Current Date for SL.NO {slno}: {current_date}")
-
-        # Use parameterized query to avoid issues and ensure correct formatting
+      
         query = '''UPDATE {0} SET present = ?, absent = ?, date = ? WHERE slno = ?'''.format(in_classname)
         cursor.execute(query, (new_present, new_absent, current_date, slno))
         conn.commit()
     else:
-        print(f"No data found for SL.NO: {slno}")
+        return f"No data found for SL.NO: {slno}"
     
     conn.close()
-
-
+    
 @app.route('/save_attendance', methods=['POST'])
 def save_attendance():
-    current_date = datetime.now().strftime('%d-%m-%Y')  # Format current date as 'YYYY-MM-DD'
+    current_date = datetime.now().strftime('%d-%m-%Y')  
     in_classname = request.form['classname']
-    print(f"Form Data: {request.form}")  # Debugging: Print form data
-
-    # Track which students have already been processed
     processed_students = set()
 
     # Iterate over each student and check attendance for periods P1 to P8
@@ -363,9 +298,7 @@ def save_attendance():
                     else:
                         absent += 1  # Period absent
 
-                # Debugging: Print the calculated attendance
-                print(f"SL.NO {student_slno}: Present = {present}, Absent = {absent}")
-
+             
                 # Update the attendance in the database
                 update_attendance(student_slno, present, absent, current_date, in_classname)
 
@@ -379,19 +312,32 @@ def save_attendance():
     return "Attendance updated successfully!"
 
 
-@app.route("/report_attendance/<string:classname>", methods=["POST", "GET"])
-def report_attendance(classname):
+
+
+
+#manage the class staffs
+@app.route("/manage_classes_staff",methods=["POST", "GET"])
+def manage_classes_staff():
+    con = sqlite3.connect("data_base.db")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+    cur.execute("Select * from all_classes")
+    data = cur.fetchall()
+    con.close()
+    return render_template("staff/manage_classes.html", data=data)
+
+
+@app.route("/staff_view_attendance_sheet/<string:classname>",methods=["POST", "GET"])
+def staff_view_attendance_sheet(classname):
     con = sqlite3.connect("data_base.db")
     con.row_factory = sqlite3.Row
     cur = con.cursor()
     query = f"SELECT * FROM {classname}"
     cur.execute(query)
     data = cur.fetchall()
-    if data == None:
-        return "No data available"
-    else:
-        con.close()
-        return render_template("admin/report.html",data=data)
+    con.close()
+    return render_template("staff/attendance_sheet.html",data=data,classname=classname)
+          
 
 @app.route('/staffs_search_class')
 def staffs_search_class():
@@ -418,6 +364,8 @@ def generate_report():
         return render_template("admin/report.html",data=data)
 
 
+
+#others only generate the report
 @app.route('/others_search_class')
 def others_search_class():
     return render_template("other/search_report.html")    
@@ -452,51 +400,3 @@ def others_generate_report():
 
 if(__name__ == '__main__'):
     app.run()
-
-
-
-
-"""def get_db():
-    conn = sqlite3.connect('data_base.db')
-    return conn
-
-# Update attendance data in the database
-def update_attendance(slno, present, absent,current_date):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute('''UPDATE class1 SET present = ?, absent = ? ,date = ? WHERE slno = ?''', (present, absent, current_date,slno))
-    conn.commit()
-    conn.close()
-
-@app.route('/save_attendance', methods=['POST'])
-def save_attendance():
-    current_date = datetime.now().strftime('%d-%m-%Y')
-    # Iterate over each student and check attendance for periods P1 to P8
-    for slno in request.form:
-        if slno.startswith('p'):  # Only process keys representing periods (e.g., p1_1, p2_1)
-            try:
-                student_slno = slno.split('_')[1]  # Extract the student SL.NO
-                student_slno = int(student_slno)  # Convert to integer
-
-                # Initialize the present and absent counts
-                present = 0
-                absent = 0
-
-                # Loop through each period (P1 to P8) and count attendance
-                for period in range(1, 9):
-                    # Check if the student attended this period (checkbox is checked)
-                    if f'p{period}_{student_slno}' in request.form:
-                        present += 1  # Period attended
-                    else:
-                        absent += 1  # Period absent
-
-                # Update the attendance in the database (only present and absent columns)
-                update_attendance(student_slno, present, absent,current_date)
-            except IndexError:
-                print(f"Error processing attendance for form field: {slno}")
-                continue
-
-    return "Attendance updated successfully!"
-
-if(__name__ == '__main__'):
-    app.run()"""

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STUDENT PRESENCE MANAGER</title>
-    <link rel="stylesheet" href="\static\css\add_stud.css">
+    <link rel="stylesheet" href="\static\css\attendance_sheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -15,26 +15,13 @@
         <img src="\static\images\logo.jpg">
         <ul>
             <li><a href="{{url_for('home')}}">Home</a></li>
-            <li><a href="{{url_for('manage_classes')}}">Manage Classes</a></li>
-            <li><a href="#">Manage Teachers</a></li>
-            <li><a href="#">Manage Students</a></li>
-            <li><a href="#">Manage Reports</a></li>
+            <li><a href="{{url_for('manage_classes_staff')}}">Manage Classes</a></li>
+            <li><a href="{{url_for('staffs_search_class')}}">Manage Reports</a></li>
             <li><a href="{{url_for('login')}}">Logout</a></li>
         </ul>
     </div>
 
     <div class="img_container">
-
-        <div class="add-student">
-            <h1>ADD STUDENTS</h1>
-            <form action="/excel_to_table" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".xlsx, .xls" class="file-upload">
-                <label for="classname" style="display:none;">Class Name :</label>
-                <input type="text" name="classname" value="{{ classname }}" readonly style="display:none;">
-                <button type="submit">Upload File</button>
-            </form>
-        </div>
-        
         <div class="all-attendance-table">
             <h1>ATTENDANCE</h1>
             <div class="search-box">
@@ -91,6 +78,7 @@
                
                     <button type="submit">SAVE</button>
                     <button type="button" onclick="clearForm()">CLEAR</button>
+                    <button type="submit" name="action" value="undo">UNDO Changes</button>
                 </div>
             </form>
         </div>
