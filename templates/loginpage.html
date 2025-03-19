@@ -14,21 +14,22 @@
   </head>
   <style>
     body {
-      display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
     .wrapper {
+      margin-left: 250px;
+      margin-top: 50Px;
+      display: flex;
       position: relative;
       width: 1200px;
       height: 300px;
       margin-bottom: 300px;
       background: transparent;
     }
-    .form-lgn h1 {
-      color: white;
-    }
+
+
     /* Entire form */
 
     .form-lgn {
@@ -41,7 +42,8 @@
       margin-left: 80px;
     }
     .form-lgn h1 {
-      margin-left: 150px;
+    color:white;
+      margin-left: 180px;
       margin-top: 15px;
       font-size: 40px;
       font-weight: bold;
@@ -55,10 +57,27 @@
       margin-left: 100px;
       background: white;
     }
+
     .btn2:hover {
       transform: scale(1.1);
       background: white;
       color: #f92288;
+    }
+    .btn3 {
+      margin-top: 10px;
+      border-radius: 3px;
+      width: 50px;
+      height: 25px;
+    
+      margin-left: 100px;
+      background: white;
+    }
+    .btn3:hover {
+      transform: scale(1.1);
+      background: white;
+      color: #f92288;
+      border: 2px solid rgb(164, 165, 165);
+      border-radius: 3px;
     }
     .admin a {
       margin-left: 100px;
@@ -72,7 +91,7 @@
       font-size: 25px;
       margin-top: 40px;
     }
-
+    
     .img img {
       margin-left: 100px;
       float: right;
@@ -86,7 +105,7 @@
     }
     .input-box {
       margin-left: 50px;
-      margin-top: 50px;
+      margin-top: 80px;
     }
     .input-box label {
       font-family: Arial;
@@ -94,23 +113,42 @@
       color: white;
     }
     .b1 {
-      margin-left: 150px;
-      margin-top: 5px;
+      margin-left: 50px;
+      margin-top: 15px;
     }
     .input-box input {
       border-radius: 3px;
       border: 1px solid #f92288;
-      margin-left: 30px;
       outline:none;
     }
+    .b2{
+      margin-top: 30px;
+      margin-left: 1200px;
 
+    }
+   
     .i {
       width: 300px;
       height: 300px;
     }
+    .link{
+      margin-top: 80px;
+      color: azure;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .link p a{
+      list-style-type: none;
+      text-decoration: none;
+      color: rgb(185, 185, 185);
+    }
   </style>
 
   <body>
+    <!---admin btn----->
+    <div class="b2">
+      <input type="submit" value="Admin" class="btn2"/>
+</div>
     <i class="fa-solid fa-lock"></i>
     <div class="wrapper">
       <div class="form-lgn">
@@ -118,19 +156,15 @@
           <img src="static/images/donate.png" />
         </div>
         <h1>Login</h1>
-        <div class="admin">
-          <a href="admin"><span> Admin</span></a>
-        </div>
 
-        <!---admin link----->
         <form action="/confirm" method="POST">
           <div class="input-box">
             <label>Username <ion-icon name="person"></ion-icon></label>
-            <input type="text" name="name" required /><br /><br />
-            <label>Password <ion-icon name="lock-closed"></ion-icon></label>
-            <input type="password" name="password" required /> <br />
+            <input type="text" name="ad_name" required /><br /><br />
+            <label>Password <ion-icon name="lock-closed"></ion-icon> </label>
+            <input type="password" name="ad_pass" required /> <br />
             <div class="b1">
-              <input type="submit" value="Login" class="btn2" />
+              <input type="submit" value="Login" class="btn3" />
             </div>
             <div class="link">
               <p>

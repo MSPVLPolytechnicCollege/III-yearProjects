@@ -17,13 +17,11 @@ def firstpage():
 @app.route('/loginpage')
 def home():
     return render_template('loginpage.html')
+
 #about page
 @app.route('/about',methods=['GET','POST'])
 def about():
     return render_template("about.html")
-
-#ourimpact page
-
 
 #adminpage
 @app.route('/admin',methods=['GET','POST'])
@@ -34,7 +32,6 @@ def admipage():
         con = sqlite3.connect('charity.db')
         con.row_factory = sqlite3.Row
         cursor = con.cursor()
-        # cursor.execute("insert into lgn(uname,password) values(?,?);", (, p))
         cursor.execute("select * from admin where ad_name=? and ad_pass=?;", (ad_nm, ad_pd))
         data = cursor.fetchone()
     # compare the data name&password
@@ -44,14 +41,10 @@ def admipage():
             return redirect("admindashboard")  #call the success in router
         else:
             return ("Mismatch the password and username")
-    #return redirect(url_for("sucess.html"))
-        #con.commit()
-        #con.close()
-
     return render_template('admin.html')# return the admin.html page
 
 
-#donate details
+#donate & control  details table
 @app.route('/view')
 def view():
     con = sqlite3.connect('charity.db')
@@ -68,12 +61,6 @@ def view():
     cursor.execute('select * from contact')
     res = cursor.fetchall()
     return render_template("view.html", datas=res)
-
-
-
-
-
-# call the route
 
 # contact the route
 @app.route('/contact',methods=['GET','POST'])
@@ -108,7 +95,6 @@ def register():
     return render_template('register.html')
 
 
-
 #donate form
 @app.route('/donate',methods=['GET','POST'])
 def donate():
@@ -126,7 +112,6 @@ def donate():
     return render_template('donate.html')
 
 #login page code
-
 @app.route('/confirm',methods=['GET','POST'])
 def login():
     if request.method=='POST':
@@ -135,7 +120,6 @@ def login():
         con = sqlite3.connect('charity.db')
         con.row_factory=sqlite3.Row
         cursor = con.cursor()
-        #cursor.execute("insert into lgn(uname,password) values(?,?);", (, p))
         cursor.execute("select * from register where name=? and password=?;", (u,p))
         data=cursor.fetchone()
 #compare the data name&password
@@ -148,7 +132,7 @@ def login():
     return redirect(url_for("sucess.html"))
 
 
-#compare this router
+#sucess  router
 @app.route('/sucess',methods=['GET','POST'])
 def sucess():
     return render_template("sucess.html")
@@ -167,6 +151,7 @@ def loginpage():
 def payment():
     return render_template("payment.html")
 
+#admin dashboard page
 @app.route('/admindashboard',methods=['GET','POST'])
 def admindashboard():
     return render_template("admindashboard.html")
