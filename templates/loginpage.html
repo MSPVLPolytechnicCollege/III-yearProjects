@@ -14,25 +14,25 @@
   </head>
   <style>
     body {
-      display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
     }
     .wrapper {
+      margin-left: 200px;
+      margin-top: 50px;
+      display: flex;
       position: relative;
       width: 1200px;
       height: 300px;
       margin-bottom: 300px;
       background: transparent;
     }
-    .form-lgn h1 {
-      color: white;
-    }
+
     /* Entire form */
 
     .form-lgn {
-      background: #ff50a2;
+      background: #fa469a;
       border: 2px solid white;
       border-radius: 20px;
       width: 900px;
@@ -41,38 +41,49 @@
       margin-left: 80px;
     }
     .form-lgn h1 {
-      margin-left: 150px;
+      color: white;
+      margin-left: 180px;
       margin-top: 15px;
       font-size: 40px;
       font-weight: bold;
     }
+
+    /* admin putside button */
+
     .btn2 {
       margin-top: 10px;
       border-radius: 3px;
-      width: 50px;
-      height: 25px;
+      width: 80px;
+      height: 35px;
       border: 2px solid #f92288;
       margin-left: 100px;
       background: white;
     }
+
     .btn2:hover {
       transform: scale(1.1);
       background: white;
       color: #f92288;
     }
-    .admin a {
-      margin-left: 100px;
-      text-decoration: none;
-      margin-left: 40px;
-      color: white;
-      color: white;
-    }
-    .admin {
-      margin-top: 10px;
-      font-size: 25px;
-      margin-top: 40px;
-    }
 
+    /* inside login button */
+
+    .btn3 {
+      margin-top: 10px;
+      border-radius: 3px;
+      width: 80px;
+      height: 40px;
+      margin-left: 140px;
+      background: white;
+      border: 2px solid #f92288;
+    }
+    .btn3:hover {
+      transform: scale(1.1);
+      background: white;
+      color: #f92288;
+      border: 2px solid rgb(174, 173, 174);
+      border-radius: 3px;
+    }
     .img img {
       margin-left: 100px;
       float: right;
@@ -86,58 +97,78 @@
     }
     .input-box {
       margin-left: 50px;
-      margin-top: 50px;
+      margin-top: 80px;
     }
     .input-box label {
       font-family: Arial;
       font-weight: bold;
       color: white;
+      font-size: 16px;
+    }
+    /* desgnin the icons */
+
+    .input-box ion-icon {
+      color: white;
+      font-size: 18px;
     }
     .b1 {
-      margin-left: 150px;
-      margin-top: 5px;
+      margin-left: 50px;
+      margin-top: 15px;
     }
     .input-box input {
       border-radius: 3px;
       border: 1px solid #f92288;
-      margin-left: 30px;
+      outline: none;
+      height: 25px;
+      width: 190px;
     }
 
-    .i {
-      width: 300px;
-      height: 300px;
+    .b2 {
+      margin-top: 30px;
+      margin-left: 1000px;
+    }
+
+    .link {
+      margin-top: 60px;
+      color: azure;
+      font-size: 20px;
+      font-weight: bold;
+      margin-left: 30px;
+    }
+    .link p a {
+      list-style-type: none;
+      text-decoration: none;
+      color: rgb(185, 185, 185);
     }
   </style>
 
   <body>
+    <!---admin btn----->
+    <div class="b2">
+      <input type="submit" value="Admin" class="btn2" />
+    </div>
     <i class="fa-solid fa-lock"></i>
     <div class="wrapper">
       <div class="form-lgn">
         <div class="img">
           <img src="static/images/donate.png" />
         </div>
-        <h1>Loginpage</h1>
-        <div class="admin">
-          <a href="admin"><span> Admin</span></a>
-        </div>
+        <h1>Login</h1>
 
-        <!---admin link----->
         <form action="/confirm" method="POST">
           <div class="input-box">
             <label>Username <ion-icon name="person"></ion-icon></label>
-            <input type="text" name="name" required /><br /><br />
-            <label>Password <ion-icon name="lock-closed"></ion-icon></label>
-            <input type="password" name="password" required /> <br />
-            <div class="b1">
-              <input type="submit" value="Login" class="btn2" />
-            </div>
-            <div class="link">
-              <p>
-                Don't have an account?<a href="register"
-                  ><span> Sign up</span></a
-                >
-              </p>
-            </div>
+            <input type="text" name="ad_name" required /><br /><br />
+            <label>Password <ion-icon name="lock-closed"></ion-icon> </label>
+            <input type="password" name="ad_pass" required /> <br />
+          </div>
+          <div class="b1">
+            <input type="submit" value="Login" class="btn3" />
+          </div>
+          <div class="link">
+            <p>
+              Don't have an account?<a href="register"><span> Sign up</span></a>
+            </p>
           </div>
         </form>
       </div>

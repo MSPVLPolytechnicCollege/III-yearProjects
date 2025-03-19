@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>admindashboard</title>
+      <!-----script------>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
@@ -46,6 +48,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+
     }
 
     .brand-name h1 {
@@ -150,38 +153,14 @@
       margin-top: 50px;
     }
 
-    .table {
-      margin-left: 100px;
-    }
-    .table p {
-      margin-left: 100px;
-      color: #f92288;
-    }
-
-    .table td {
-      padding: 5px;
-    }
-
-
-      .t2{ 
-        margin-left: 100px;
-        padding-top: 50px;
-      }
-
- .t2 p {
-      margin-left: 80px;
-      color: #f92288;
-    }
-
-
 .donatedeatils th{
         color: #f92288;
         background-color:;
     }
-    
-  </style>
 
+  </style>
   <body>
+   <!-----icon set ------>
     <div class="side-menu">
       <div class="brand-name">
         <h1>Dashboard <ion-icon name="list-outline"></ion-icon></h1>
@@ -205,12 +184,14 @@
       </div>
     </div>
 
+    <div class="container">
     <div class="container1">
       <div class="header">
         <div class="nav">
+             <!----- view link------>
           <div class="search">
             <div class="user">
-              <a href="#" class="btn">view more </a>
+              <a href="view" class="btn">view more </a><!----redirect the page into view page--->
             </div>
           </div>
           <div class="img">
@@ -218,6 +199,7 @@
           </div>
         </div>
       </div>
+         <!----- box and conetent1  ------>
       <div class="content">
         <div class="cards">
           <div class="card">
@@ -229,7 +211,7 @@
               <img src="static/images/msk2.png" height="90px" width="90px" />
             </div>
           </div>
-
+ <!----- box and conetent2  ------>
           <div class="card">
             <div class="box">
               <h1>30000</h1>
@@ -243,7 +225,7 @@
               />
             </div>
           </div>
-
+ <!----- box and conetent3 ------>
           <div class="card">
             <div class="box">
               <h1>300</h1>
@@ -255,58 +237,7 @@
           </div>
         </div>
       </div>
-<!----table for donation details-->
-    <div class="table">
-        <p>Donate details</p>
-        {% if messages %} {% for message in messages %} {{message}} {% endfor %}
-        {% endif %}
-
-        <div class="donatedeatils">
-            <table border="1" color="gray">
-              {% for data in datas %}
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone  </th>
-                <th>Address</th>
-                <th>payments</th>
-              </tr>
-              <tr>
-                <td>{{ data['name'] }}</td>
-                <td>{{ data['email'] }}</td>
-                <td>{{ data['phone'] }}</td>
-                <td>{{ data['address'] }}</td>
-                <td>{{ data['payment'] }}</td>
-              </tr>
-              {% endfor %}
-            </table>
-          </form>
-        </div>
-      </div>
-<!----table for contact details---->
-       <div class="t2">
-          <p>Contact details</p>
-       <table border="1" color="gray">
-              {% for data in datas %}
-         <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone  </th>
-                <th>Address</th>
-              </tr>
-          <tr>
-            <td>{{ data['name'] }}</td>
-            <td>{{ data['email'] }}</td>
-            <td>{{ data['phone'] }}</td>
-            <td>{{ data['address'] }}</td>
-          </tr>
-              {% endfor %}
-            </table>
-          </form>
-        </div>
-      </div>
-      </div>
     </div>
-
+    </div>
   </body>
 </html>
