@@ -17,7 +17,7 @@
             <li><a href="{{url_for('home')}}">Home</a></li>
             <li><a href="{{url_for('manage_classes')}}">Manage Classes</a></li>
             <li><a href="#">Manage Teachers</a></li>
-            <li><a href="#">Manage Reports</a></li>
+            <li><a href="{{url_for('report_generate_form')}}">Manage Reports</a></li>
             <li><a href="{{url_for('login')}}">Logout</a></li>
         </ul>
     </div>
@@ -26,10 +26,10 @@
         <div class="all-attendance-table">
             <h1>ATTENDANCE</h1>
             <div class="search-box">
-                <input type="date" id="dateInput">
                 <form>
-                    <input type="search" name="search" required placeholder="Search">
+                    <input type="date" id="dateInput">
                     <button>search</button>
+                    <button>create</button>
                 </form>
             </div>
         
@@ -77,8 +77,8 @@
                 </table>
                 <div class="btn-group">
                     <button type="submit">SAVE</button>
-                    <button type="button" onclick="clearForm()">CLEAR</button>
-                    <button type="submit" name="action" value="undo">UNDO Changes</button>
+                    <button type="reset" onclick="clearForm()">CLEAR</button>
+                    <button type="submit" >UNDO</button>
                 </div>
             </form>
         </div>
