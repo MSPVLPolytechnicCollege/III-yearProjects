@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './ForgotPassword.css'; // Import your updated CSS
 
 function ForgotPassword() {
     const [username, setUsername] = useState('');
@@ -8,41 +9,63 @@ function ForgotPassword() {
     const navigate = useNavigate();
 
     const handleVerify = async () => {
-        setError('');
+        setError(''); // Clear any previous errors
 
-        const response = await fetch('/api/verify-user', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email })
-        });
+        if (!username || !email) {
+            setError('Please fill in both fields.');
+            return;
+        }
 
-        const data = await response.json();
+        try {
+            const response = await fetch('/api/verify-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email })
+            });
 
-        if (response.ok) {
-            navigate('/reset-password', { state: { username } }); // ✅ Pass username to ResetPassword.js
-        } else {
-            setError(data.message || 'User verification failed. Try again.');
+            const data = await response.json();
+
+            if (response.ok) {
+                navigate('/reset-password', { state: { username } }); // Pass username to ResetPassword page
+            } else {
+                setError(data.message || 'User verification failed. Try again.');
+            }
+        } catch (error) {
+            setError('An error occurred. Please try again.');
         }
     };
 
     return (
         <div className="forgot-password-container">
-            <h2>Forgot Password</h2>
-            {error && <p className="error-message">{error}</p>}
-            <input 
-                type="text" 
-                placeholder="Enter your username" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-            />
-            <input 
-                type="email" 
-                placeholder="Enter your email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
-            />
-            <button onClick={handleVerify} className="verify-button">Verify</button>
-            <button onClick={() => navigate('/login')} className="back-button">Back</button>
+            <div className="forgot-password-box">
+                <h2>Forgot Password</h2>
+                {error && <p className="error-message">{error}</p>}
+                
+                <div className="input-group">
+                    <label htmlFor="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="Enter your username" 
+                        value={username} 
+                        onChange={(e) => setUsername(e.target.value)} 
+                    />
+                </div>
+
+                <div className="input-group">
+                    <label htmlFor="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="Enter your email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                    />
+                </div>
+
+                <button onClick={handleVerify} className="verify-button">Verify</button>
+                <button onClick={() => navigate('/login')} className="back-button">Back</button>
+            </div>
         </div>
     );
 }

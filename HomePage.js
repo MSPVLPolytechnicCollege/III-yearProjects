@@ -4,22 +4,24 @@ import './HomePage.css';
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
+  const [darkMode, setDarkMode] = useState(false); // Dark mode state
   const spinnerRef = useRef(null);
   const rotationRef = useRef(0);
-  const navigate = useNavigate(); // Add navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 5000);
+      document.querySelector('.loading-container').classList.add('hidden');
+    }, 1000);
 
     const interval = setInterval(() => {
       if (spinnerRef.current) {
         spinnerRef.current.style.borderTopColor = getRandomColor();
-        rotationRef.current += 5; // Increased rotation speed
+        rotationRef.current += 5;
         spinnerRef.current.style.transform = `rotate(${rotationRef.current}deg)`;
       }
-    }, 30); // Reduced interval for smoother/faster rotation
+    }, 30);
 
     return () => {
       clearTimeout(timer);
@@ -36,44 +38,50 @@ function HomePage() {
     return color;
   }
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-animation">
-          <div className="spinner" ref={spinnerRef}></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="home-container">
-      <header className="home-header">
-        <h1>Welcome to PyBot!</h1>
-      </header>
-
-      <section className="home-content">
-        <p>
-          Dive into the world of Python programming with our intelligent chatbot. Whether you're a beginner or an experienced developer, we're here to assist you with Python syntax, concepts, and best practices.
-        </p>
-
-        <div className="home-buttons">
-          <button className="home-button" onClick={() => navigate('/login')}>
-            Login
-          </button>
-          <button className="home-button" onClick={() => navigate('/signup')}>
-            Signup
-          </button>
-          <button className="home-button" onClick={() => navigate('/chatbot')}>
-            Continue as Guest
-          </button>
+    <div className={`home-container ${darkMode ? 'dark-mode' : ''}`}>
+      {loading ? (
+        <div className="loading-container">
+          <div className="loading-animation">
+            <div className="spinner" ref={spinnerRef}></div>
+            <p>Loading...</p>
+          </div>
         </div>
-      </section>
+      ) : (
+        <>
+          <header className="home-header">
+            <h1>Welcome to PyBot!</h1>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className={darkMode ? 'dark-mode' : ''}
+            >
+              Change Theme
+            </button>
+          </header>
 
-      <footer className="home-footer">
-        <p>&copy; {new Date().getFullYear()} Python Chatbot</p>
-      </footer>
+          <main className="home-content">
+            <p>
+              Dive into the world of Python programming with our intelligent chatbot. Whether you're a beginner or an experienced developer, we're here to assist you with Python syntax, concepts, and best practices.
+            </p>
+
+            <div className="home-buttons">
+              <button className="home-button" onClick={() => navigate('/login')}>
+                Login
+              </button>
+              <button className="home-button" onClick={() => navigate('/signup')}>
+                Signup
+              </button>
+              <button className="home-button" onClick={() => navigate('/chatbot')}>
+                Continue as Guest
+              </button>
+            </div>
+          </main>
+
+          <footer className="home-footer">
+            <p>&copy; {new Date().getFullYear()} Python Chatbot</p>
+          </footer>
+        </>
+      )}
     </div>
   );
 }

@@ -7,12 +7,14 @@ function Chatbot({ isLoggedIn, onBack }) {
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef(null);
 
+  // Auto scroll to the bottom when new message is added
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
+  // Handle voice input from the user
   const handleVoiceInput = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
@@ -31,6 +33,7 @@ function Chatbot({ isLoggedIn, onBack }) {
     };
   };
 
+  // Send message to the bot
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
 
@@ -60,10 +63,12 @@ function Chatbot({ isLoggedIn, onBack }) {
     }
   };
 
+  // Handle input change
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
 
+  // Send message on Enter key press (without Shift key)
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -73,8 +78,8 @@ function Chatbot({ isLoggedIn, onBack }) {
 
   return (
     <div className="chatbot-container">
-      <button className="back-button" onClick={onBack}>Back</button> {/* Add Back Button */}
-      
+      <button className="back-button" onClick={onBack}>Back</button> {/* Back Button */}
+
       <div className="chat-display" ref={chatContainerRef}>
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
