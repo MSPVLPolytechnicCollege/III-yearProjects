@@ -1,39 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
 
-function Chatbot({ isLoggedIn, onBack }) {
+function Chatbot({ onBack }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef(null);
 
-  // Auto scroll to the bottom when new message is added
+  // Scroll to the bottom when a new message is added
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Handle voice input from the user
-  const handleVoiceInput = () => {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    
-    recognition.lang = 'en-US';
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const voiceInput = event.results[0][0].transcript;
-      setInput(voiceInput);
-      sendMessage(voiceInput);
-    };
-
-    recognition.onerror = (event) => {
-      console.error('Voice input error:', event);
-    };
-  };
-
-  // Send message to the bot
+  // Handle sending message
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
 
@@ -43,11 +24,9 @@ function Chatbot({ isLoggedIn, onBack }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('/api/chat', {  // Replace with your API endpoint
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: message }),
       });
 
@@ -68,7 +47,7 @@ function Chatbot({ isLoggedIn, onBack }) {
     setInput(e.target.value);
   };
 
-  // Send message on Enter key press (without Shift key)
+  // Handle send button click or Enter key
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -78,7 +57,10 @@ function Chatbot({ isLoggedIn, onBack }) {
 
   return (
     <div className="chatbot-container">
-      <button className="back-button" onClick={onBack}>Back</button> {/* Back Button */}
+      <div className="chat-header">
+        <button className="back-button" onClick={onBack}>Back</button>
+        <span>Pybot</span>
+      </div>
 
       <div className="chat-display" ref={chatContainerRef}>
         {messages.map((message, index) => (
@@ -86,7 +68,8 @@ function Chatbot({ isLoggedIn, onBack }) {
             <div className="message-content">{message.text}</div>
           </div>
         ))}
-        {isLoading && <div className="loading-indicator">Thinking...</div>}
+
+        {isLoading && <div className="loading-indicator">...Thinking</div>}
       </div>
 
       <div className="input-area">
@@ -94,14 +77,9 @@ function Chatbot({ isLoggedIn, onBack }) {
           value={input}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder="Type your question..."
           className="chat-input"
         />
-        {isLoggedIn && (
-          <button onClick={handleVoiceInput} className="voice-button">
-            🎤
-          </button>
-        )}
         <button onClick={() => sendMessage(input)} className="send-button">
           Send
         </button>
