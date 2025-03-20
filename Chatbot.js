@@ -46,6 +46,16 @@ function Chatbot({ onBack }) {
     }
   };
 
+  // Function to speak text aloud
+  const speakText = (text) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 1;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
 
@@ -68,12 +78,14 @@ function Chatbot({ onBack }) {
       const data = await response.json();
       const botResponse = { text: data.response, sender: 'bot' };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
+
+      // Speak the bot response
+      speakText(data.response);
     } catch (error) {
       console.error('Error:', error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: 'An error occurred. Please try again.', sender: 'bot' },
-      ]);
+      const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      speakText('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
