@@ -1,49 +1,34 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Moon, Sun } from 'lucide-react'; // Import icons
 import './HomePage.css';
 
 function HomePage() {
   const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false); // Dark mode state
-  const spinnerRef = useRef(null);
-  const rotationRef = useRef(0);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('darkMode') === 'true';
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-      document.querySelector('.loading-container').classList.add('hidden');
     }, 1000);
 
-    const interval = setInterval(() => {
-      if (spinnerRef.current) {
-        spinnerRef.current.style.borderTopColor = getRandomColor();
-        rotationRef.current += 5;
-        spinnerRef.current.style.transform = `rotate(${rotationRef.current}deg)`;
-      }
-    }, 30);
-
-    return () => {
-      clearTimeout(timer);
-      clearInterval(interval);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
-  function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
+  useEffect(() => {
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
 
   return (
     <div className={`home-container ${darkMode ? 'dark-mode' : ''}`}>
       {loading ? (
         <div className="loading-container">
           <div className="loading-animation">
-            <div className="spinner" ref={spinnerRef}></div>
+            <div className="spinner"></div>
             <p>Loading...</p>
           </div>
         </div>
@@ -53,9 +38,10 @@ function HomePage() {
             <h1>Welcome to PyBot!</h1>
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className={darkMode ? 'dark-mode' : ''}
+              className="theme-toggle"
+              aria-label="Toggle Dark Mode"
             >
-              Change Theme
+              {darkMode ? <Sun size={20} /> : <Moon size={20} />} {/* Icon changes dynamically */}
             </button>
           </header>
 

@@ -1,20 +1,51 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Send, Mic } from 'lucide-react';
 import './Chatbot.css';
 
 function Chatbot({ onBack }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [showLightning, setShowLightning] = useState(false);
   const chatContainerRef = useRef(null);
+  const recognitionRef = useRef(null);
 
-  // Scroll to the bottom when a new message is added
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
 
-  // Handle sending message
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setInput(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  const startRecording = () => {
+    if (recognitionRef.current) {
+      setIsRecording(true);
+      recognitionRef.current.start();
+    }
+  };
+
+  const stopRecording = () => {
+    if (recognitionRef.current) {
+      setIsRecording(false);
+      recognitionRef.current.stop();
+    }
+  };
+
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
 
@@ -22,9 +53,13 @@ function Chatbot({ onBack }) {
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
     setInput('');
     setIsLoading(true);
+    setShowLightning(true);
 
     try {
-      const response = await fetch('/api/chat', {  // Replace with your API endpoint
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setShowLightning(false);
+
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: message }),
@@ -35,19 +70,15 @@ function Chatbot({ onBack }) {
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     } catch (error) {
       console.error('Error:', error);
-      const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: 'An error occurred. Please try again.', sender: 'bot' },
+      ]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Handle input change
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  // Handle send button click or Enter key
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -58,8 +89,10 @@ function Chatbot({ onBack }) {
   return (
     <div className="chatbot-container">
       <div className="chat-header">
-        <button className="back-button" onClick={onBack}>Back</button>
-        <span>Pybot</span>
+        <button className="back-button" onClick={onBack}>
+          <ArrowLeft size={20} /> Back
+        </button>
+        <span>PyBot</span>
       </div>
 
       <div className="chat-display" ref={chatContainerRef}>
@@ -69,19 +102,28 @@ function Chatbot({ onBack }) {
           </div>
         ))}
 
+        {showLightning && <div className="lightning-effect"></div>}
+
         {isLoading && <div className="loading-indicator">...Thinking</div>}
       </div>
 
       <div className="input-area">
         <textarea
           value={input}
-          onChange={handleInputChange}
+          onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your question..."
           className="chat-input"
         />
         <button onClick={() => sendMessage(input)} className="send-button">
-          Send
+          <Send size={20} />
+        </button>
+        <button
+          onMouseDown={startRecording}
+          onMouseUp={stopRecording}
+          className={`mic-button ${isRecording ? 'recording' : ''}`}
+        >
+          <Mic size={20} />
         </button>
       </div>
     </div>

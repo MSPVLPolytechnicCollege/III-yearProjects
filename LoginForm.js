@@ -40,12 +40,12 @@ function LoginForm() {
     <div className="login-container">
       <h2>Login</h2>
       {error && <p className="error-message">{error}</p>}
-
+      
       <div className="input-group">
         <label htmlFor="username">Username</label>
         <input
-          id="username"
           type="text"
+          id="username"
           placeholder="Enter your username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -55,8 +55,8 @@ function LoginForm() {
       <div className="input-group">
         <label htmlFor="password">Password</label>
         <input
-          id="password"
           type="password"
+          id="password"
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
