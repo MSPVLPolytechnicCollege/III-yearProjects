@@ -161,6 +161,126 @@ cursor.execute('''
 con.commit()
 con.close()
 
+#cse table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS cse (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#it table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS it (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#eee table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS eee (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#ece table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS ece (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#mech table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS mech (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#civil table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS civil (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#automobile table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS auto (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+
 
 #Register the student details
 @app.route('/register', methods=['GET', 'POST'])
@@ -783,6 +903,39 @@ def get_total_alumni_json():
 
     conn.close()
     return jsonify({'total': total_alumni})  # JSON format la return pannu
+
+
+
+#data to be inserted on the selected department
+@app.route('/add_student1', methods=['GET','POST'])
+def add_student1():
+    if request.method=='POST':
+        name = request.form['name']
+        register_number = request.form['register']
+        dob = request.form['dob']
+        semester = request.form['semester']
+        year = request.form['year']
+        department = request.form['department']
+        address = request.form['address']
+        phone = request.form['phone']
+
+         # Validate department to avoid SQL Injection
+        allowed_departments = ['CSE', 'IT', 'EEE', 'MECH', 'CIVIL', 'ECE', 'AUTO']
+        if department not in allowed_departments:
+            return "Invalid department selected!", 400
+        
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        query = f"INSERT INTO {department} (name, regno, dob, semester, year, address, phoneno) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        cursor.execute(query, (name, register_number, dob, semester, year, address, phone))
+        con.commit()
+        con.close()
+         # Redirect back to the form with a success message
+        return redirect(url_for('add_student1', success="Student record inserted successfully!"))
+
+    success_message = request.args.get('success')  # Retrieve success message
+    return render_template('student-details.html', success=success_message)
+
 
 if __name__=='__main__':
     app.secret_key = '1234'
