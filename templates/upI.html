@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>upi page</title>
+    <!-- Bootstrap CSS --->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+</head>
+<style>
+    .p1{
+        width:500px;
+        margin-left:300px;
+        margin-top:100px;
+    }
+    .card-header{
+    background-color:#f92288;
+    color:white;
+     font-size:24px;
+      font-weight:medium;
+    }
+     .popup {
+          width: 400px;
+          background:#fff;
+          border-radius: 6px;
+          border:solid 2px #f92288;
+          position: absolute;
+          top: 0%;
+          left: 40%;
+          transform: translate(-50%, -50%) scale(0.1);
+          text-align:center;
+          padding:0 30px 30px;
+          color:#333;
+           visibility: hidden;
+           transition:transform 0.4s,top 0.4s;
+        }
+        .open-popup {
+          visibility: visible;
+          top: 50%;
+          transform: translate(-50%, -50%) scale(1);
+        }
+    .popup img {
+          width: 100px;
+          margin-top: -50px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px (rgb(0, 0, 0, 0.2));
+        }
+    .popup button {
+          width: 100%;
+          margin-top: 50px;
+          padding: 10px 0;
+          background: #6fd649;
+          color: #fff;
+          border: 0;
+          outline: none;
+          font-size: 18px;
+          border-radius: 4px;
+          cursor: pointer;
+          box-shadow: 0 5px 5px (rgb(0, 0, 0, 0.2));
+        }
+</style>
+<body>
+<div class="p1">
+<div class="card text-center">
+  <div class="card-header">
+    Indian Bank
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">xxxxx6789 UPI</h5>
+    <p class="card-text">Enter your upi pin</p>
+      <p>___   ___   __   ___</p>
+       <button class="submit" class="btn" onclick="openPopup()">
+                click ok</button></div></div>
+
+
+   <!--- <a href="#" class="btn btn-primary">Go somewhere tick</a>-
+    <div class="contaniner">
+         <button class="submit" class="btn" onclick="openPopup()">
+                click ok</button>--->
+      <div class="popup" id="popup">
+                <img src="static/images/sucs.png">
+                <h2>thankyou!</h2>
+                <p>your transcation has succesfully tranmited. thankyou</p>
+               <button type="button" onclick="closePopup()">ok</button>
+      </div>
+
+
+  </div></div>
+    <script>
+          let popup = document.getElementById("popup");
+
+          function openPopup() {
+            popup.classList.add("open-popup");
+          }
+
+        function closePopup() {
+            popup.classList.remove("open-popup");
+          }
+        </script>
+
+</body>
+</html>

@@ -152,6 +152,11 @@ def loginpage():
 def payment():
     return render_template("payment.html")
 
+#upi  page
+@app.route('/upI',methods=['GET','POST'])
+def upi():
+    return render_template("upI.html")
+
 #admin dashboard page
 @app.route('/admindashboard',methods=['GET','POST'])
 def admindashboard():

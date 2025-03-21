@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS --->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -19,8 +19,9 @@
     />
   </head>
   <body>
+  <!-----offline bootstrab-->
     <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS ---->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS --->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -65,25 +66,27 @@
       margin-left: 250px;
       margin-top: 30px;
     }
-    .ftr p{
-      margin-left: 400px;
-      margin-top: 30px;
-      font-size: 18px;
-      color: #f92288;
+    .form-label{
+      font-size:24px;
+      font-weight:medium;
     }
-
+  .card-footer{
+       background-color: #f92288;
+      height: 40px;
+      color: white;
+    }
   </style>
 
   <body>
   <form action="/payment" method="POST">
-  <div class="card">
-      <div class="card-header">Donation</div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          <form action="/payment" method="POST">
-            <div class="f1">
-              <!----class for mb-3 in label and inputbox--->
-              <div class="mb-3">
+   <!---- <div class="shadow p-3 mb-5 bg-body-tertiary rounded">Regular shadow</div>--->
+    <div class="card">
+    <div class="card-header">
+    Donation
+    </div>
+    <div class="card-body">
+
+    <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" />
               </div>
@@ -104,7 +107,7 @@
                   type="text"
                   class="form-control"
                   id="phone"
-                  name="phone"
+                  name="phone" required
                 />
               </div>
 
@@ -119,26 +122,43 @@
               </div>
 
               <div class="mb-3">
-                <label for="payment" class="form-label">Payment</label>
+                <label for="city" class="form-label">City</label>
                 <input
                   type="text"
                   class="form-control"
-                  id="payment"
-                  name="payment"
+                  id="city"
+                  name="city"
                 />
               </div>
-              <!------ buttton ------->
+
+              <div class="mb-3">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pincode"
+                  name="poncode"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="amount"
+                  name="amount"
+                />
+              </div>
+
+   <!------ buttton ------->
               <div class="b1">
                 <button type="submit" class="btn btn-outline-danger">
                   payment
                 </button>
               </div>
-            </div>
-          </form>
-        <div class="ftr">
-          <p>charity@gmail.com</p>
-        </div>
-      </div>
+    </div>
+   <div class="card-footer text-body-secondary text-right" >
+   <p>charity@gmail.com</p>
     </div>
     </div>
   </form>

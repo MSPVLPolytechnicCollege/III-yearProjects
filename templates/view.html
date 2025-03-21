@@ -15,23 +15,34 @@
     margin-left:300px;
     width:800px;
     margin-top:50px;
+
+    }
+    .t1 p{
+    color:#fa469a;
+    font-size:26px;
+    font-weight:bold;
     }
     .t2{
     margin-left:300px;
     width:800px;
     margin-top:150px;
     }
+     .t2 p{
+    color:#fa469a;
+    font-size:26px;
+    font-weight:bold;
+    }
 </style>
   <body>
     <div class="table-responsive">
-         <!----table for donation details--->
+         <!----table for donation Details--->
       <div class="table">
         <div class="t1">
         <p>Donate details</p>
         {% if messages %} {% for message in messages %} {{message}} {% endfor %}
         {% endif %}
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" >
           <thead>
             <tr>
               <th scope="col">Name</th>
