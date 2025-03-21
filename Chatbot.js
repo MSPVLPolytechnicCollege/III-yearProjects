@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, Send, Mic } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';  
 import './Chatbot.css';
 
-function Chatbot({ onBack }) {
+function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -10,17 +11,33 @@ function Chatbot({ onBack }) {
   const [showLightning, setShowLightning] = useState(false);
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
+  const synthRef = useRef(window.speechSynthesis);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
       const recognition = new window.webkitSpeechRecognition();
       recognition.continuous = false;
-      recognition.lang = 'en-US';
+      recognition.lang = 'ta-IN,en-US'; // Recognizes both Tamil & English
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+      recognition.onresult = async (event) => {
+        let transcript = event.results[0][0].transcript;
+
+        // If input is in Tamil, translate it to English
+        if (/[\u0B80-\u0BFF]/.test(transcript)) { 
+          try {
+            const response = await fetch(
+              `https://api.mymemory.translated.net/get?q=${encodeURIComponent(transcript)}&langpair=ta|en`
+            );
+            const data = await response.json();
+            transcript = data.responseData.translatedText;
+          } catch (error) {
+            console.error('Translation error:', error);
+          }
+        }
+
         setInput(transcript);
       };
 
@@ -46,29 +63,25 @@ function Chatbot({ onBack }) {
     }
   };
 
-  // Function to speak text aloud
   const speakText = (text) => {
+    synthRef.current.cancel(); // Stop any ongoing speech
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US';
       utterance.rate = 1;
-      speechSynthesis.speak(utterance);
+      synthRef.current.speak(utterance);
     }
   };
 
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
 
-    const newUserMessage = { text: message, sender: 'user' };
-    setMessages((prevMessages) => [...prevMessages, newUserMessage]);
+    setMessages((prev) => [...prev, { text: message, sender: 'user' }]);
     setInput('');
     setIsLoading(true);
     setShowLightning(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setShowLightning(false);
-
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,31 +90,27 @@ function Chatbot({ onBack }) {
 
       const data = await response.json();
       const botResponse = { text: data.response, sender: 'bot' };
-      setMessages((prevMessages) => [...prevMessages, botResponse]);
+      setMessages((prev) => [...prev, botResponse]);
 
-      // Speak the bot response
-      speakText(data.response);
+      speakText(data.response); // ✅ Speak bot response aloud
     } catch (error) {
       console.error('Error:', error);
       const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
-      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
       speakText('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage(input);
+      setShowLightning(false);
     }
   };
 
   return (
     <div className="chatbot-container">
       <div className="chat-header">
-        <button className="back-button" onClick={onBack}>
+        <button className="back-button" onClick={() => {
+          synthRef.current.cancel(); // ✅ Stop speech when navigating away
+          navigate('/');
+        }}>
           <ArrowLeft size={20} /> Back
         </button>
         <span>PyBot</span>
@@ -113,9 +122,7 @@ function Chatbot({ onBack }) {
             <div className="message-content">{message.text}</div>
           </div>
         ))}
-
         {showLightning && <div className="lightning-effect"></div>}
-
         {isLoading && <div className="loading-indicator">...Thinking</div>}
       </div>
 
@@ -123,7 +130,6 @@ function Chatbot({ onBack }) {
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
           placeholder="Type your question..."
           className="chat-input"
         />
