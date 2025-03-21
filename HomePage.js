@@ -64,7 +64,7 @@ function HomePage() {
           </main>
 
           <footer className="home-footer">
-            <p>&copy; {new Date().getFullYear()} Python Chatbot</p>
+            <p>&copy; {new Date().getFullYear()} MSPVL.IT_Boys.pvt.limited</p>
           </footer>
         </>
       )}
