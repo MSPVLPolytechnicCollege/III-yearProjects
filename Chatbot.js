@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowLeft, Send, Mic } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Chatbot.css';
 
 function Chatbot({ onBack }) {
@@ -10,6 +11,7 @@ function Chatbot({ onBack }) {
   const [showLightning, setShowLightning] = useState(false);
   const chatContainerRef = useRef(null);
   const recognitionRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if ('webkitSpeechRecognition' in window) {
@@ -127,7 +129,7 @@ function Chatbot({ onBack }) {
   return (
     <div className="chatbot-container">
       <div className="chat-header">
-        <button className="back-button" onClick={onBack}>
+        <button className="back-button" onClick={() => navigate('/')}>
           <ArrowLeft size={20} /> Back
         </button>
         <span>PyBot</span>
