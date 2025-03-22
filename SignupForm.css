@@ -1,8 +1,8 @@
 /* Signup Form Container */
 .signup-container {
-  width: 450px;
+  width: 350px;
   margin: 50px auto;
-  padding: 15px;
+  padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -16,7 +16,7 @@
 /* Heading */
 .signup-container h2 {
   margin-bottom: 20px;
-  font-size: 20px;
+  font-size: 24px;
   color: #333;
 }
 
@@ -39,7 +39,7 @@
 
 /* Input Fields */
 .input-group input {
-  width: 80%;
+  width: 100%;
   padding: 12px;
   margin: 5px 0;
   border: 1px solid #ccc;
@@ -56,9 +56,9 @@
 }
 
 /* Buttons */
-.signup-button,
-.back-button {
+.signup-button {
   width: 100%;
+  max-width: 300px;
   padding: 12px;
   font-size: 16px;
   border: none;
@@ -79,17 +79,22 @@
 }
 
 /* Back Button */
-.back-button {
-  background-color: #ff8372;
+.back-button-sign {
+  width: 100%;
+  max-width: 200px;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  background-color: #ffa4a4;
   color: white;
-  padding: 8px;  /* Smaller padding */
-  font-size: 14px; /* Smaller font size */
-  margin-top: 10px; /* Ensure there’s space between the buttons */
-  width: auto; /* Prevent full width */
 }
 
-.back-button:hover {
-  background-color: #5a6268;
+.back-button-sign:hover {
+  background-color: #ff1212;
 }
 
 /* Error Message */

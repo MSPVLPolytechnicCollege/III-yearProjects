@@ -71,7 +71,7 @@ function LoginForm() {
         Forgot Password?
       </button>
 
-      <button className="back-button" onClick={() => navigate('/')}>
+      <button className="back-button-log" onClick={() => navigate('/')}>
         Back
       </button>
     </div>

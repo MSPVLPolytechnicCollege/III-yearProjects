@@ -108,7 +108,7 @@ function SignupForm() {
         Signup
       </button>
 
-      <button className="back-button" onClick={() => navigate('/')}>
+      <button className="back-button-sign" onClick={() => navigate('/')}>
         Back
       </button>
     </div>
