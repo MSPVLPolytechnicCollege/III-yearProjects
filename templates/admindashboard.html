@@ -6,6 +6,7 @@
     <title>admindashboard</title>
 
       <!-----script------>
+    <script src="scrpit.js"></script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
@@ -162,6 +163,54 @@
       font-size:40px;
      padding:10px;
  }
+ .wrapper {
+      border: 1px solid black;
+      position: absolute;
+      border-radius: 0.5em;
+      width: 40vw;
+      transform: translate(-50%, -50%);
+      top: 70%;
+      left: 50%;
+      display: flex;
+    }
+    .c1 {
+      width: 28vmin;
+      height: 28vmin;
+      border: 1px solid orange;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding: 1em 0;
+      position: relative;
+      font-size: 16px;
+      border-radius: 0.5em;
+      background-color: #21242b;
+      border-bottom: 10px solid #18f98f;
+    }
+
+    img {
+      font-size: 2.5em;
+      text-align: center;
+      margin-left:50px;
+    }
+
+    span.num {
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 3em;
+    }
+
+    span.text {
+      color: white;
+      font-size: 1em;
+      text-align: center;
+      pad: 0.7em 0;
+      font-weight: 400;
+      line-height: 0;
+    }
+
   </style>
   <body>
    <!-----icon set ------>
@@ -204,8 +253,8 @@
         </div>
       </div>
          <!----- box and conetent1  ------>
-      <div class="content">
-        <div class="cards">
+      <div class="content"> <!----- start wrapper box and conetent1  ------>
+        <div class="cards"> <!----- start wrapper box and conetent1  ------>
           <div class="card">
             <div class="box">
               <h1>500</h1>
@@ -240,16 +289,44 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> <!----- end   ------>
     </div>
     </div>
+
+
+<!----- start wrapper box and conetent1  ------>
+   <div class="wrapper">
+     <div class="c1">
+        <img src="static/images/msk3.png" height="90px" width="90px" />
+        <span class="num" data-val="800">000</span>
+       <span class="text">contactlist</span>
+     </div>
+   </div>
+<!-------------------------------------------->
    <div class="col-12 col-md-5">
      <h3 class="fw-bold fs-4 my-3">report vbbkjvbhd</h3>
     <canvas id="doughnut-chart" width="800" height="450"></canvas>
    </div>
+ <script>
+      let valueDisplays = document.querySelectorAll(".num");
+      let interval = 4000;
 
+      valueDisplays.forEach((valueDisplay) => {
+        let startValue = 0;
+        let endValue = parseInt(valueDisplay.getAttribute("data-val"));
 
+      let duration = Math.floor(interval / endValue);
+      let counter = setInterval(function () {
+        startValue += 1;
+        valueDisplay.textContent = startValue;
+        if(startValue == endValue){
+          clearInterval(counter);
+        }
+      });
 
+});
+
+    </script>
  <script>
  new Chart(document.getElementById("doughnut-chart"), {
     type: 'doughnut',
