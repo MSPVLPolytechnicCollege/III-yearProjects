@@ -280,6 +280,17 @@ con.execute("""
     );
 """)
 
+#message
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS messages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sender TEXT NOT NULL,
+        receiver TEXT NOT NULL,
+        message TEXT NOT NULL,
+        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+""")
 
 
 #Register the student details
@@ -936,6 +947,75 @@ def add_student1():
     success_message = request.args.get('success')  # Retrieve success message
     return render_template('student-details.html', success=success_message)
 
+# Route to fetch data based on the selected department
+@app.route('/select_table',methods=['GET','POST'])
+def select_table():
+     return render_template("student-details-view.html")
+
+# Route to fetch data based on the selected department
+@app.route('/select_table1',methods=['GET','POST'])
+def select_table1():
+    semester = request.form.get('semester')
+    year = request.form.get('year')
+    department = request.form.get('department')
+
+    # Allowed departments for security
+    allowed_departments = ['CSE', 'IT', 'EEE', 'MECH', 'CIVIL', 'ECE', 'AUTO']
+    if department not in allowed_departments:
+        return "Invalid department selected!", 400
+
+    # Connect to database
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+
+    query = f"SELECT * FROM {department} WHERE semester=? AND year=?"
+    cursor.execute(query, (semester, year))
+    res = cursor.fetchall()
+    
+    con.close()
+
+    # Render the data in a table
+    return render_template("student-details-view.html", datas=res)
+    
+#message send
+# API to send message
+@app.route("/send", methods=["POST"])
+def send_message():
+    data = request.json
+    sender = data["sender"]
+    receiver = data["receiver"]
+    message = data["message"]
+
+    conn = sqlite3.connect("alumini_db.db")
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)", 
+                   (sender, receiver, message))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "Message Sent!"})
+
+# API to get messages
+@app.route("/messages/<user>", methods=["GET"])
+def get_messages(user):
+    conn = sqlite3.connect("alumini_db.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT sender, message, timestamp FROM messages WHERE receiver = ?", (user,))
+    messages = cursor.fetchall()
+    conn.close()
+
+    return jsonify(messages)
+
+# Render Chat Page
+@app.route("/message")
+def message():
+    return render_template("message.html")
+
+
+# Render Chat Page
+@app.route("/rmessage")
+def rmessage():
+    return render_template("receiver-message.html")
 
 if __name__=='__main__':
     app.secret_key = '1234'

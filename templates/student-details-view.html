@@ -111,16 +111,86 @@
            
             margin-top: 5%;
             margin-right: 5%;
-            height: auto;
+            height: 500px;
             width: 1390px;
             background-color: white;
             border-radius: 35px;
             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
+        table{
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+        }
+        table tr{
+            font-size: 16px;
+            font-family: 'Lato',sans-serif;
+            font-weight: 500;
+
+        }
+        th,td{
+           padding: 5px 5px;
+        }
+
+        table td:nth-child(10) a{
+           
+            color: white;
+            border-radius: 10px;
+            background:#0bc427;
+            text-decoration:none;
+            padding:5px 25px;
+        }
+        table td:nth-child(10) a:hover{
+            transition: 0.2s linear;
+            background:#028916 ;
+            transition: 0.2S ease;
+        }
+        
+        table td:nth-child(11) a{
+            color: white;
+            border-radius: 10px;
+            background:#e20303;
+            text-decoration:none;
+            padding:5px 20px;
+        }
+        table td:nth-child(11) a:hover{
+            transition: 0.2s linear;
+            background:#ff0000 ;
+            transition: 0.2S ease;
+        }
+        table{
+            margin-left:145px;
+	        width:80%;
+	        border-collapse:collapse;
+	        margin-top:25px;
+        }
+        td{
+            color: black;
+        }
+        tr td,tr th{
+	        border:1px solid #4682B4;
+	        padding:7px 5px;
+        }
+        tr th{
+            border:none;
+            background:#007BFF;
+            border:1px solid #4682B4;
+            color:white;
+        }
+        .pad{
+            
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
+    {% if messages %}
+            {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
     <div class="div">
+        <form action="/select_table1" method="POST">
         <div class="box1">
             <h2>SEARCH A STUDENT DETAIL</h2>
             <div class="input-tag">
@@ -171,12 +241,44 @@
             </div>
             <div class="button">
                 <button type="submit">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="">Cancel</a>
+                <a href="{{url_for('admin_dashboard')}}">Cancel</a>
             </div>
             <div class="box2">
-
+                <h2>STUDENT DETAILS</h2>
+                <table>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>Register Number</th>
+                        <th>DOB</th>
+                        <th>Semester</th>
+                        <th>Year</th>
+                        <th>Department</th>
+                        <th>Address</th>
+                        <th>Phone No.</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for data in datas %}
+                    <tr>
+                        <td>{{ data['sno'] }}</td>
+                        <td>{{ data['name'] }}</td>
+                        <td>{{ data['regno'] }}</td>
+                        <td>{{ data['dob'] }}</td>
+                        <td>{{ data['semester'] }}</td>
+                        <td>{{ data['year'] }}</td>
+                        <td>{{ data['department'] }}</td>
+                        <td>{{ data['address'] }}</td>
+                        <td>{{ data['phoneno'] }}</td>
+                        <td class="pad"><a class="size" href="">Edit</a></td>
+                        <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="">Delete</a></td>
+                </tr>
+                {% endfor %}
+                    </tr>
+                </table>
             </div>
         </div>
+    </form>
     </div>
 </body>
 </html>
