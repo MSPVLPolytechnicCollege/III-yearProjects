@@ -107,45 +107,32 @@
   </style>
 
   <body>
-  <label for="exampleColorInput" class="form-label">Color picker</label>
-<input type="color" class="form-control form-control-color" id="exampleColorInput" value="#563d7c" title="Choose your color">
-
-
-
 
   <form action="/payment" method="POST">
    <!---- <div class="shadow p-3 mb-5 bg-body-tertiary rounded">Regular shadow</div>--->
-    <div class="card">
-    <div class="card-header">
-    Donation
-    </div>
-    <div class="card-body">
-
-    <div class="mb-3">
+      <div class="card">
+        <div class="card-header">
+        Donation
+        </div>
+        <div class="card-body">
+             <!----- name ------->
+            <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" />
-              </div>
+            </div>
+            <!----- uname ------->
 
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  name="email"
-                />
-              </div>
           <div class="mb-3">
                 <label for="uname" class="form-label">Username</label>
                 <div class="input-group has-validation">
                      <div class="ume">
-                  <span class="input-group-text" id="uname">@</span>
+                         <span class="input-group-text" id="uname">@</span>
 
-                  <input type="text" class="form-control"  required>
+                        <input type="text" class="form-control"  required>
                     </div>
                 </div>
         </div>
-
+               <!----- phone ------->
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
                 <input
@@ -155,7 +142,7 @@
                   name="phone" required
                 />
               </div>
-
+               <!----- address ------->
               <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
                 <input
@@ -165,7 +152,7 @@
                   name="address"
                 />
               </div>
-
+                   <!----- city ------->
               <div class="mb-3">
                 <label for="city" class="form-label">City</label>
                 <input
@@ -176,15 +163,7 @@
                 />
               </div>
 
-        <div class="mb-3">
-                <div class="input-group mb-3">
-          <div class="input-group-text">
-            <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
-          </div>
-          <input type="text" class="form-control" aria-label="Text input with checkbox">
-        </div>
-
-
+               <!----- pincode ------->
               <div class="mb-3">
                 <label for="pincode" class="form-label">Pincode</label>
                 <input
@@ -194,7 +173,8 @@
                   name="poncode"
                 />
               </div>
-        <div class="mb-3">
+               <!----- select ------->
+             <div class="mb-3">
                     <label for="validationDefault04" class="form-label">State</label>
                     <select class="form-select" id="validationDefault04" required>
                               <option selected disabled value="">choose</option>
@@ -202,8 +182,10 @@
                                  <option>Kerala</option>
                                  <option>Karanataka</option>
                                  <option>maharasahta</option>
-    </select>
-  </div>
+                    </select>
+            </div>
+
+               <!----- amount ------->
               <div class="mb-3">
                 <label for="amount" class="form-label">Amount</label>
                 <input
@@ -213,7 +195,7 @@
                   name="amount"
                 />
               </div>
-
+                   <!----- datretime ------->
             <div class="mb-3">
                 <label for="dtetme" class="form-label">Date-time</label>
                 <input
@@ -223,7 +205,7 @@
                   name="dtetme"
                 />
               </div>
-
+                   <!----- week ------->
             <div class="mb-3">
                 <label for="week" class="form-label">week</label>
                 <input
@@ -232,8 +214,7 @@
                   id="week"
                   name="weekField"
                 />
-              </div>
-
+            </div>
 
    <!------ buttton ------->
               <div class="b1">
@@ -241,15 +222,13 @@
                   payment
                 </button>
               </div>
-    </div>
-   <div class="card-footer text-body-secondary text-right" >
-   <p>charity@gmail.com</p>
-    </div>
-        </div>
-    </div>
-
+    </div><!---body card--->
+         <!------ footer ------->
+   <div class="card-footer text-body-secondary text-right">
+        <p>charity@gmail.com</p>
+   </div>
+ </div>
   </form>
-<hr>
 
   </body>
 </html>
