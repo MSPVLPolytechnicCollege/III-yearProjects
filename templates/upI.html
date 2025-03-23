@@ -14,15 +14,20 @@
 <style>
     .p1{
         width:500px;
-        margin-left:300px;
+        margin-left:500px;
         margin-top:100px;
+       border:1px solid  #f92288;
     }
     .card-header{
     background-color:#f92288;
     color:white;
-     font-size:24px;
+     font-size:26px;
       font-weight:medium;
     }
+.card-header h3{
+     color:white;
+     font-size:20px;
+        }
      .popup {
           width: 400px;
           background:#fff;
@@ -40,11 +45,11 @@
         }
         .open-popup {
           visibility: visible;
-          top: 50%;
-          transform: translate(-50%, -50%) scale(1);
+          top: 60%;
+          transform: translate(-50%, -50%) scale(1.1);
         }
     .popup img {
-          width: 100px;
+          width: 150px;
           margin-top: -50px;
           border-radius: 50%;
           box-shadow: 0 2px 5px (rgb(0, 0, 0, 0.2));
@@ -62,18 +67,70 @@
           cursor: pointer;
           box-shadow: 0 5px 5px (rgb(0, 0, 0, 0.2));
         }
+        .submit{
+
+            height:40px;
+            width:100px;
+            outline:none;
+            color:#fff;
+             background:#ff3091;
+            border: 1px solid #ff3091;
+             border-radius:5px;
+             font-size:18px;
+             margin-right:20px;
+             margin-top:30px;
+    }
+    .submit:hover{
+     color: #f92288;
+          background: white;
+    }
+    .img{
+        display:flex;
+    }
+    .img img{
+    margin-left:200px;
+    }
+    .para{
+      font-size:18px;
+     font-weight:medium;
+      color:black;
+    }
+    .p p{
+        font-size:26px;
+        font-weight:medium;
+    }
+    .mb-3 input{
+      outline:none;
+    }
 </style>
+
 <body>
 <div class="p1">
 <div class="card text-center">
-  <div class="card-header">
+  <div class="card-header text-left">
     Indian Bank
+      <h3>XXXXX6789</h3>
+       <h6 class="card-title"></h6>
   </div>
   <div class="card-body">
-    <h5 class="card-title">xxxxx6789 UPI</h5>
-    <p class="card-text">Enter your upi pin</p>
-      <p>___   ___   __   ___</p>
-       <button class="submit" class="btn" onclick="openPopup()">
+      <div class="img">
+          <div class="para">
+              <p>To</p>
+              <p>sending</p></div>
+          <img src="static/images/upi.png" width="200px" height="100px" /></div>
+      <div class="p">
+    <p class="card-text">Enter your UPI PIN </p>
+      <p>___   ___   __   ___</p><div>
+      <div class="mb-3">
+             
+                <input
+                  type="get_digit"
+                  class="d1"
+                  id="digit"
+                  name="digit"
+                />
+              </div>
+       <button class="submit" class="buton" onclick="openPopup()">
                 click ok</button></div></div>
 
 
@@ -83,8 +140,8 @@
                 click ok</button>--->
       <div class="popup" id="popup">
                 <img src="static/images/sucs.png">
-                <h2>thankyou!</h2>
-                <p>your transcation has succesfully tranmited. thankyou</p>
+                <h2>Thankyou!</h2>
+                <p>your transaction has succesfully tranmited. thankyou</p>
                <button type="button" onclick="closePopup()">ok</button>
       </div>
 
