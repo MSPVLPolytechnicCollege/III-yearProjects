@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="/static/css/register.css">
+</head>
+<body>
+    <div class="register">
+        <div class="box">
+            <h2>Student Registration</h2>
+            <form action="/register" method="post" autocomplete="off">
+                <div class="input">
+
+                    <input type="text" name="stu_reg" placeholder="Reg No">
+                </div>
+                <div class="id">
+
+                    <input type="text" name="stu_name" placeholder="Student Name">
+                </div>
+                <div class="email">
+
+                    <input type="email" name="stu_email"  placeholder="Email">
+                </div>
+                <div class="username">
+
+                    <input type="text" name="stu_user"  placeholder="Username">
+                </div>
+                <div class="pass">
+
+                    <input type="password" name="stu_pass"  placeholder="Password">
+                </div>
+                <div class="conform-pass">
+
+                    <input type="password" name="stu_con-pass"  placeholder="Conform Password">
+                </div>
+                <div class="btn-add">
+                    <button type="submit">Sign up</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="login-stu.html"><button type="button">Cancel</button></a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

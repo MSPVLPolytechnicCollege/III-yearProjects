@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+<form action="/admin">
+    <div class="admin">
+        <div class="side-bar">
+            <div class="menu">
+                <div class="admin1">
+                    <div class="admin2">
+                        <div class="admin-icon">
+                            <span><img src="/static/images/no-profile-removebg-preview.png" alt=""></span>
+                        </div>
+                        <div class="admin-content">
+                            <p>Admin</p>
+                            <p class="email">admin@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item"><a href="#" class="desk"><i class="fas fa-desktop"></i>Home</a></div>
+                <div class="item"><a href="{{url_for('course')}}"><i class="fas fa-book"></i>Course</a></div>
+                <div class="item">
+                    <a class="sub-btn" ><i class="fas fa-table"></i>Event <i class="fas fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="{{url_for('addevent')}}" class="sub-item"><i class="fas fa-add"></i>Add Event</a>
+                        <a href="{{url_for('updateevent')}}" class="sub-item"><i class="fas fa-eye"></i>View Event</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <a class="sub-btn" ><i class="fas fa-image"></i>Gallery <i class="fas fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="{{url_for('gallery')}}" class="sub-item"><i class="fas fa-eye"></i>View Gallery</a>
+                    </div>
+                </div>
+                <div class="item"><a href="{{url_for('request_job_show')}}"><i class="fas fa-th"></i>Job Posting</a></div>
+                <div class="item">
+                    <a class="sub-btn" ><i class="fas fa-layer-group"></i>Details <i class="fas fa-angle-right dropdown"></i></a>
+                    <div class="sub-menu">
+                        <a href="{{url_for('select_table')}}" class="sub-item"><i class="fas fa-user"></i>Student Details</a>
+                        <a href="{{url_for('total_alumni')}}" class="sub-item"><i class="fas fa-users"></i>Alumni Details</a>
+                    </div>
+                </div>
+                <div class="item"><a href="{{url_for('add_student1')}}"><i class="fas fa-add"></i>Add a student</a></div>
+                <div class="item"><a href=""><i class="fas fa-circle-info"></i>Report</a></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <header>
+                <div class="wrapper">
+                    <div class="menu-wrapper">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <div class="content-wrapper">
+                         <p>Dashboard</p>
+                    </div>
+                </div>
+               
+                <div class="search">
+                    <span id='search' class="fas fa-search"></span>
+                    <input class='text' type="text" name="search" id="" placeholder="Search here">
+                </div>
+                <div class="user-wrapper">
+                    <a href="{{url_for('stuhome')}}" class="image"><i class="fas fa-circle-user"></i></a>
+                    <div class="user-content">
+                        <p class="name">Go to Student</p>
+                       
+                    </div>
+                </div>
+                <div class="user-wrapper2">
+                    <a href="{{url_for('admin')}}">Logout</a>
+                </div>
+            </header>
+        </div>
+        <div class="box">
+            <div class="box1">
+                <div class="request1">
+                    <div class="icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="count">
+                        <p id="total-event">{{ total_events }}</p>
+                    </div>
+                    <div class="content">
+                        <p>Total Events</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('updateevent')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box3">
+                <div class="request1">
+                    <div class="icon" id="envelope">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="count">
+                        <p id="total-job-request">{{ total_job_request }}</p>
+                    </div>
+                    <div class="content">
+                        <p>New Job Posted Request</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('request_job_show')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box2">
+                <div class="request1">
+                    <div class="icon" id="checkbox">
+                        <i class="fas fa-check-double"></i>
+                    </div>
+                    <div class="count">
+                        <p id="total-jobs">{{total_jobs}}</p>
+                    </div>
+                    <div class="content">
+                        <p>Approved Job Post</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('job_approved2')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="box4">
+                <div class="request1">
+                    <div class="icon" id="users">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="count">
+                        <p id="total-alumni">{{total_alumni}}</p>
+                    </div>
+                    <div class="content">
+                        <p>Total Alumni Reg</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('total_alumni')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box1">
+                <div class="request1">
+                    <div class="icon" id="book">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="count">
+                        <p>7</p>
+                    </div>
+                    <div class="content">
+                        <p>Manage Course</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('course')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="box3">
+                <div class="request1">
+                    <div class="icon" id="calendar">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="count">
+                        <p id="total-contact">{{ total_contact }}</p>
+                    </div>
+                    <div class="content">
+                        <p>Student Request</p>
+                    </div>
+                    <div class="view-details">
+                        <a href="{{url_for('view_contact')}}">View Details</a>
+                    </div>
+                </div>
+            </div>
+           
+           
+        </div>
+        <!---script for auto update the event-->
+        <script>
+            setInterval(function () {
+                fetch('/get_total_events')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-events').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+           <!---script for auto update the contact-->
+           <script>
+            setInterval(function () {
+                fetch('/get_total_contact')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-contact').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+         <!---script for auto update the job-request-->
+         <script>
+            setInterval(function () {
+                fetch('/get_total_job_request')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-job-request').innerText = data.total;
+                    });
+            },);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+        <!---script for auto update the approval jobs-->
+        <script>
+            setInterval(function () {
+                fetch('/get_total_jobs_json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-jobs').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+         <!---script for auto update the total alumni-->
+        <script>
+            setInterval(function () {
+                fetch('/get_total_alumni_json')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('total-alumni').innerText = data.total;
+                    });
+            }, 5000);  // 5 seconds ku oru thadava update aagum
+        </script>
+
+        <script>
+            $(document).ready(function(){
+                //jquery for toggle sub menus
+                $('.sub-btn').click(function(){
+                    $(this).next('.sub-menu').slideToggle();
+                    $(this).find('.dropdown').toggleClass('rotate');
+                });
+    
+                //jquery for expand and collapse the slidebar
+                $('.menu-btn').click(function(){
+                    $('.side-bar').addClass('active');
+                    $('.menu-bar').css('visibility','hidden');
+                });
+    
+                $('.close-btn').click(function(){
+                    $('.side-bar').removeClass('active');
+                    $('.menu-bar').css('visibility','visible');
+                });
+            });
+        </script>
+    </div>
+</form>
+</body>
+</html>

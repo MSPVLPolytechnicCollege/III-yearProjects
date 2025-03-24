@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Student Details</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+       *{
+           margin: 0;
+           padding: 0;
+       }
+       body{
+           font-family: 'Roboto',sans-serif;
+           background-color:#f1f5f8 ;
+       }
+       .box1{
+            margin-top: 3%;
+            margin-left: 5%;
+            margin-right: 5%;
+            height: 250px;
+            width: 1390px;
+            background-color: white;
+            border-radius: 35px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+       }
+       h2{
+            color: #005cd5;
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            padding-top: 40px;
+       }
+       .input-tag{
+        display: flex;
+        margin-left: 55px;
+        margin-top: 25px;
+       }
+       input{
+            transition: 0.2s ease;
+            height: 28px;
+            width: 200px;
+            border-radius: 8px;
+            padding-left: 15px;
+            border: 1px solid #0466e6;
+            outline: 1px solid #166ad7;
+            box-shadow: 0 0 1px 1px #617d98;
+            margin-top: 6px;
+            font-size: 16px;
+       }
+       select{
+            transition: 0.2s ease;
+            height: 28px;
+            width: 200px;
+            border-radius: 8px;
+            padding-left: 15px;
+            border: 1px solid #0466e6;
+            outline: 1px solid #166ad7;
+            box-shadow: 0 0 1px 1px #617d98;
+            margin-top: 6px;
+            font-size: 14px;
+       }
+       label{
+        font-size: 17px;
+       }
+       .register{
+        margin-left: 40px;
+       }
+       .button{
+        margin-top: 30px;
+        margin-left: 400px;
+       }
+       button{
+            cursor: pointer;
+            width: 100px;
+            margin-left: 40px;
+            padding: 5px 20px;
+            border-radius: 8px;
+            color: white;
+            border: none;
+            font-size: 17px;
+
+        }
+        a{
+            transition: 0.2s ease;
+            list-style: none;
+            text-decoration: none;
+            background-color:#0bc427;
+            width: 100px;
+            margin-left: 40px;
+            padding: 5px 20px;
+            border-radius: 8px;
+            color: white;
+            border: none;
+            font-size: 17px;
+        }
+        button:nth-child(1){
+            transition: 0.2s ease;
+            background-color: #006efe;
+            outline: 1px solid #006efe;
+        }
+        button:nth-child(1):hover{
+            
+            background-color: #005cd5;
+        }
+        a:hover{
+            transition: 0.2s ease;
+            background-color: #009b17;
+        }
+        .box2{
+           
+            margin-top: 5%;
+            margin-right: 5%;
+            height: 500px;
+            width: 1390px;
+            background-color: white;
+            border-radius: 35px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+        table{
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+        }
+        table tr{
+            font-size: 16px;
+            font-family: 'Lato',sans-serif;
+            font-weight: 500;
+
+        }
+        th,td{
+           padding: 5px 5px;
+        }
+
+        table td:nth-child(10) a{
+           
+            color: white;
+            border-radius: 10px;
+            background:#0bc427;
+            text-decoration:none;
+            padding:5px 25px;
+        }
+        table td:nth-child(10) a:hover{
+            transition: 0.2s linear;
+            background:#028916 ;
+            transition: 0.2S ease;
+        }
+        
+        table td:nth-child(11) a{
+            color: white;
+            border-radius: 10px;
+            background:#e20303;
+            text-decoration:none;
+            padding:5px 20px;
+        }
+        table td:nth-child(11) a:hover{
+            transition: 0.2s linear;
+            background:#ff0000 ;
+            transition: 0.2S ease;
+        }
+        table{
+            margin-left:145px;
+	        width:80%;
+	        border-collapse:collapse;
+	        margin-top:25px;
+        }
+        td{
+            color: black;
+        }
+        tr td,tr th{
+	        border:1px solid #4682B4;
+	        padding:7px 5px;
+        }
+        tr th{
+            border:none;
+            background:#007BFF;
+            border:1px solid #4682B4;
+            color:white;
+        }
+        .pad{
+            
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+            {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+    <div class="div">
+        <form action="/select_table1" method="POST">
+        <div class="box1">
+            <h2>SEARCH A STUDENT DETAIL</h2>
+            <div class="input-tag">
+                <div class="name">
+                    <label for="">Name</label>
+                    <input type="text" name="name" placeholder="Enter the Name">
+                </div>
+               
+                <div class="register">
+                    <label for="">Register Number</label>
+                    <input type="text" name="register" placeholder="Enter the Register No.">
+                </div>
+                
+                <div class="semester">
+                    <label for="">Semester</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="semester" id="" required>
+                        <option value="">----Select Semester----</option>
+                        <option value="I">I</option>
+                        <option value="II">II</option>
+                        <option value="III">III</option>
+                        <option value="IV">IV</option>
+                        <option value="V">V</option>
+                        <option value="VI">VI</option>
+                    </select>
+                </div>
+                <div class="year">
+                    <label for="">Year</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select name="year" id="" required>
+                        <option value="">----Select Year----</option>
+                        <option value="1st">1st year</option>
+                        <option value="2nd">2nd year</option>
+                        <option value="3rd">3rd year</option>
+                    </select>
+                </div>
+                <div class="department">
+                    <label for="">Department</label>&nbsp;&nbsp;&nbsp;
+                    <select name="department" id="" required>
+                        <option value="">----Select Department----</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="EEE">EEE</option>
+                        <option value="MECH">MECH</option>
+                        <option value="CIVIL">CIVIL</option>
+                        <option value="ECE">ECE</option>
+                        <option value="AUTO">AUTO</option>
+                    </select>
+                </div>
+            </div>
+            <div class="button">
+                <button type="submit">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{{url_for('admin_dashboard')}}">Cancel</a>
+            </div>
+            <div class="box2">
+                <h2>STUDENT DETAILS</h2>
+                <table>
+                    <tr>
+                        <th>Sno</th>
+                        <th>Name</th>
+                        <th>Register Number</th>
+                        <th>DOB</th>
+                        <th>Semester</th>
+                        <th>Year</th>
+                        <th>Department</th>
+                        <th>Address</th>
+                        <th>Phone No.</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for data in datas %}
+                    <tr>
+                        <td>{{ data['sno'] }}</td>
+                        <td>{{ data['name'] }}</td>
+                        <td>{{ data['regno'] }}</td>
+                        <td>{{ data['dob'] }}</td>
+                        <td>{{ data['semester'] }}</td>
+                        <td>{{ data['year'] }}</td>
+                        <td>{{ data['department'] }}</td>
+                        <td>{{ data['address'] }}</td>
+                        <td>{{ data['phoneno'] }}</td>
+                        <td class="pad"><a class="size" href="">Edit</a></td>
+                        <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="">Delete</a></td>
+                </tr>
+                {% endfor %}
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </form>
+    </div>
+</body>
+</html>

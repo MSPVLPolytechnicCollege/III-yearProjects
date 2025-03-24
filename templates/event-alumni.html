@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #f1f5f8;
+        }
+        p{
+            text-align: center;
+            font-size: 32px;
+            font-family: 'Lato',sans-serif;
+            color: #005cd5;
+            font-weight: 700;
+        }
+        .box2{
+            margin-top: 50px;
+
+        }
+        table{
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+        }
+        table tr{
+            font-size: 20px;
+            font-family: 'Lato',sans-serif;
+            font-weight: 500;
+
+        }
+        th,td{
+           padding: 8px 12px;
+        }
+        table td:nth-child(6) a{
+            color: white;
+            border-radius: 10px;
+            background:rgb(0, 155, 0);
+            text-decoration:none;
+            padding:5px 30px 5px 30px ;
+        }
+        table td:nth-child(6) a:hover{
+            transition: 0.2s linear;
+            background: rgb(0, 103, 0);
+        }
+        table td:nth-child(7) a{
+            color: white;
+            border-radius: 10px;
+            background:#e20303;
+            text-decoration:none;
+            padding:5px 30px 5px 30px ;
+        }
+        table td:nth-child(7) a:hover{
+            transition: 0.2s linear;
+            background:#ff0000 ;
+        }
+        table{
+            margin-left: 160px;
+	        width:80%;
+	        border-collapse:collapse;
+	        margin-top:25px;
+        }
+        tr td,tr th{
+	        border:1px solid #4682B4;
+	        padding:10px;
+        }
+        tr th{
+            border:none;
+            background:#005cd5;
+            border:1px solid #4682B4;
+            color:white;
+        }
+        .box1 i{
+            margin-top: 10px;
+            margin-left: 1500px;
+            font-size: 28px;
+            color: black;
+        }
+        .box1 i:hover{
+            color: #005cd5;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+            {% for message in messages %}
+            {{message}}
+            {% endfor %}
+    {% endif %}
+    <form action="/viewevent" method="">
+        <div class="box1">
+            <a href="{{url_for('alumni_dashboard')}}"><i class="fas fa-close"></i></a>
+            <div class="box2">
+                <p>Events</p>
+                <table border="1">
+                    <tr>
+                        <th>Event Date</th>
+                        <th>Event Location</th>
+                        <th>Event Time</th>
+                        <th>Event Name</th>
+                    </tr>
+                {% for data in datas %}
+                <tr>
+                    <td>{{ data['event_date'] }}</td>
+                    <td>{{ data['event_location'] }}</td>
+                    <td>{{ data['event_time'] }}</td>
+                    <td>{{ data['event_des'] }}</td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>
+
+
+

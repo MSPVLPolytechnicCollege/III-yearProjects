@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat System</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .chat-box { width: 300px; height: 300px; overflow-y: scroll; border: 1px solid black; margin: auto; padding: 10px; }
+        input { width: 200px; padding: 5px; margin-top: 10px; }
+        button { padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Simple Web Chat</h2>
+    
+    <div class="chat-box" id="chat-box"></div>
+    
+    <input type="text" id="sender" placeholder="Your Name">
+    <input type="text" id="receiver" placeholder="Receiver">
+    <input type="text" id="message" placeholder="Type Message">
+    <button onclick="sendMessage()">Send</button>
+    <button onclick="loadMessages()">Refresh</button>
+
+    <script>
+        function sendMessage() {
+            let sender = document.getElementById("sender").value;
+            let receiver = document.getElementById("receiver").value;
+            let message = document.getElementById("message").value;
+
+            fetch("/send", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ sender: sender, receiver: receiver, message: message })
+            }).then(response => response.json())
+            .then(data => {
+                alert(data.status);
+                document.getElementById("message").value = "";
+                loadMessages();
+            });
+        }
+
+        function loadMessages() {
+            let receiver = document.getElementById("receiver").value;
+            fetch(`/messages/${receiver}`)
+            .then(response => response.json())
+            .then(messages => {
+                let chatBox = document.getElementById("chat-box");
+                chatBox.innerHTML = "";
+                messages.forEach(msg => {
+                    chatBox.innerHTML += `<p><strong>${msg[0]}:</strong> ${msg[1]}</p>`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>

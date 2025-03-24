@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APPROVED JOB</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #f1f5f8;
+            font-family: 'Roboto',sans-serif;
+        }
+        .icon a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+        .icon  a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
+        }
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        .big-box{
+            margin-top: 50px;
+        }
+        .job-content {
+            color: #005cd5;
+            font-weight: 700;
+            font-size: 26px;
+            text-align: center;
+        }
+        .job-content1{
+            font-family: 'Satisfy',sans-serif;
+            color: #005cd5;
+            font-size: 26px;
+            text-align: center;
+        }
+        .data{
+            margin-top: 30px;
+            padding-left: 20px;
+            margin-left: 85px;
+            height: 250px;
+            width: 1400px;
+            background-color: white;
+            border-radius: 25px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            padding-top: 30px;
+        }
+        .datas{
+            display: flex;
+            margin-left: 120px;
+            margin-top: 30px;
+        }
+        .job{
+            padding-top: 30px;
+            text-align: center;
+            display: block;
+        }
+        .name{
+            font-size: 22px;
+            padding-bottom: 10px;
+            color: #005cd5;
+            font-weight: 500;
+        }
+        .qualification{
+            padding-left: 50px;
+        }
+        .qualification1{
+            padding-left: 270px;
+        }
+        .qualification2{
+            padding-left: 270px;
+        }
+        .input{
+            padding-left: 5px;
+            font-size: 20px;
+        }
+        .read a{
+            list-style: none;
+            text-decoration: none;
+            background-color: #0bc427;
+            color: white;
+            padding: 7px 15px;
+            border-radius: 10px;
+            margin-top: 40px;
+            display: inline-block;
+            margin-left: 620px;
+            font-size: 20px;
+        }
+        .read a:hover{
+            transition: 0.2s ease;
+            background-color: #009b17;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+            {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+    <form action="/request_job_show" method="post">
+        <div class="course">
+            <div class="icon">
+                <a href="{{url_for('stuhome')}}"><ion-icon name="close-outline"></ion-icon></a>
+            </div>
+            
+            <div class="big-box">
+                <p class="job-content">JOB VACANCY</p>
+                {% for data in datas %}
+                
+                <div class="data">
+                    <p class="job-content1">Job Details</p>
+                   <div class="datas">
+                    <div class="qualification">
+                        <p class="name">Company Name</p>
+                        <p class="input">{{ data['company'] }}</p>
+                    </div>
+                    <div class="qualification1">
+                        <p class="name">Job Qualification</p>
+                        <p class="input">{{ data['qualification'] }}</p>
+                    </div>
+                    <div class="qualification2">
+                        <p class="name">Job Skill</p>
+                        <p class="input">{{ data['key_skills'] }}</p>
+                    </div>
+                   </div>
+                    <div class="read">
+                        <a href="#">Read More</a>
+                    </div>
+                    {% endfor %}
+               </div>
+                   
+                </div>
+            </div>
+        </div>

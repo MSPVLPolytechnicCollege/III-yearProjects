@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO POST A JOB</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: 'Roboto',sans-serif;
+            background-color:#f1f5f8 ;
+        }
+        .job{
+            margin-top: 5%;
+            margin-left: 23%;
+            background-color: white;
+            height: 820px;
+            width: 800px;
+            border-radius: 30px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            margin-bottom: 5%;       
+        }
+        .job-content{
+            color: #005cd5;
+            font-size: 30px;
+            font-weight: 600;
+            padding-top: 40px;
+            text-align: center;
+        }
+        .posting{
+            margin-left: 120px;
+            margin-top: 30px;
+        }
+        label{
+            font-size: 19px;
+        }
+        input{
+            transition: 0.2s ease;
+            height: 28px;
+            width: 340px;
+            border-radius: 8px;
+            padding-left: 15px;
+            border: 1px solid #0466e6;
+            outline: 1px solid #166ad7;
+            box-shadow: 0 0 1px 1px #617d98;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        input:hover{
+            box-shadow: 0 0 5px 1px #617d98;
+        }
+        .job-button{
+            margin-top: 40px;
+            margin-left: 100px;
+        }
+        button{
+            padding: 8px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background-color: #005cd5;
+            color: white;
+            font-weight: 600;
+        }
+        button:hover{
+            background-color: #0147a2;
+            transition: 0.2s ease;
+            transform: scale(1.02);
+            cursor: pointer;
+        }
+        .job a{
+            padding: 8px 25px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            background-color: #005cd5;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .job a:hover{
+            background-color: #0147a2;
+            transition: 0.2s ease;
+            transform: scale(1.02);
+            cursor: pointer;
+        }
+        .icon a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+        .icon a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
+        }
+    </style>
+</head>
+<body>
+    <div class="job-posting">
+        <div class="icon">
+            <a href="{{url_for('alumni_dashboard')}}"><ion-icon name="close-outline"></ion-icon></a>
+        </div>
+        <div class="job">
+            <div class="job-content">
+                <p>To Post a Job</p>
+            </div>
+            <form action="/request_job_admin" method="post" autocomplete="off">
+                <div class="posting">
+                    <div class="company">
+                        <label for="">Company</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="company-name" placeholder="Company">
+                    </div>
+                    <div class="job-location">
+                        <label for="">Job Location</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-location" placeholder="Location">
+                    </div>
+                    <div class="job-title">
+                        <label for="">Job Title</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-title" placeholder="Title">
+                    </div>
+                    <div class="job-qualification">
+                        <label for="">qualification</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-qualification" placeholder="Qualification">
+                    </div>
+                    <div class="job-description">
+                        <label for="">Job Description</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-description" placeholder="Description">
+                    </div>
+                    <div class="job-key-skill">
+                        <label for="">Key Skills</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="key-skill" placeholder="Key Skills">
+                    </div>
+                    <div class="job-package">
+                        <label for="">Salary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-package" placeholder="Package">
+                    </div>
+                    <div class="job-experience">
+                        <label for="">Experienced Required</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-experience" placeholder="Experienced Required">
+                    </div>
+                    <div class="job-vacancy">
+                        <label for="">No. of Vacancy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="text" name="job-vacancy" placeholder="No. of Vacancy">
+                    </div>
+                    <div class="job-reference">
+                        <label for="">Reference Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="email" name="job-email" placeholder="Reference Email">
+                    </div>
+                    <div class="job-date">
+                        <label for="">Last Date</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="date" name="job-date" placeholder="Last Date">
+                    </div>
+                    <div class="contact">
+                        <label for="">Contact</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="email" name="contact" placeholder="Email">
+                    </div>
+                    <div class="job-button">
+                        <button type="submit">Post</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{{url_for('alumni_dashboard')}}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>

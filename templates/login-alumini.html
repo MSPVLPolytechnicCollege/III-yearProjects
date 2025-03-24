@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumini Login</title>
+    <link rel="stylesheet" href="/static/css/login-style.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="header">
+        <a href="{{url_for('admin')}}" target="_self"><button type="submit">Admin</button></a>
+        <a href="{{url_for('alumni_login')}}" target="_self"><button type="submit">Alumini</button></a>
+        <a href="{{url_for('login')}}" target="_self"><button type="submit">Student</button></a>
+    </div>
+    <div class="student-login-container">
+        <div class="stu-login-page">
+            <div class="box1">
+                <h2 class="head">Alumini Login</h2>
+                <form action="{{ url_for('alumni_login') }}"  method="post" autocomplete="off">
+                <div class="input">
+                    <input type="text" name="alumini-name" placeholder="Username" required><ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+                <div class="pass">
+                    <input type="password" name="alumini-pass" placeholder="Password" required><ion-icon name="eye-outline"></ion-icon>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox" name="alumini-rem" id="">Remember Me
+                    <span><a href="">Forgot Password?</a></span>
+                </div>
+                <div class="button">
+                    <button type="submit">Login</button>
+                </div>
+                <div class="register">
+                    <p>Don't have an account?<a href="{{url_for('alumni_redirect')}}"><span> Sign up</span></a></p>
+                </div>
+                </form>
+            </div>
+            <div class="box2">
+                <img src="/static/images/alumini-image-logo.avif" alt="" width="300px" height="300px">
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>
