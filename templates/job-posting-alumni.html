@@ -59,6 +59,18 @@
             margin-top: 40px;
             margin-left: 100px;
         }
+        .job-experience select{
+            transition: 0.2s ease;
+            height: 28px;
+            width: 340px;
+            border-radius: 8px;
+            padding-left: 15px;
+            border: 1px solid #0466e6;
+            outline: 1px solid #166ad7;
+            box-shadow: 0 0 1px 1px #617d98;
+            margin-top: 20px;
+            font-size: 16px;
+        }
         button{
             padding: 8px 25px;
             font-size: 16px;
@@ -143,11 +155,20 @@
                     </div>
                     <div class="job-package">
                         <label for="">Salary</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="job-package" placeholder="Package">
+                        <input type="text" name="job-package" placeholder="Salary">
                     </div>
                     <div class="job-experience">
-                        <label for="">Experienced Required</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="text" name="job-experience" placeholder="Experienced Required">
+                        <label for="">Select the Experience</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <select name="job-experience" id="" required>
+                            <option value="">----Select Experience----</option>
+                            <option value="fresher">FRESHER</option>
+                            <option value="1">1 yr</option>
+                            <option value="2">2 yrs</option>
+                            <option value="3">3 yrs</option>
+                            <option value="4">4 yrs</option>
+                            <option value="5">5 yrs</option>
+                            <option value="more than 5">More than 5 yrs</option>
+                        </select>
                     </div>
                     <div class="job-vacancy">
                         <label for="">No. of Vacancy</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

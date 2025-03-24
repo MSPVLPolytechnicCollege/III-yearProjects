@@ -825,6 +825,15 @@ def alumni_view_job():
     res = cursor.fetchall()
     return render_template('alumini-view-job.html',datas=res)
 
+@app.route('/job_stu')
+def job_stu():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('job-stu.html',datas=res)
+
 
 #Delete the job by admin
 @app.route('/deletejob/<string:sno>',methods=['GET','POST'])
@@ -978,44 +987,7 @@ def select_table1():
     # Render the data in a table
     return render_template("student-details-view.html", datas=res)
     
-#message send
-# API to send message
-@app.route("/send", methods=["POST"])
-def send_message():
-    data = request.json
-    sender = data["sender"]
-    receiver = data["receiver"]
-    message = data["message"]
 
-    conn = sqlite3.connect("alumini_db.db")
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)", 
-                   (sender, receiver, message))
-    conn.commit()
-    conn.close()
-    return jsonify({"status": "Message Sent!"})
-
-# API to get messages
-@app.route("/messages/<user>", methods=["GET"])
-def get_messages(user):
-    conn = sqlite3.connect("alumini_db.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT sender, message, timestamp FROM messages WHERE receiver = ?", (user,))
-    messages = cursor.fetchall()
-    conn.close()
-
-    return jsonify(messages)
-
-# Render Chat Page
-@app.route("/message")
-def message():
-    return render_template("message.html")
-
-
-# Render Chat Page
-@app.route("/rmessage")
-def rmessage():
-    return render_template("receiver-message.html")
 
 if __name__=='__main__':
     app.secret_key = '1234'
