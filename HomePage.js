@@ -57,7 +57,7 @@ function HomePage() {
               <button className="home-button" onClick={() => navigate('/signup')}>
                 Signup
               </button>
-              <button className="home-button" onClick={() => navigate('/chatbot')}>
+              <button className="home-button" onClick={() => navigate('/chatbotlog')}>
                 Continue as Guest
               </button>
             </div>

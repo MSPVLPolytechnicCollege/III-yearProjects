@@ -6,6 +6,7 @@ import Chatbot from './Chatbot';
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import SignupForm from './SignupForm';
+import ChatbotLog from './ChatbotLog';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/chatbotlog" element={<ChatbotLog />} />
       </Routes>
     </Router>
   );

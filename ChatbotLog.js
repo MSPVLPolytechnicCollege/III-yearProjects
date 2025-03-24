@@ -1,31 +1,95 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ArrowLeft, Send } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Chatbot.css';
 
-function Chatbot() {
+function Chatbot({ onBack }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [isBotTyping, setIsBotTyping] = useState(false);
-  const messagesEndRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showLightning, setShowLightning] = useState(false);
+  const chatContainerRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window) {
+      const recognition = new window.webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.lang = 'ta-IN'; // Tamil language
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = async (event) => {
+        const tamilText = event.results[0][0].transcript;
+        console.log("Recognized Tamil:", tamilText);
+
+        // Translate Tamil to English
+        const translatedText = await translateTamilToEnglish(tamilText);
+        console.log("Translated English:", translatedText);
+
+        setInput(translatedText); // Set translated English text in the input field
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+      };
+
+      recognitionRef.current = recognition;
+    }
+  }, []);
+
+  // ✅ Function to translate Tamil text to English
+  const translateTamilToEnglish = async (text) => {
+    try {
+      const response = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ta|en`
+      );
+      const data = await response.json();
+
+      if (data && data.responseData && data.responseData.translatedText) {
+        return data.responseData.translatedText;
+      } else {
+        console.error("Translation failed:", data);
+        return text; // If translation fails, return the original Tamil text
+      }
+    } catch (error) {
+      console.error('Translation API error:', error);
+      return text; // If an error occurs, return the original Tamil text
+    }
+  };
+
 
   const sendMessage = async (message) => {
     if (message.trim() === '') return;
-    
-    // Add user message
+
     const newUserMessage = { text: message, sender: 'user' };
     setMessages((prevMessages) => [...prevMessages, newUserMessage]);
     setInput('');
+    setIsLoading(true);
+    setShowLightning(true);
 
-    // Simulate bot response after 1 second
-    setIsBotTyping(true);
-    setTimeout(() => {
-      const botResponse = { text: "This is a bot response.", sender: 'bot' };
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setShowLightning(false);
+
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: message }),
+      });
+
+      const data = await response.json();
+      const botResponse = { text: data.response, sender: 'bot' };
       setMessages((prevMessages) => [...prevMessages, botResponse]);
-      setIsBotTyping(false);
-    }, 1500);
-  };
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
+    } catch (error) {
+      console.error('Error:', error);
+      const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
+      setMessages((prevMessages) => [...prevMessages, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -35,44 +99,39 @@ function Chatbot() {
     }
   };
 
-  useEffect(() => {
-    // Scroll to bottom when new messages are added
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
   return (
     <div className="chatbot-container">
       <div className="chat-header">
-        <h2>Chatbot</h2>
+        <button className="back-button" onClick={() => navigate('/')}>
+          <ArrowLeft size={20} /> Back
+        </button>
+        <span>PyBot</span>
       </div>
 
-      <div className="chat-display">
+      <div className="chat-display" ref={chatContainerRef}>
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
             <div className="message-content">{message.text}</div>
           </div>
         ))}
 
-        {isBotTyping && (
-          <div className="message bot typing">
-            <div className="message-content">...</div>
-          </div>
-        )}
+        {showLightning && <div className="lightning-effect"></div>}
 
-        <div ref={messagesEndRef} />
+        {isLoading && <div className="loading-indicator">...Thinking</div>}
       </div>
 
       <div className="input-area">
         <textarea
           value={input}
-          onChange={handleInputChange}
+          onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder="Type your question..."
           className="chat-input"
         />
         <button onClick={() => sendMessage(input)} className="send-button">
-          Send
+          <Send size={20} />
         </button>
+
       </div>
     </div>
   );
