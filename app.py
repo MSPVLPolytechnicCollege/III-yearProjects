@@ -14,6 +14,16 @@ app.secret_key="123"
 def firstpage():
     return render_template('firstpage.html')
 
+#get the admin form using button
+@app.route('/admin1')
+def admin1():
+  return redirect(url_for("admin.html"))
+
+#get the login form using button
+@app.route('/login1')
+def login1():
+  return redirect(url_for("loginpage.html"))
+
 #login page router
 @app.route('/loginpage')
 def home():
@@ -51,17 +61,21 @@ def view():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
-    cursor.execute('select * from donate')
+    cursor.execute('select * from dnt')
     res = cursor.fetchall()
     return render_template("view.html", datas=res)
 
-def view():
+
+#donate & control  details table
+@app.route('/view1')
+def view1():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
     cursor.execute('select * from contact')
     res = cursor.fetchall()
     return render_template("view.html", datas=res)
+
 
 # contact the route
 @app.route('/contact',methods=['GET','POST'])
@@ -101,13 +115,19 @@ def register():
 def donate():
     if request.method=="POST":
         n = request.form['name']
-        e = request.form['email']
+        e = request.form['uname']
         m = request.form['phone']
         add = request.form['address']
-        pay = request.form['payment']
+        c = request.form['city']
+        pi = request.form['pincode']
+        st = request.form['state']
+        amt = request.form['amount']
+        dt = request.form['dtetme']
+        mth = request.form['mth']
+        wf = request.form['weekField']
         con = sqlite3.connect('charity.db')
         cursor = con.cursor()
-        cursor.execute("insert into donate(name,email,phone,address,payment) values(?,?,?,?,?);", (n, e, m,add,pay))
+        cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme,mth,weekField) values(?,?,?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt,mth,wf))
         con.commit()
         con.close()
     return render_template('donate.html')
@@ -161,6 +181,10 @@ def upi():
 @app.route('/admindashboard',methods=['GET','POST'])
 def admindashboard():
     return render_template("admindashboard.html")
+
+
+
+
 
 
 #Main  file

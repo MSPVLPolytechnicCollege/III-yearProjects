@@ -108,8 +108,7 @@
 
   <body>
 
-  <form action="/payment" method="POST">
-   <!---- <div class="shadow p-3 mb-5 bg-body-tertiary rounded">Regular shadow</div>--->
+  <form action="/donate" method="POST">
       <div class="card">
         <div class="card-header">
         Donation
@@ -123,15 +122,15 @@
             <!----- uname ------->
 
           <div class="mb-3">
-                <label for="uname" class="form-label">Username</label>
+                <label for="uname" class="form-label" >Username</label>
                 <div class="input-group has-validation">
                      <div class="ume">
-                         <span class="input-group-text" id="uname">@</span>
+                         <span class="input-group-text" id="uname" >@</span>
 
-                        <input type="text" class="form-control"  required>
+                        <input type="text" class="form-control" name="uname" >
                     </div>
                 </div>
-        </div>
+        </div><!---required--->
                <!----- phone ------->
               <div class="mb-3">
                 <label for="phone" class="form-label">Phone</label>
@@ -170,13 +169,13 @@
                   type="text"
                   class="form-control"
                   id="pincode"
-                  name="poncode"
+                  name="pincode"
                 />
               </div>
                <!----- select ------->
              <div class="mb-3">
-                    <label for="validationDefault04" class="form-label">State</label>
-                    <select class="form-select" id="validationDefault04" required>
+                    <label for="state" class="form-label">State</label>
+                    <select class="form-select" id="state" name="state" >
                               <option selected disabled value="">choose</option>
                               <option>Tamil Nadu</option>
                                  <option>Kerala</option>

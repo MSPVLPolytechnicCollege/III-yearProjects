@@ -148,9 +148,10 @@
 
   <body>
     <!---admin btn----->
+     <form action="/admin" method="GET"><!---THIS ACTION GET  FROM ADMIN  PAge---->
     <div class="b2">
       <input type="submit" value="Admin" class="btn2" />
-    </div>
+    </div></form>
     <i class="fa-solid fa-lock"></i>
     <div class="wrapper">
       <div class="form-lgn">
@@ -162,9 +163,9 @@
         <form action="/confirm" method="POST">
           <div class="input-box">
             <label>Username <ion-icon name="person"></ion-icon></label>
-            <input type="text" name="ad_name" required /><br /><br />
+            <input type="text" name="name" required /><br /><br />
             <label>Password <ion-icon name="lock-closed"></ion-icon> </label>
-            <input type="password" name="ad_pass" required /> <br />
+            <input type="password" name="password" required /> <br />
 
           </div>
           <div class="b1">
