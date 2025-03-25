@@ -28,9 +28,65 @@
             font-size: 16px;
             text-align:center;
         }
+
+    .popup {
+          width: 400px;
+          background:#fff;
+          border-radius: 6px;
+          border:solid 2px #f92288;
+          position: absolute;
+          top: 0%;
+          left: 40%;
+          transform: translate(-50%, -50%) scale(0.1);
+          text-align:center;
+          padding:0 30px 30px;
+          color:#333;
+           visibility: hidden;
+           transition:transform 0.4s,top 0.4s;
+        }
+        .open-popup {
+          visibility: visible;
+          top: 60%;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+    .popup img {
+          width: 150px;
+          margin-top: -50px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px (rgb(0, 0, 0, 0.2));
+        }
+    .popup button {
+          width: 100%;
+          margin-top: 50px;
+          padding: 10px 0;
+          background: #6fd649;
+          color: #fff;
+          border: 0;
+          outline: none;
+          font-size: 18px;
+          border-radius: 4px;
+          cursor: pointer;
+          box-shadow: 0 5px 5px (rgb(0, 0, 0, 0.2));
+        }
+        .submit{
+
+            height:40px;
+            width:100px;
+            outline:none;
+            color:#fff;
+             background:#ff3091;
+            border: 1px solid #ff3091;
+             border-radius:5px;
+             font-size:18px;
+             margin-right:20px;
+             margin-top:30px;
+    }
+    .submit:hover{
+     color: #f92288;
+          background: white;
+    }
 </style>
 <body>
-<form action="/upI" method="POST">
 <div class="card">
   <div class="card-header">
     PaymentGateway
@@ -38,23 +94,34 @@
   <div class="card-body">
     <h5 class="card-title">Scan me</h5>
     <img src="static/images/scan.png "/>
-       <div class="mb-3">
-                <label for="amount" class="form-label">$Amount</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="amount"
-                  name="amount"
-                />
-              </div>
+
    <div class="btn">
-                <button type="submit" class="btn btn-outline-danger">
+                <button  class="submit" class="button" onclick="openPopup()" >
                   pay
                 </button>
               </div>
   </div>
 </div>
-<h1></h1>
+    <!----popup btn---->
+  <div class="popup" id="popup">
+                <img src="static/images/sucs.png">
+                <h2>Thankyou!</h2>
+                <p>your transaction has succesfully tranmited. thankyou</p>
+               <button type="button" onclick="closePopup()">ok</button>
+      </div>
+
 </form>
+
+ <script>
+          let popup = document.getElementById("popup");
+
+          function openPopup() {
+            popup.classList.add("open-popup");
+          }
+
+        function closePopup() {
+            popup.classList.remove("open-popup");
+          }
+        </script>
 </body>
 </html>

@@ -1,6 +1,4 @@
 
-
-
 #import sqlite
 import sqlite3
 #import modules
@@ -66,7 +64,7 @@ def view():
     return render_template("view.html", datas=res)
 
 
-#donate & control  details table
+# contact details table
 @app.route('/view1')
 def view1():
     con = sqlite3.connect('charity.db')
@@ -74,7 +72,7 @@ def view1():
     cursor = con.cursor()
     cursor.execute('select * from contact')
     res = cursor.fetchall()
-    return render_template("view.html", datas=res)
+    return render_template("payment.html", datas=res)
 
 
 # contact the route
