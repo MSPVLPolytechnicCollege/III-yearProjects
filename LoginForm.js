@@ -67,11 +67,11 @@ function LoginForm() {
         Login
       </button>
 
-      <button className="forgot-password-button" onClick={() => navigate('/forgot-password')}>
+      <button className="forgot-password-button" onClick={() => navigate('/forgotpassword')}>
         Forgot Password?
       </button>
 
-      <button className="back-button-log" onClick={() => navigate('/')}>
+      <button className="back-button" onClick={() => navigate('/')}>
         Back
       </button>
     </div>

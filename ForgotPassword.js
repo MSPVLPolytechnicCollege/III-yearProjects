@@ -17,7 +17,7 @@ function ForgotPassword() {
         }
 
         try {
-            const response = await fetch('/api/verify-user', {
+            const response = await fetch('/api/forgotpassword', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, email })
@@ -26,7 +26,7 @@ function ForgotPassword() {
             const data = await response.json();
 
             if (response.ok) {
-                navigate('/reset-password', { state: { username } }); // Pass username to ResetPassword page
+                navigate('/resetpassword', { state: { username } }); // Pass username to ResetPassword page
             } else {
                 setError(data.message || 'User verification failed. Try again.');
             }

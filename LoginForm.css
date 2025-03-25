@@ -1,8 +1,7 @@
 /* Login Form Container */
 .login-container {
   width: 350px;
-  margin-left: 600px;
-  margin-top: 150px;
+  margin: 50px auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -20,8 +19,7 @@
 
 /* Input Fields */
 .login-container input {
-  width: 80%;
-  max-width: 320px;
+  width: 100%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -31,9 +29,9 @@
 
 /* Buttons */
 .login-button,
-.forgot-password-button{
+.forgot-password-button,
+.back-button {
   width: 100%;
-  max-width: 300px;
   padding: 12px;
   margin-top: 10px;
   font-size: 16px;
@@ -45,7 +43,7 @@
 
 /* Login Button */
 .login-button {
-  background-color: #82beff;
+  background-color: #007bff;
   color: white;
 }
 
@@ -55,31 +53,22 @@
 
 /* Forgot Password Button */
 .forgot-password-button {
-  background-color: #ffe69a;
+  background-color: #ffc107;
   color: #333;
 }
 
 .forgot-password-button:hover {
-  background-color: #ffc61c;
+  background-color: #e0a800;
 }
 
 /* Back Button */
-.back-button-log {
-  width: 100%;
-  max-width: 300px;
-  padding: 12px;
-  margin-top: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-  background-color: #ffa4a4;
+.back-button {
+  background-color: #ffffff;
   color: white;
 }
 
-.back-button-log:hover {
-  background-color: #ff1919;
+.back-button:hover {
+  background-color: #5a6268;
 }
 
 /* Error Message */

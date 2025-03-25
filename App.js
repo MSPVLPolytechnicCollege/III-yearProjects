@@ -7,6 +7,7 @@ import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 import SignupForm from './SignupForm';
 import ChatbotLog from './ChatbotLog';
+import OtpVerification from './OtpVerification';
 
 function App() {
   return (
@@ -16,9 +17,10 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignupForm />} />
         <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/chatbotlog" element={<ChatbotLog />} />
+        <Route path="/otpverification" element={<OtpVerification />} />
       </Routes>
     </Router>
   );

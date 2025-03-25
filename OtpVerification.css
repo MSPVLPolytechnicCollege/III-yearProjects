@@ -1,15 +1,15 @@
-/* Forgot Password Page Styling */
-.forgot-password-container {
+/* OTP Verification Page Styling */
+.otp-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f0f2f5;  /* Light background */
+    background-color: #f0f2f5;
     font-family: Arial, sans-serif;
 }
 
-.forgot-password-box {
+.otp-box {
     width: 100%;
     max-width: 400px;
     padding: 20px;
@@ -19,18 +19,18 @@
     text-align: center;
 }
 
-.forgot-password-box h2 {
+.otp-box h2 {
     font-size: 22px;
     color: #333;
     margin-bottom: 15px;
 }
 
-.input-group {
+.otp-input-group {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.input-group label {
+.otp-input-group label {
     display: block;
     font-size: 14px;
     color: #555;
@@ -38,21 +38,24 @@
     margin-bottom: 5px;
 }
 
-.input-group input {
+.otp-input-group input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: bold;
 }
 
-.input-group input:focus {
+.otp-input-group input:focus {
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.verify-button, .back-button {
+.verify-otp-button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -60,25 +63,12 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.verify-button {
     background-color: #007bff;
     color: white;
 }
 
-.verify-button:hover {
+.verify-otp-button:hover {
     background-color: #0056b3;
-}
-
-.back-button {
-    background-color: #6c757d;
-    color: white;
-}
-
-.back-button:hover {
-    background-color: #5a6268;
 }
 
 .error-message {
@@ -89,11 +79,11 @@
 
 /* Responsive Design */
 @media (max-width: 600px) {
-    .forgot-password-container {
+    .otp-container {
         padding: 10px;
     }
 
-    .forgot-password-box {
+    .otp-box {
         width: 90%;
         padding: 15px;
     }
