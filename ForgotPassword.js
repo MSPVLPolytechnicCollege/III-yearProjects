@@ -26,7 +26,7 @@ function ForgotPassword() {
             const data = await response.json();
 
             if (response.ok) {
-                navigate('/resetpassword', { state: { username } }); // Pass username to ResetPassword page
+                navigate('/verifyotp', { state: { username } }); // Pass username to ResetPassword page
             } else {
                 setError(data.message || 'User verification failed. Try again.');
             }

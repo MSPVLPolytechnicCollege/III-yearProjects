@@ -20,7 +20,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/chatbotlog" element={<ChatbotLog />} />
-        <Route path="/otpverification" element={<OtpVerification />} />
+        <Route path="/verifyotp" element={<OtpVerification />} />
       </Routes>
     </Router>
   );

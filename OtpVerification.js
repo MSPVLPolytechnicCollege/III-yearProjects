@@ -1,41 +1,53 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-function OtpVerification() {
-    const [otp, setOtp] = useState('');
-    const [error, setError] = useState('');
+function OTPVerification() {
+    const [otp, setOtp] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const email = location.state?.email;
 
-    const handleOtpVerification = async () => {
-        setError('');
-
+    const handleVerifyOtp = async () => {
+        if (!otp) {
+            setError("Please enter OTP.");
+            return;
+        }
+    
         try {
-            const response = await fetch('/api/otpverification', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ otp })
+            const response = await fetch("http://localhost:5000/api/verifyotp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, otp }),
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                navigate('/resetpassword');
-            } else {
-                setError(data.message || 'Invalid OTP. Try again.');
+    
+            if (!response.ok) {
+                const data = await response.json();
+                throw new Error(data.message || "Invalid OTP.");
             }
+    
+            navigate("/resetpassword", { state: { email } });
+    
         } catch (error) {
-            setError('An error occurred. Please try again.');
+            console.error("Error:", error);
+            setError(error.message || "Failed to verify OTP.");
         }
     };
+    
 
     return (
-        <div className="otp-verification-container">
+        <div className="otp-container">
             <h2>Enter OTP</h2>
             {error && <p className="error-message">{error}</p>}
-            <input type="text" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
-            <button onClick={handleOtpVerification}>Verify OTP</button>
+            <input
+                type="text"
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+            />
+            <button onClick={handleVerifyOtp}>Verify OTP</button>
         </div>
     );
 }
 
-export default OtpVerification;
+export default OTPVerification;
