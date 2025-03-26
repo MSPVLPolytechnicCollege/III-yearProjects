@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,7 +45,7 @@
 
         <table class="table table-bordered border-dark table-hover text-center text-capitalize" >
           <thead>
-            <tr class="table-dark table-active text-uppercase text-white">
+            <tr class="table-dark table-active text-white">
               <th scope="col">Name</th>
               <th scope="col">Email</th>
               <th scope="col">Phone</th>
@@ -57,8 +58,9 @@
               <th scope="col">Month</th>
               <th scope="col">Week</th>
             </tr>
+
           </thead>
-          {% for data in datas %}<!----for loop print again and agin---->
+ {% for data in datas %}<!----for loop print again and agin---->
           <tbody>
             <tr>
               <td>{{ data['name'] }}</td>
