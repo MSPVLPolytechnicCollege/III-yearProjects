@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import './LoginForm.css';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -37,43 +39,48 @@ function LoginForm() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <p className="error-message">{error}</p>}
-      
-      <div className="input-group">
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Enter your username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className="background-container">
+      <div className="login-container">
+        <h2>Login</h2>
+        {error && <p className="error-message">{error}</p>}
+
+        <div className="input-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group password-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type={showPassword ? "text" : "password"}
+            id="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        <button className="login-button" onClick={handleLogin}>
+          Login
+        </button>
+
+        <button className="forgot-password-button" onClick={() => navigate('/forgotpassword')}>
+          Forgot Password?
+        </button>
+
+        <button className="back-button" onClick={() => navigate('/')}>
+          Back
+        </button>
       </div>
-
-      <div className="input-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
-      <button className="login-button" onClick={handleLogin}>
-        Login
-      </button>
-
-      <button className="forgot-password-button" onClick={() => navigate('/forgotpassword')}>
-        Forgot Password?
-      </button>
-
-      <button className="back-button" onClick={() => navigate('/')}>
-        Back
-      </button>
     </div>
   );
 }
