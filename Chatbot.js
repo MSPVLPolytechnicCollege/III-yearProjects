@@ -1,185 +1,233 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ArrowLeft, Send, Mic, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, Send, Mic, Menu, LogOut, Settings, Sun, Moon, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './Chatbot.css';
 
 function Chatbot() {
-  const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-  const [showLightning, setShowLightning] = useState(false);
-  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark'); // ✅ Save Theme in LocalStorage
-  const chatContainerRef = useRef(null);
-  const recognitionRef = useRef(null);
-  const synthRef = useRef(window.speechSynthesis);
-  const navigate = useNavigate();
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
+    const chatContainerRef = useRef(null);
+    const recognitionRef = useRef(null);
+    const synthRef = useRef(window.speechSynthesis);
+    const navigate = useNavigate();
+    const [showSettingsOptions, setShowSettingsOptions] = useState(false);
+    const [showThemeOptions, setShowThemeOptions] = useState(false); // State for theme options visibility
 
-  // ✅ Initialize Speech Recognition for Tamil & English
-  useEffect(() => {
-    if ('webkitSpeechRecognition' in window) {
-      const recognition = new window.webkitSpeechRecognition();
-      recognition.continuous = false;
-      recognition.lang = 'ta-IN,en-US';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
 
-      recognition.onresult = async (event) => {
-        let transcript = event.results[0][0].transcript;
+    useEffect(() => {
+        if ('webkitSpeechRecognition' in window) {
+            const recognition = new window.webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'ta-IN,en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
 
-        // ✅ Translate Tamil input to English
-        if (/[\u0B80-\u0BFF]/.test(transcript)) { 
-          try {
-            const response = await fetch(
-              `https://api.mymemory.translated.net/get?q=${encodeURIComponent(transcript)}&langpair=ta|en`
-            );
-            const data = await response.json();
-            transcript = data.responseData.translatedText;
-          } catch (error) {
-            console.error('Translation error:', error);
-          }
+            recognition.onresult = async (event) => {
+                let transcript = event.results[0][0].transcript;
+
+                if (/[\u0B80-\u0BFF]/.test(transcript)) {
+                    try {
+                        const response = await fetch(
+                            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(transcript)}&langpair=ta|en`
+                        );
+                        const data = await response.json();
+                        transcript = data.responseData.translatedText;
+                    } catch (error) {
+                        console.error('Translation error:', error);
+                    }
+                }
+
+                setInput(transcript);
+            };
+
+            recognition.onerror = (event) => console.error('Speech recognition error:', event.error);
+            recognitionRef.current = recognition;
         }
+    }, []);
 
-        setInput(transcript);
-      };
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
 
-      recognition.onerror = (event) => console.error('Speech recognition error:', event.error);
-      recognitionRef.current = recognition;
-    }
-  }, []);
+    const startRecording = () => {
+        if (recognitionRef.current) {
+            setIsRecording(true);
+            recognitionRef.current.start();
+        }
+    };
 
-  // ✅ Auto-scroll to latest message
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
+    const stopRecording = () => {
+        if (recognitionRef.current) {
+            setIsRecording(false);
+            recognitionRef.current.stop();
+        }
+    };
 
-  // ✅ Start & Stop Recording
-  const startRecording = () => {
-    if (recognitionRef.current) {
-      setIsRecording(true);
-      recognitionRef.current.start();
-    }
-  };
+    const speakText = (text) => {
+        synthRef.current.cancel();
+        if ('speechSynthesis' in window) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 1;
+            synthRef.current.speak(utterance);
+        }
+    };
 
-  const stopRecording = () => {
-    if (recognitionRef.current) {
-      setIsRecording(false);
-      recognitionRef.current.stop();
-    }
-  };
+    const sendMessage = async (message) => {
+        if (message.trim() === '') return;
 
-  // ✅ Text-to-Speech (Bot responses)
-  const speakText = (text) => {
-    synthRef.current.cancel();
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US';
-      utterance.rate = 1;
-      synthRef.current.speak(utterance);
-    }
-  };
+        setMessages((prev) => [...prev, { text: message, sender: 'user' }]);
+        setInput('');
+        setIsLoading(true);
 
-  // ✅ Send Message to Backend
-  const sendMessage = async (message) => {
-    if (message.trim() === '') return;
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: message }),
+            });
 
-    setMessages((prev) => [...prev, { text: message, sender: 'user' }]);
-    setInput('');
-    setIsLoading(true);
-    setShowLightning(true);
+            const data = await response.json();
+            const botResponse = { text: data.response, sender: 'bot' };
+            setMessages((prev) => [...prev, botResponse]);
+            speakText(data.response);
+        } catch (error) {
+            console.error('Error:', error);
+            const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
+            setMessages((prev) => [...prev, errorMessage]);
+            speakText('An error occurred. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
-    try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: message }),
-      });
+    const handleKeyDown = (event) => {
+        if (event.shiftKey && event.key === 'Enter') {
+            event.preventDefault();
+            sendMessage(input);
+        }
+    };
 
-      const data = await response.json();
-      const botResponse = { text: data.response, sender: 'bot' };
-      setMessages((prev) => [...prev, botResponse]);
-      speakText(data.response); // ✅ Speak bot response aloud
-    } catch (error) {
-      console.error('Error:', error);
-      const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
-      setMessages((prev) => [...prev, errorMessage]);
-      speakText('An error occurred. Please try again.');
-    } finally {
-      setIsLoading(false);
-      setShowLightning(false);
-    }
-  };
 
-  // ✅ Shift + Enter to Send Message
-  const handleKeyDown = (event) => {
-    if (event.shiftKey && event.key === 'Enter') {
-      event.preventDefault();
-      sendMessage(input);
-    }
-  };
 
-  // ✅ Toggle Dark Mode & Save Preference
-  const toggleTheme = () => {
-    const newTheme = !darkMode;
-    setDarkMode(newTheme);
-    localStorage.setItem('theme', newTheme ? 'dark' : 'light');
-  };
+    const toggleMenu = () => {
+        setShowMenu((prev) => !prev);
+        setShowSettingsOptions(false); // Close settings options when menu is toggled
+        setShowThemeOptions(false);
+    };
 
-  return (
-    <div className={`chatbot-container ${darkMode ? 'dark' : ''}`}>
-      {/* Header */}
-      <div className="chat-header">
-        <button
-          className="back-button-chat"
-          onClick={() => {
-            synthRef.current.cancel();
-            navigate('/');
-          }}
-        >
-          <ArrowLeft size={20} /> Back
-        </button>
-        <span>PyBot</span>
-        {/* ✅ Theme Toggle Button */}
-        <button className="theme-toggle" onClick={toggleTheme}>
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </button>
-      </div>
+    const handleLogout = () => {
+        localStorage.removeItem('authToken');
+        navigate('/');
+    };
 
-      {/* Chat Display */}
-      <div className="chat-display" ref={chatContainerRef}>
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            <div className="message-content">{message.text}</div>
-          </div>
-        ))}
-        {showLightning && <div className="lightning-effect"></div>}
-        {isLoading && <div className="loading-indicator">...Thinking</div>}
-      </div>
+    const handleSettingsClick = () => {
+        setShowSettingsOptions(!showSettingsOptions);
+        setShowThemeOptions(false);
+    };
 
-      {/* Input Area */}
-      <div className="input-area">
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown} // ✅ Detect Shift + Enter
-          placeholder="Type your question... (Shift + Enter to send)"
-          className="chat-input"
-        />
-        <button onClick={() => sendMessage(input)} className="send-button">
-          <Send size={20} />
-        </button>
-        <button
-          onMouseDown={startRecording}
-          onMouseUp={stopRecording}
-          className={`mic-button ${isRecording ? 'recording' : ''}`}
-        >
-          <Mic size={20} />
-        </button>
-      </div>
-    </div>
-  );
+    const clearChatHistory = () => {
+        setMessages([]);
+        // You can also clear the history from your backend/database if needed.
+    };
+
+    const handleThemeClick = () => {
+        setShowThemeOptions(!showThemeOptions);
+    };
+
+
+    return (
+        <div className={`chatbot-container ${darkMode ? 'dark' : ''}`}>
+            {/* Header */}
+            <div className="chat-header">
+                <button className="back-button-chat" onClick={() => navigate('/')}>
+                    <ArrowLeft size={20} /> Back
+                </button>
+                <span>PyBot</span>
+
+                {/* Header Buttons */}
+                <div className="header-buttons">
+
+
+                    {/* Menu Button (3 dots) */}
+                    <button className="menu-button" onClick={toggleMenu}>
+                        <Menu size={20} />
+                    </button>
+
+                    {/* Dropdown Menu */}
+                    {showMenu && (
+                        <div className="menu-dropdown">
+                            <button className="menu-item" onClick={handleSettingsClick}>
+                                <Settings size={18} /> Settings
+                            </button>
+                            {showSettingsOptions && (
+                                <div className="settings-options">
+                                    <button className="settings-option" onClick={handleThemeClick}>
+                                        Theme
+                                    </button>
+                                    {showThemeOptions && (
+                                        <div className="theme-options">
+                                            <button className="theme-option" onClick={() => { setDarkMode(false); localStorage.setItem('theme', 'light'); setShowThemeOptions(false); }}>
+                                                <Sun size={16} /> White
+                                            </button>
+                                            <button className="theme-option" onClick={() => { setDarkMode(true); localStorage.setItem('theme', 'dark'); setShowThemeOptions(false); }}>
+                                                <Moon size={16} /> Dark
+                                            </button>
+                                        </div>
+                                    )}
+                                    <button className="settings-option" onClick={clearChatHistory}>
+                                        <Clock size={16}/> History
+                                    </button>
+                                    <button className="settings-option" onClick={clearChatHistory}>Delete History</button>
+                                </div>
+                            )}
+                            <button className="menu-item" onClick={handleLogout}>
+                                <LogOut size={18} /> Logout
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Chat Display */}
+            <div className="chat-display" ref={chatContainerRef}>
+                {messages.map((message, index) => (
+                    <div key={index} className={`message ${message.sender}`}>
+                        <div className="message-content">{message.text}</div>
+                    </div>
+                ))}
+                {isLoading && <div className="loading-indicator">...Thinking</div>}
+            </div>
+
+            {/* Input Area */}
+            <div className="input-area">
+                <textarea
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Type your question... (Shift + Enter to send)"
+                    className="chat-input"
+                />
+                <button onClick={() => sendMessage(input)} className="send-button">
+                    <Send size={20} />
+                </button>
+                <button
+                    onMouseDown={startRecording}
+                    onMouseUp={stopRecording}
+                    className={`mic-button ${isRecording ? 'recording' : ''}`}
+                >
+                    <Mic size={20} />
+                </button>
+            </div>
+        </div>
+    );
 }
 
 export default Chatbot;
+

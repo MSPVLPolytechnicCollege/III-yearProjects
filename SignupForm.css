@@ -66,7 +66,7 @@
 /* Password Field with Eye Icon */
 .password-group {
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 
 .password-group input {
@@ -100,7 +100,7 @@
 }
 
 .signup-button {
-  background: #6a11cb;
+  background: #cb11c2;
   color: white;
   margin-bottom: 10px;
 }

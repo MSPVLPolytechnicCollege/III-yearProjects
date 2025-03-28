@@ -1,94 +1,29 @@
-/* Full Page Background */
+/* Background Container */
 .background-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #b0b3c0, #665f6d);
+  background: linear-gradient(to right, #6a11cb, #2575fc);
 }
 
-/* Login Container (Glassmorphism Effect) */
+/* Login Card */
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  max-width: 400px;
+  background: white;
   padding: 30px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 350px;
   text-align: center;
-  font-family: 'Poppins', sans-serif;
+  animation: fadeIn 0.6s ease-in-out;
 }
 
-@keyframes colorChange {
-  0% { color: #ff4b5c; }
-  25% { color: #ff9a00; }
-  50% { color: #32d296; }
-  75% { color: #3b82f6; }
-  100% { color: #ff4b5c; }
-}
-
+/* Header */
 .login-container h2 {
-  font-size: 35px;
-  font-weight: 600;
-  text-align: center;
-  animation: colorChange 4s infinite alternate ease-in-out;
-}
-
-
-/* Input Group */
-.input-group {
-  width: 100%;
   margin-bottom: 15px;
-  text-align: left;
-  position: relative;
-}
-
-.input-group label {
-  display: block;
-  font-size: 14px;
-  color: #fff;
-  margin-bottom: 5px;
-  font-weight: 500;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Password Group (For Eye Icon) */
-.password-group {
-  position: relative;
-}
-
-.password-group input {
-  padding-right: 40px;
-}
-
-.eye-icon {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #555;
-  font-size: 18px;
-}
-
-.eye-icon:hover {
-  color: #007bff;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
 }
 
 /* Error Message */
@@ -98,64 +33,121 @@
   margin-bottom: 10px;
 }
 
+/* Input Groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #6a11cb;
+  outline: none;
+  box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+}
+
+/* Password Field with Eye Icon */
+.password-group {
+  color: #333;
+  display: flex;
+  align-items: left;
+}
+
+.password-group input {
+  width: calc(100% - 30px);
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  transition: 0.3s;
+}
+
+.eye-icon:hover {
+  color: #333;
+}
+
 /* Buttons */
 .login-button, .forgot-password-button, .back-button {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: bold;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
-  margin-top: 10px;
+  transition: 0.3s ease-in-out;
 }
 
-/* Primary Login Button */
+/* Login Button */
 .login-button {
-  background: #007bff;
+  background: #cb11c2;
   color: white;
+  margin-bottom: 10px;
 }
 
 .login-button:hover {
-  background: #0056b3;
+  background: #4a0ca5;
 }
 
 /* Forgot Password Button */
 .forgot-password-button {
-  background: transparent;
-  color: #fff;
-  border: 2px solid #fff;
+  background: #ffae00;
+  color: black;
+  margin-bottom: 10px;
 }
 
 .forgot-password-button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #ff8800;
 }
 
 /* Back Button */
 .back-button {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
+  background: #ccc;
+  color: black;
 }
 
 .back-button:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: #b3b3b3;
 }
 
-/* Responsive Design */
-@media (max-width: 480px) {
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.9);
+  }
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 400px) {
   .login-container {
       width: 90%;
       padding: 20px;
-  }
-
-  .input-group input {
-      font-size: 14px;
-      padding: 10px;
-  }
-
-  .login-button, .forgot-password-button, .back-button {
-      font-size: 14px;
-      padding: 10px;
   }
 }

@@ -56,7 +56,7 @@ function LoginForm() {
         </div>
 
         <div className="input-group password-group">
-          <label htmlFor="password">Password</label>
+          <b><label htmlFor="password">Password</label></b>
           <input
             type={showPassword ? "text" : "password"}
             id="password"
