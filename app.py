@@ -1,6 +1,4 @@
 
-
-
 #import sqlite
 import sqlite3
 #import modules
@@ -28,6 +26,16 @@ def login1():
 @app.route('/loginpage')
 def home():
     return render_template('loginpage.html')
+
+#contactus page router
+@app.route('/cnttbl')
+def cnttbl():
+    return render_template('contacttbl.html')
+
+#chart page router
+@app.route('/chart')
+def chart():
+    return render_template('chart.html')
 
 #about page
 @app.route('/about',methods=['GET','POST'])
@@ -66,15 +74,15 @@ def view():
     return render_template("view.html", datas=res)
 
 
-#donate & control  details table
-@app.route('/view1')
-def view1():
+# contact details table
+@app.route('/contacttbl')
+def contacttbl():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
     cursor.execute('select * from contact')
     res = cursor.fetchall()
-    return render_template("view.html", datas=res)
+    return render_template("contacttbl.html", datas=res)
 
 
 # contact the route
@@ -130,6 +138,7 @@ def donate():
         cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme,mth,weekField) values(?,?,?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt,mth,wf))
         con.commit()
         con.close()
+        return  redirect(url_for('payment'))
     return render_template('donate.html')
 
 #login page code

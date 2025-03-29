@@ -5,12 +5,18 @@
     <meta charset="UTF-8" />
     <title>admindashboard</title>
       <!-----script------>
-    <script src="scrpit.js"></script>
-    <script  type="module"src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
     <script
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+
+
+ <link rel="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" >
+
   </head>
   <style>
     * {
@@ -126,7 +132,7 @@
     }
 
     .container1 .content {
-
+      position: relative;
       margin-top: 10vh;
       min-height: 50vh;
     }
@@ -252,18 +258,23 @@
         <a href="contact"
           > <ion-icon name="call-outline"></ion-icon><span>Contact us</span
         ></a>
-        <a href="loginpage"
-          > <ion-icon name="person-add-outline"></ion-icon>   <span>Login </span ></a>
-        <a href="sucess"
-          ><ion-icon name="home-outline"></ion-icon><span>Home </span
+        <a href="loginpage"><ion-icon name="person-add-outline"></ion-icon>
+          <i class="fas fa-comment"></i>
+        <span>Login </span>
+        </a>
+        <a href="sucess">
+          <ion-icon name="home-outline"></ion-icon><span>Home</span>
+        </a>
+          <a href="chart"
+          ><ion-icon name="apps-outline"></ion-icon>
+            <span>Details</span
         ></a>
       </div>
     </div>
 
-    <!---<div class="container">--->
-      <div class="nav">
-       <div class="container1">
-       <div class="header">
+    <div class="container">
+    <div class="container1">
+      <div class="header">
         <div class="nav">
              <!----- view link------>
           <div class="search">
@@ -277,24 +288,19 @@
           </div>
         </div>
       </div>
-     </div>
-     </div>
-
-
          <!----- box and conetent1  ------>
       <div class="content"> <!----- start wrapper box and conetent1  ------>
         <div class="cards"> <!----- start wrapper box and conetent1  ------>
           <div class="card">
             <div class="box">
               <h1>500</h1>
-              <h3>Donaters</h3>
+              <h3> Total Donaters</h3>
             </div>
             <div class="imgs">
               <img src="static/images/msk2.png" height="90px" width="90px" />
             </div>
           </div>
-        </div>
-      </div>
+
       <!----- box and conetent2  ------>
           <div class="card">
             <div class="box">
@@ -316,32 +322,12 @@
               <img src="static/images/mskgph.png" height="90px" width="90px" />
             </div>
           </div>
-            <div class="wrapper">
-     <div class="c1">
-        <img src="static/images/msk3.png" height="90px" width="90px" />
-        <span class="num" data-val="800">000</span>
-       <span class="text">contactlist</span>
-     </div>
-
-      <div class="c1">
-       <img src="static/images/mskusr.png" height="90px" width="90px" />
-        <span class="num" data-val="500">000</span>
-       <span class="text">users</span>
-     </div>
-
-       <div class="c1">
-      <img src="static/images/mskeye.png" height="130px" width="120px" />
-        <span class="num" data-val="600">000</span>
-       <span class="text">Viewers</span>
-     </div>
-   </div>
-
         </div>
       </div> <!----- end   ------>
     </div>
   </div>
 
-<!----- start wrapper box and conetent1  ---->
+<!----- start wrapper box and conetent1  ------>
    <div class="wrapper">
      <div class="c1">
         <img src="static/images/msk3.png" height="90px" width="90px" />
@@ -352,7 +338,7 @@
       <div class="c1">
        <img src="static/images/mskusr.png" height="90px" width="90px" />
         <span class="num" data-val="500">000</span>
-       <span class="text">users</span>
+       <span class="text"> current Donaters</span>
      </div>
 
        <div class="c1">
@@ -361,22 +347,6 @@
        <span class="text">Viewers</span>
      </div>
    </div>
-
-
-
-   <div class="progress" role="progressbar" aria-label="Success example">
-  <div class="progress-bar bg-success" style="width: 25%">25%</div>
-</div>
-<div class="progress" role="progressbar" aria-label="Info example" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar bg-info text-dark" style="width: 50%">50%</div>
-</div>
-<div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar bg-warning text-dark" style="width: 75%">75%</div>
-</div>
-<div class="progress" role="progressbar" aria-label="Danger example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar bg-danger" style="width: 100%">100%</div>
-</div>
-
 <!----- scribit tag   ------>
  <script>
       let valueDisplays = document.querySelectorAll(".num");
@@ -402,7 +372,5 @@
    <!----scribt for js--->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
   </body>
 </html>

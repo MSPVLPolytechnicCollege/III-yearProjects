@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>chart</title>
+    <!-- Bootstrap CSS --->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-----script------>
+    <script src="scrpit.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+    <!------------------->
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"
+    />
+  </head>
+  <!--------->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body{
+        background-color: #727272;
+    }
+    .entier{
+      display: flex;
+      justify-content: space-around;
+    }
+   .c1{
+
+    display: flex;
+    gap: 60px;
+    justify-content:space-around;
+
+   }
+   .popup{
+    margin-top: 60px;
+    background-color:rgb(99, 99, 99);
+    height: 500px;
+    width:800px ;
+    padding: 10px;
+    margin-left: 40px;
+    border-radius: 5px;
+    border: 2px solid #f92288;
+
+   }
+
+   .popup1{
+    margin-top: 60px;
+    background-color:rgb(190, 190, 190);
+    height: 500px;
+    width:550px ;
+    padding: 10px;
+    margin-left: 40px;
+    border-radius: 20px;
+    border: 2px solid #f92288;
+
+   }
+
+   .popup2{
+    margin-top: 60px;
+    background-color:rgb(190, 190, 190);
+    height: 680px;
+    width:800px ;
+    padding: 10px;
+    margin-left: 40px;
+    border-radius: 20px;
+    border: 2px solid #f92288;
+
+   }
+   .chart{
+    margin-top: 10px;
+    margin-left: 0px;
+    width: 700px;
+    height: 400px;
+
+    border-radius: 5px;
+    box-shadow: 0 2px 5px (rgba(223, 88, 88, 0.));
+
+   }
+    .popup button{
+      display: block;
+      margin:  0 0 20px auto;
+      background-color: transparent;
+      font-size: 40px;
+      color: #f3efef;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .popup1 button{
+      display: block;
+      margin:  0 0 20px auto;
+      background-color: transparent;
+      font-size: 30px;
+      color: #636363;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .popup2 button{
+      display: block;
+      margin:  0 0 20px auto;
+      background-color: transparent;
+      font-size: 30px;
+      color: #636363;
+      border: none;
+      outline: none;
+      cursor: pointer;
+     
+    }
+
+
+   .c2{
+    height: 200px;
+    width: 400px;
+    margin-left: 80px;
+   }
+   .cc1 p{
+    font-size: 34px;
+    font-weight: bold;
+    text-align: center;
+   }
+
+
+   /*------------------------------->*/
+   .p1{
+    width: 400px;
+    margin-top: 100px;
+    margin-left: 300px;
+   padding: 40px;
+   }
+  .p1 p{
+     font-size: 34px;
+    font-weight: bold;
+    color: #f92288;
+    margin-left: 200px;
+  }
+  .p1 h6{
+    margin-left: 600px;
+  }
+  .p1 h5{
+    margin-left: 80px;
+  }
+
+  .progress{
+    width: 600px;
+    margin-left: 50px;
+  }
+  </style>
+
+
+    <!----entire start--->
+    <div class="entier">
+
+
+    <div class="popup">
+      <button id="close">&times;</button>
+        <div class="chart">
+      <div id="myfirstchart" style="height: 400px"></div>
+    </div>
+   </div>
+
+  <!------------------------------->
+  <div class="popup1">
+     <button id="close1">&times;</button>
+  <div class="c2">
+       <div id="donut-example" style="height: 400px"></div>
+    </div>
+  </div>
+    </div><!--------entier end---------------------->
+
+
+
+
+      <!------------------------------->
+
+
+<div class="p1">
+  <div class="popup2">
+    <button id="close2">&times;</button>
+<p>Goal completition</p>
+<h6>kjbbdv</h6><h5>highest donars</h5>
+    <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar text-bg-warning" style="width: 25%">25%</div></div><br>
+
+
+  <h6>kjbbdv</h6><h5>Contact</h5>
+    <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar bg-success" style="width: 75%">60%</div></div><br>
+
+
+  <h6>kjbbdv</h6><h5>Volunteers</h5>
+     <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar bg-info text-dark" style="width: 75%">50%</div></div><br>
+
+
+ <h6>100/75</h6><h5>Donate</h5>
+      <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar bg-warning text-dark" style="width: 75%">75%</div></div><br>
+
+
+    <h6>kjbbdv</h6><h5>Viewers</h5>
+        <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger" style="width: 100%">100%</div></div>
+
+</div>
+</div>
+
+    <!------------------------------------------->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script>
+      new Morris.Line({
+        // ID of the element in which to draw the chart.
+        element: "myfirstchart",
+        lineColors:[' #f92288'],
+
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: [
+
+          { year: "2015", value: 40 },
+          { year: "2016", value: 60 },
+          { year: "2017", value: 5 },
+          { year: "2018", value: 60 },
+          { year: "2019", value: 25 },
+          { year: "2020", value: 70 },
+          { year: "2021", value: 40 },
+          { year: "2022", value: 80 },
+           { year: "2023", value: 95 },
+            { year: "2024", value: 100 },
+        ],
+        // The name of the data record attribute that contains x-values.
+        xkey: "year",
+        // A list of names of data record attributes that contain y-values.
+        ykeys: ["value"],
+        // Labels for the ykeys -- will be displayed when you hover over the
+        // chart.
+        labels: ["Value"],
+      });
+
+
+
+      Morris.Donut({
+  element: 'donut-example',
+  data: [
+    {label: " volunterrs50%", value: 50},
+    {label: "Donaters30%", value: 30},
+    {label: "contact20%", value: 20}
+  ],
+  colors: [' #f92288','grey','rgb(247, 123, 181)'],
+  label:"#fffff"
+});
+    </script>
+
+
+ <!------------------------------------------->
+
+<script>
+window.addEventListener("load", function(){
+          setTimeout(
+                function open(event){
+                      document.querySelector(".popup").style.display ="block";
+                },
+                1000
+          )
+});
+
+
+
+  document.querySelector("#close").addEventListener
+  ("click",function(){
+      document.querySelector(".popup").style.display="none";
+
+  });
+
+
+
+ /*---------------------------------*/
+
+  window.addEventListener("load", function(){
+          setTimeout(
+                function open(event){
+                      document.querySelector(".popup1").style.display ="block";
+                },
+                1000
+          )
+});
+
+
+
+
+  document.querySelector("#close1").addEventListener
+  ("click",function(){
+      document.querySelector(".popup1").style.display="none";
+
+  });
+</script>
+
+
+
+
+
+
+
+
+ <!------------------------------------------->
+</div>
+</body>
+</html>
