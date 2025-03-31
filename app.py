@@ -38,10 +38,16 @@ def home():
 def cnttbl():
     return render_template('contacttbl.html')
 
-#chart page router
-@app.route('/chart')
-def chart():
-    return render_template('chart.html')
+
+#error page router
+@app.route('/error')
+def error():
+    return render_template('error.html')
+
+#volunterrs page router
+@app.route('/volunterrs')
+def volunterrs():
+    return render_template('volunterrs.html')
 
 #about page
 @app.route('/about',methods=['GET','POST'])
@@ -65,7 +71,7 @@ def admipage():
             session["ad_pass"] = data['ad_pass']
             return redirect("admindashboard")  #call the success in router
         else:
-            return ("Mismatch the password and username")
+            return render_template("error.html")
     return render_template('admin.html')# return the admin.html page
 
 
@@ -75,7 +81,7 @@ def view():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
-    cursor.execute('select * from dnt')
+    cursor.execute('select * from dnt order by amount desc')
     res = cursor.fetchall()
     return render_template("view.html", datas=res)
 
@@ -105,6 +111,7 @@ def contact():
         cursor.execute("insert into contact(name1,name2,email,phone,msg) values(?,?,?,?,?);", (n1,n2,e,ph,msg))
         con.commit()
         con.close()
+        return redirect(url_for('sucess'))
     return render_template("contact.html")
 
 #registerform
@@ -124,6 +131,26 @@ def register():
     return render_template('register.html')
 
 
+
+#volunteerss form
+@app.route('/vlnts',methods=['GET','POST'])
+def vnts():
+    if request.method=="POST":
+        n = request.form['name']
+        e = request.form['email']
+        m = request.form['phone']
+        add = request.form['address']
+        c = request.form['city']
+        pi = request.form['pincode']
+        con = sqlite3.connect('charity.db')
+        cursor = con.cursor()
+        cursor.execute("insert into volunterrs(name,email,phone,address,city,pincode) values(?,?,?,?,?,?);", (n, e, m, add,c,pi))
+        con.commit()
+        con.close()
+        return redirect (url_for('sucess'))
+    return render_template('volunterrs.html')
+
+
 #donate form
 @app.route('/donate',methods=['GET','POST'])
 def donate():
@@ -137,11 +164,9 @@ def donate():
         st = request.form['state']
         amt = request.form['amount']
         dt = request.form['dtetme']
-        mth = request.form['mth']
-        wf = request.form['weekField']
         con = sqlite3.connect('charity.db')
         cursor = con.cursor()
-        cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme,mth,weekField) values(?,?,?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt,mth,wf))
+        cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme) values(?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt))
         con.commit()
         con.close()
         return  redirect(url_for('payment'))
@@ -164,8 +189,8 @@ def login():
             session["password"] = data['password']
             return redirect("sucess")  #call the success in router
         else:
-            return ("Mismatch the password and username")
-    return redirect(url_for("sucess.html"))
+            return render_template("error.html")
+    return render_template("sucess.html")
 
 
 #sucess  router

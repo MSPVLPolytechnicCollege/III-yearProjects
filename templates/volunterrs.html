@@ -1,24 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-        <!-- icons link --->
-<script
-      type="module"
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-    ></script>
-    <!-- Bootstrap CSS --->
+    <meta charset="UTF-8" />
+    <title>volunterrs</title>
+
+      <!-- Bootstrap CSS --->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -27,7 +13,7 @@
     />
   </head>
   <style>
-    .card {
+.card {
       width: 600px;
       margin-left: 500px;
       margin-top: 50px;
@@ -49,13 +35,7 @@
       font-size:24px;
       font-weight:medium;
     }
-
-  .card-footer{
-       background-color: #f92288;
-      height: 40px;
-      color: white;
-    }
-      .input-area
+.input-area
       {
         margin-bottom:20px;
       }
@@ -83,13 +63,14 @@
          font-size:30px;
     }
 
-  </style>
-  <body>
 
-  <form action="/donate" method="POST">
+
+  </style>
+<body>
+<form action="/vlnts" method="POST">
       <div class="card">
         <div class="card-header">
-        Donation
+        Volunteers
         </div>
         <div class="card-body">
              <!----- name ------->
@@ -108,7 +89,7 @@
                      <div class="ume">
                          <span class="input-group-text" id="uname" >@</span>
 
-                        <input type="text" class="form-control" name="uname" >
+                        <input type="text" class="form-control" name="email" >
                     </div>
                 </div>
         </div><!---required--->
@@ -153,53 +134,17 @@
                   name="pincode"
                 />
               </div>
-               <!----- select ------->
-             <div class="mb-3">
-                    <label for="state" class="form-label">State</label>
-                    <select class="form-select" id="state" name="state" >
-                              <option selected disabled value="">choose</option>
-                              <option>Tamil Nadu</option>
-                                 <option>Kerala</option>
-                                 <option>Karanataka</option>
-                                 <option>maharasahta</option>
-                    </select>
-            </div>
 
-               <!----- amount ------->
-              <div class="mb-3">
-                <label for="amount" class="form-label">Amount</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="amount"
-                  name="amount"
-                />
-              </div>
-                   <!----- datretime ------->
-            <div class="mb-3">
-                <label for="dtetme" class="form-label">Date-time</label>
-                <input
-                  type="datetime-local"
-                  class="form-control"
-                  id="dtetme"
-                  name="dtetme"
-                />
-              </div>
 
 
    <!------ buttton ------->
               <div class="b1">
                 <button type="submit" class="btn btn-outline-danger">
-                  payment
+                  submit
                 </button>
               </div>
     </div><!---body card--->
-         <!------ footer ------->
-   <div class="card-footer text-body-secondary text-right">
-        <p>charity@gmail.com</p>
-   </div>
- </div>
-  </form>
 
-  </body>
-</html>
+</body>
+
+

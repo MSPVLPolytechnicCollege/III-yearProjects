@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -34,7 +31,7 @@
   <!--------->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body{
+     body{
         background-color: #727272;
     }
     .entier{
@@ -62,32 +59,12 @@
 
    .popup1{
     margin-top: 60px;
-<<<<<<< HEAD
-    background-color:rgb(190, 190, 190);
-=======
     background-color:bisque;
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
     height: 500px;
     width:550px ;
     padding: 10px;
     margin-left: 40px;
-<<<<<<< HEAD
-    border-radius: 20px;
-    border: 2px solid #f92288;
-
-   }
-
-   .popup2{
-    margin-top: 60px;
-    background-color:rgb(190, 190, 190);
-    height: 680px;
-    width:800px ;
-    padding: 10px;
-    margin-left: 40px;
-    border-radius: 20px;
-=======
     border-radius: 5px;
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
     border: 2px solid #f92288;
 
    }
@@ -123,21 +100,6 @@
       cursor: pointer;
     }
 
-<<<<<<< HEAD
-    .popup2 button{
-      display: block;
-      margin:  0 0 20px auto;
-      background-color: transparent;
-      font-size: 30px;
-      color: #636363;
-      border: none;
-      outline: none;
-      cursor: pointer;
-     
-    }
-
-=======
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
 
    .c2{
     height: 200px;
@@ -155,39 +117,49 @@
    .p1{
     width: 400px;
     margin-top: 100px;
-<<<<<<< HEAD
-    margin-left: 300px;
-=======
     margin-left: 50px;
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
    padding: 40px;
    }
   .p1 p{
      font-size: 34px;
     font-weight: bold;
     color: #f92288;
-<<<<<<< HEAD
-    margin-left: 200px;
-=======
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
   }
   .p1 h6{
     margin-left: 600px;
   }
-<<<<<<< HEAD
-  .p1 h5{
-    margin-left: 80px;
+  .progress{
+    width: 600px;
   }
 
-  .progress{
-    width: 600px;
-    margin-left: 50px;
-=======
-  .progress{
-    width: 600px;
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
-  }
   </style>
+
+<body>
+    <!----entire start--->
+    <div class="entier">
+
+
+    <div class="popup">
+      <button id="close">&times;</button>
+        <div class="chart">
+      <div id="myfirstchart" style="height: 400px"></div>
+    </div>
+   </div>
+
+  <!------------------------------->
+  <div class="popup1">
+     <button id="close1">&times</button>
+  <div class="c2">
+       <div id="donut-example" style="height: 400px"></div>
+    </div>
+  </div>
+    </div><!--------entier end---------------------->
+
+
+
+
+      <!------------------------------->
+
 
 
     <!----entire start--->
@@ -217,19 +189,11 @@
 
 
 <div class="p1">
-<<<<<<< HEAD
-  <div class="popup2">
-    <button id="close2">&times;</button>
-<p>Goal completition</p>
-<h6>kjbbdv</h6><h5>highest donars</h5>
-    <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-=======
 
 <p>Goal completition</p>
 <h6>kjbbdv</h6><h5>highest donars</h5>
     <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
     <div class="progress-bar text-bg-warning" style="width: 25%">25%</div></div><br>
 
 
@@ -243,11 +207,7 @@
     <div class="progress-bar bg-info text-dark" style="width: 75%">50%</div></div><br>
 
 
-<<<<<<< HEAD
- <h6>100/75</h6><h5>Donate</h5>
-=======
  <h6>kjbbdv</h6><h5>Donate</h5>
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
       <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
     <div class="progress-bar bg-warning text-dark" style="width: 75%">75%</div></div><br>
 
@@ -257,10 +217,6 @@
         <div class="progress-bar bg-danger" style="width: 100%">100%</div></div>
 
 </div>
-<<<<<<< HEAD
-</div>
-=======
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
 
     <!------------------------------------------->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
@@ -304,13 +260,8 @@
   element: 'donut-example',
   data: [
     {label: " volunterrs50%", value: 50},
-<<<<<<< HEAD
-    {label: "Donaters30%", value: 30},
-    {label: "contact20%", value: 20}
-=======
     {label: "Donaters", value: 30},
     {label: "contact", value: 20}
->>>>>>> a0323a02a13ccf4cdfbc34f9fa6c31ca2c2a3f30
   ],
   colors: [' #f92288','grey','rgb(247, 123, 181)'],
   label:"#fffff"
@@ -372,3 +323,4 @@ window.addEventListener("load", function(){
 </div>
 </body>
 </html>
+
