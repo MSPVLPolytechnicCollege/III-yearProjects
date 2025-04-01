@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alumini Registration</title>
     <link rel="stylesheet" href="/static/css/register2.css">
+    <link rel="icon" href="/static/images/mspvl.png">
 </head>
 <body>
     <div class="register">
@@ -14,19 +15,19 @@
             <form action="/alumni_register" method="post">
                 <table>
                     <tr>
-                        <td><label for="">Full Name</label></td> <td><input type="text" name="alumini-name"></td>
+                        <td><label for="">Full Name</label></td> <td><input type="text" name="alumini-name" required></td>
                     </tr>
                     <tr>
-                        <td><label for="">Password</label></td> <td><input type="password" name="alumini-pass"></td>
+                        <td><label for="">Password</label></td> <td><input type="password" name="alumini-pass" required></td>
                     </tr>
                     <tr>
-                        <td><label for="">Email Address</label></td><td><input type="text" name="alumini-email"></td>
+                        <td><label for="">Email Address</label></td><td><input type="text" name="alumini-email" required></td>
                     </tr> 
                     <tr>
-                        <td><label for="">Phone Number</label></td><td><input type="text" name="alumini-phone"></td>
+                        <td><label for="">Phone Number</label></td><td><input type="text" name="alumini-phone" required></td>
                     </tr>
                     <tr>
-                        <td><label for="">Year of Graduation</label></td><td><select id="graduation-year" name="graduation-year">
+                        <td><label for="">Year of Graduation</label></td><td><select id="graduation-year" name="graduation-year" required>
                             <option value="">Select Year</option>
                             <!-- Example years; update as needed -->
                             <option value="2025">2025</option>
@@ -46,11 +47,11 @@
                     </tr>  
                     <tr>
                         <td><label for="">Date of Birth</label></td>
-                        <td><input type="date" name="dob"></td>
+                        <td><input type="date" name="dob" required></td>
                     </tr>
                     <tr>
                         <td><label for="">Course of Study</label></td>
-                        <td><select id="Course" name="course">
+                        <td><select id="Course" name="course" required>
                             <option value="">Select Course</option>
                             <!-- Example years; update as needed -->
                             <option value="CSE">CSE</option>
@@ -66,7 +67,7 @@
                     </tr>
                     <tr>
                         <td><label for="">Address</label></td>
-                        <td><textarea name="address" id=""></textarea></td>
+                        <td><textarea name="address" id="" required></textarea></td>
                     </tr>
                     <tr>
                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Sign up</button></td>

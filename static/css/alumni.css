@@ -383,13 +383,13 @@ input:focus {
 }
 /*-----Copy Right------*/
 .copyright{
-    margin-left: 160px;
+    margin-left: 150px;
     margin-top: 50px;
-    background-color:#010a16;
-    height: 200px;
+    background-color:#006efd;
+    height: auto;
+    padding-bottom: 30px;
 }
 .logos{
-    padding-left: 140px;
     font-size: 30px;
     color: white;
     padding-top: 30px;
@@ -411,27 +411,67 @@ input:focus {
     text-align: center;
     padding-top: 15px;
     padding-left: 3px;
-    margin-left: 140px;
+   
 }
-.copy{
+.copy .copy1{
     color: white;
     font-family: 'Rotobo',sans-serif;
     font-size: 20px;
     text-align: center;
     padding-top: 20px;
     padding-left: 3px;
-    margin-left: 140px;
 }
 .logos a:hover{
-    color: #006efe;
+    color: #04f128;
     transition: 0.3s linear;
 }
 .content:hover{
-    color: #006efe;
+    color: #0bc427;
     transition: 0.3s linear;
 }
+.contact{
+    color: white;
+    margin-top: 20px;
+    font-family: 'Roboto';
+    text-decoration: none;
+    margin-left: 300px;
+    font-size: 18px;
 
-.copy:hover{
-    color: #006efe;
-    transition: 0.3s linear;
+}
+
+.pcontact{
+    font-size: 20px;
+    font-weight: 700;
+}
+.a{
+    font-size: 16px;
+}
+.address{
+    display: grid;
+}
+.address p{
+    padding-top: 10px;
+}
+.footer{
+    display: flex;
+    margin-left: 150px;
+}
+.address a{
+    color: white;
+    padding-top: 10px;
+}
+.address a:hover{
+    color: #04f128;
+    transition: 0.2s ease;
+}
+.copy1 {
+    color: white;
+    font-size: 20px;
+    font-family: 'Satisfy';
+    text-align: center;
+    padding-top: 30px;
+}
+hr{
+    color: gray;
+    margin: 25px;
 }

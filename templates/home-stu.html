@@ -8,6 +8,7 @@
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
 </head>
 <body>
      {% if messages %}
@@ -26,7 +27,6 @@
                 <div class="admin-login">
                     <a href="{{url_for('stucontact')}}">Admin Contact</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="{{url_for('admin')}}">Admin Login</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="">Communicate with Alumni</a>
                 </div>
             </div>
             <div class="header2">
@@ -40,6 +40,7 @@
                     <a href="#event">Events</a>
                     <a href="{{url_for('job_approved')}}">Job Posted</a>
                     <a href="{{url_for('alumni_contact')}}">Alumni Contact</a>
+                    <a href="{{url_for('course')}}">Course</a>
                 </div>
             </div>
         </header>
@@ -90,12 +91,34 @@
                 <a href="#"><ion-icon name="logo-github"></ion-icon></a>
                 <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
             </div>
-            <div class="content">
-               <p>Contact Us &nbsp;</p>
+            <div class="footer">
+                <div class="contact">
+                    <p class="pcontact">CONTACT</p>
+                    <div class="address">
+                        <p class="a">Address</p>
+                        <p class="a">Main Road,</p>
+                        <p class="a">Sivagamipuram</p>
+                        <p class="a">Pavoorchatram-627808</p>
+                        <p class="a">ph: 04633-250255,251091</p>
+                        
+                    </div>
+                </div>
+                <div class="contact">
+                    <p class="pcontact">LINKS</p>
+                    <div class="address">
+                        <a href="#">Home</a>
+                        <a href="#about">About</a>
+                        <a href="{{url_for('stu_gallery')}}">Gallery</a>
+                        <a href="#event">Events</a>
+                        <a href="{{url_for('job_approved')}}">Job Posted</a>
+                        <a href="{{url_for('alumni_contact')}}">Alumni Contact</a>
+                        <a href="{{url_for('course')}}">Course</a>
+                    </div>
+                </div>
             </div>
-            <div class="copy">
-                <p>&copy; 2025 MSPVL</p>
-            </div>
+            <hr>
+            <p class="copy1">&copy; 2025 MSP Velayutha Nadar Lakshmithaimmal Polytechnic College | privacy Policy & Cookies; Terms of Use</p>
+               
         </div>
     </div>
 

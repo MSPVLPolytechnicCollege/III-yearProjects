@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
 </head>
 <body>
     {% if messages %}
@@ -39,11 +40,10 @@
                     <a class="sub-btn" ><i class="fas fa-table"></i>Job Posting <i class="fas fa-angle-right dropdown"></i></a>
                     <div class="sub-menu">
                         <a href="{{url_for('request_job_admin')}}" class="sub-item"><i class="fas fa-add"></i>Add Job</a>
-                        <a href="{{url_for('alumni_view_job')}}" class="sub-item"><i class="fas fa-eye"></i>View Job</a>
+                        <a href="{{url_for('job_approved')}}" class="sub-item"><i class="fas fa-eye"></i>View Job</a>
                     </div>
                 </div>
                 <div class="item"><a href="{{url_for('view_contact_alumni')}}"><i class="fas fa-bell"></i>Student Request</a></div>
-                <div class="item"><a href="{{url_for('message')}}"><i class="fas fa-message"></i>Message</a></div>
                 <div class="item"><a href="#"><i class="fas fa-circle-info"></i>Report</a></div>
             </div>
         </div>
@@ -116,12 +116,34 @@
                 <a href="#"><ion-icon name="logo-github"></ion-icon></a>
                 <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
             </div>
-            <div class="content">
-               <p>Contact Us &nbsp;</p>
+            <div class="footer">
+                <div class="contact">
+                    <p class="pcontact">CONTACT</p>
+                    <div class="address">
+                        <p class="a">Address</p>
+                        <p class="a">Main Road,</p>
+                        <p class="a">Sivagamipuram</p>
+                        <p class="a">Pavoorchatram-627808</p>
+                        <p class="a">ph: 04633-250255,251091</p>
+                        
+                    </div>
+                </div>
+                <div class="contact">
+                    <p class="pcontact">LINKS</p>
+                    <div class="address">
+                        <a href="#">Home</a>
+                        <a href="#about">About</a>
+                        <a href="{{url_for('stu_gallery')}}">Gallery</a>
+                        <a href="#event">Events</a>
+                        <a href="{{url_for('job_approved')}}">Job Posted</a>
+                        <a href="{{url_for('alumni_contact')}}">Alumni Contact</a>
+                        <a href="{{url_for('course')}}">Course</a>
+                    </div>
+                </div>
             </div>
-            <div class="copy">
-                <p>&copy; 2025 MSPVL</p>
-            </div>
+            <hr>
+            <p class="copy1">&copy; 2025 MSP Velayutha Nadar Lakshmithaimmal Polytechnic College | privacy Policy & Cookies; Terms of Use</p>
+               
         </div>
 
                 

@@ -6,6 +6,9 @@
     <title>APPROVED JOB</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
         *{
@@ -16,83 +19,15 @@
             background-color: #f1f5f8;
             font-family: 'Roboto',sans-serif;
         }
-       
-        .big-box p{
-            color: #005cd5;
-            font-size: 26px;
-            font-weight: 700;
-            text-align: center;
-            padding-top: 40px;  
-        }
-        table{
-            align-items: center;
-            text-align: center;
-            margin-top: 30px;
-        }
-        table tr{
-            font-size: 16px;
-            font-family: 'Lato',sans-serif;
-            font-weight: 500;
-
-        }
-        th,td{
-           padding: 5px 5px;
-        }
-        table td:nth-child(13) a{
-            color: white;
-            border-radius: 10px;
-            background:#0bc427;
-            text-decoration:none;
-            padding:5px 30px 5px 30px ;
-        }
-        table td:nth-child(13) a:hover{
-            transition: 0.2s linear;
-            background:#028916 ;
-            transition: 0.2S ease;
-        }
-        
-        table td:nth-child(14) a{
-            color: white;
-            border-radius: 10px;
-            background:#e20303;
-            text-decoration:none;
-            padding:5px 30px 5px 30px ;
-        }
-        table td:nth-child(14) a:hover{
-            transition: 0.2s linear;
-            background:#ff0000 ;
-            transition: 0.2S ease;
-        }
-        table{
-            margin-left:145px;
-	        width:80%;
-	        border-collapse:collapse;
-	        margin-top:25px;
-        }
-        tr td,tr th{
-	        border:1px solid #4682B4;
-	        padding:5px;
-        }
-        tr th{
-            border:none;
-            background:#007BFF;
-            border:1px solid #4682B4;
-            color:white;
-        }
-        .icon {
-            color: black;
-            font-size: 26px;
-            margin-top:30px;
-        }
-        a{
-            margin-left:1520px;
+        .icon a{
+            margin-left:1450px;
             padding-top:20px;
             font-size:32px;
             text-decoration:none;
             font-weight:700px;
             color: black;
         }
-         a:hover{
+        .icon  a:hover{
             transition:0.2s ease;
             color:#005cd5;
         }
@@ -100,6 +35,145 @@
             color: black;
             font-size: 32px;
             font-weight: 700;
+        }
+        .big-box{
+            margin-top: 50px;
+        }
+        .job-content {
+            color: #005cd5;
+            font-weight: 700;
+            font-size: 26px;
+            text-align: center;
+        }
+        .job-content1{
+            font-family: 'Satisfy',sans-serif;
+            color: #005cd5;
+            font-size: 26px;
+            text-align: center;
+        }
+        .data{
+            padding-bottom: 30px;
+            margin-top: 30px;
+            padding-left: 20px;
+            margin-left: 85px;
+            height: auto;
+            width: 1400px;
+            background-color: white;
+            border-radius: 25px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+            padding-top: 30px;
+        }
+        .datas{
+            display: flex;
+            margin-left: 120px;
+            margin-top: 30px;
+        }
+        .job{
+            padding-top: 30px;
+            text-align: center;
+            display: block;
+        }
+        .name{
+            font-size: 22px;
+            padding-bottom: 10px;
+            color: #005cd5;
+            font-weight: 500;
+        }
+        .qualification{
+            padding-left: 50px;
+        }
+        .qualification1{
+            padding-left: 270px;
+        }
+        .qualification2{
+            padding-left: 270px;
+        }
+        .input{
+            padding-left: 5px;
+            font-size: 20px;
+        }
+        .read a{
+            list-style: none;
+            text-decoration: none;
+            background-color: #0bc427;
+            color: white;
+            padding: 7px 15px;
+            border-radius: 10px;
+            margin-top: 40px;
+            display: inline-block;
+            margin-left: 620px;
+            font-size: 20px;
+        }
+        .read a:hover{
+            transition: 0.2s ease;
+            background-color: #009b17;
+        }
+        .comment1{
+            color: #005cd5;
+            font-family: "Satisfy";
+            font-size: 24px;
+            font-weight: 600;
+            margin-left: 60px;
+
+        }
+        .type{
+            margin-left: 100px;
+            margin-top: 20px;
+
+        }
+        input{
+            height: 28px;
+            width: 280px;
+            padding-left: 2px;
+            font-size: 16px;
+            border: none;
+            border-bottom: 1px solid black;
+            outline: none;
+        }
+
+        input:hover{
+            border: none;
+            outline: none;
+        }
+        button{
+            border: none;
+            background-color: white;
+            font-size: 24px;
+            color: #005cd5;
+        }
+        .name1{
+            margin-left: 60px;
+            margin-top: 20px;
+            display: flex;
+        }
+        .name2{
+            font-size: 22px;
+            font-family: 'Satisfy';
+            color: #005cd5;
+            font-weight: 600;
+        }
+        .name3{
+            padding-left: 25px;
+            font-size: 18px;
+            padding-top: 4px;
+        }
+        .name4{
+            padding-left: 25px;
+            font-size: 18px;
+            padding-top: 4px;
+            color: #009b17;
+        }
+        .enter{
+            width: 150px;
+        }
+        select{
+            border-radius: 5px;
+            margin-left: 200px;
+            margin-right: 200px;
+            height: 25px;
+            width: 250px;
+            text-align: center;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -109,48 +183,63 @@
             {{message}}
         {% endfor %}
     {% endif %}
-    <form action="/request_job_show" method="post">
+    <form action="/job_approved" method="post">
         <div class="course">
             <div class="icon">
-                <a href="{{url_for('admin_dashboard')}}"> <ion-icon name="close-outline"></ion-icon></a>
+                <a href="{{url_for('stuhome')}}"><ion-icon name="close-outline"></ion-icon></a>
             </div>
             
             <div class="big-box">
-                <p>JOB VACANCY</p>
+                <p class="job-content">JOB VACANCY</p>
+                {% for data in datas %}
                 <div class="data">
-                    <table>
-                        <tr>
-                            <th>Sno</th>
-                            <th>Company Name</th>
-                            <th>Job Location</th>
-                            <th>Job Title</th>
-                            <th>Job Qualification</th>
-                            <th>Description</th>
-                            <th>Key Skill</th>
-                            <th>Package</th>
-                            <th>Job Experience</th>
-                            <th>Vacancy</th>
-                            <th>Job Email</th>
-                            <th>Last Date</th>
-                            <th>Contact</th>
-                        </tr>
-                        {% for data in datas %}
-                        <tr>
-                        <td>{{ data['sno'] }}</td>
-                        <td>{{ data['company'] }}</td>
-                        <td>{{ data['job_location'] }}</td>
-                        <td>{{ data['job_title'] }}</td>
-                        <td>{{ data['qualification'] }}</td>
-                        <td>{{ data['description'] }}</td>
-                        <td>{{ data['key_skills'] }}</td>
-                        <td>{{ data['job_package'] }}</td>
-                        <td>{{ data['experience'] }}</td>
-                        <td>{{ data['num_vacancy'] }}</td>
-                        <td>{{ data['reference_email'] }}</td>
-                        <td>{{ data['last_date'] }}</td>
-                        <td>{{ data['contact'] }}</td>
-                        {% endfor %}
-                    </table>
+                    <p class="job-content1">Job Details</p>
+                   <div class="datas">
+                    <div class="qualification">
+                        <p class="name">Company Name</p>
+                        <p class="input">{{ data['company'] }}</p>
+                    </div>
+                    <div class="qualification1">
+                        <p class="name">Job Qualification</p>
+                        <p class="input">{{ data['qualification'] }}</p>
+                    </div>
+                    <div class="qualification2">
+                        <p class="name">Job Skill</p>
+                        <p class="input">{{ data['key_skills'] }}</p>
+                    </div>
+                   </div>
+                    <div class="read">
+                        <a href="{{url_for('job_stu')}}" target="_self">Read More</a>
+                    </div>
+                  
+                    <div class="comment">
+                        <p class="comment1">Comment Section</p>
+                        <div class="type">
+                            <input class="enter" type="text" name="sender-name" placeholder=" Enter Your Name">
+                            <select name="stu-alu" id="">
+                                <option value="">--Select--</option>
+                                <option value="student">Student</option>
+                                <option value="student">Alumni</option>
+                                <option value="student">Admin</option>
+                            </select>
+                            <input type="text" name="name" placeholder=" Add a Comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                    {% for data in datas1 %}
+                    <div class="comments">
+                        <div class="name1">
+                            <p class="name2">{{ data['name'] }} :</p>
+                            <p class="name4">{{data['messager']}}</p>
+                            <p class="name3">{{ data['comment'] }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+               </div>
+                   
                 </div>
             </div>
         </div>
+    </form>
+    </body>
+</html>

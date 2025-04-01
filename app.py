@@ -280,18 +280,16 @@ con.execute("""
     );
 """)
 
-#message
-con = sqlite3.connect('alumini_db.db')
+#comment
+con=sqlite3.connect('alumini_db.db')
 con.execute("""
-    CREATE TABLE IF NOT EXISTS messages (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        sender TEXT NOT NULL,
-        receiver TEXT NOT NULL,
-        message TEXT NOT NULL,
-        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
+    create table if not exists comment(
+            id integer primary key autoincrement,
+            name text ,
+            messager text,
+            comment text
+        );
 """)
-
 
 #Register the student details
 @app.route('/register', methods=['GET', 'POST'])
@@ -324,7 +322,12 @@ def register():
 
 @app.route('/alumni_dashboard')
 def alumni_dashboard():
-    return render_template('alumni.html')
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template('alumni.html',datas=res)
 
 
 
@@ -637,37 +640,18 @@ def view_contact_alumni():
 
 
 
-#delete the contact by the admin
-@app.route('/deleteevent/<string:sno>',methods=['GET','POST'])
+
+#delete the contact by the admin (student)
+@app.route('/deletecontact/<string:sno>',methods=['GET','POST'])
 def deletecontact(sno):
     con=sqlite3.connect('alumini_db.db')
     cursor=con.cursor()
     cursor.execute('delete from contact1 where sno=?',(sno,))
     con.commit()
     con.close()
-    return redirect(url_for('contact-view.html'))
-
-#to view the courses
-@app.route('/course', methods=['GET', 'POST'])
-def course():
-    con = sqlite3.connect('alumini_db.db')
-    con.row_factory = sqlite3.Row  # Enables dictionary-style access
-    cursor = con.cursor()
-    cursor.execute('select * from course')
-    res = cursor.fetchall()
-    con.close()
-    return render_template('manage_course.html',datas=res)
+    return render_template('contact-view.html')
 
 
-#Delete the course by admin
-@app.route('/deletecourse/<string:sno>',methods=['GET','POST'])
-def deletecourse(sno):
-    con=sqlite3.connect('alumini_db.db')
-    cursor=con.cursor()
-    cursor.execute('delete from course where sno=?',(sno,))
-    con.commit()
-    con.close()
-    return redirect(url_for('course'))
 
 #gallery
 @app.route('/gallery')
@@ -880,15 +864,32 @@ def save_job():
 
     return jsonify({"message": "Job request saved successfully!"})  # Success message
 
-#job approved for student to be view
-@app.route('/job_approved')
+
+@app.route('/job_approved', methods=['POST', 'GET'])
 def job_approved():
     con = sqlite3.connect('alumini_db.db')
-    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    con.row_factory = sqlite3.Row  # Allows access to rows by column name (like a dictionary)
     cursor = con.cursor()
     cursor.execute('select * from accepted_jobs1')
     res = cursor.fetchall()
-    return render_template('approved-job.html',datas=res)
+    if request.method == 'POST':
+        name = request.form['sender-name']
+        messager = request.form['stu-alu']
+        comment = request.form['name']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('INSERT INTO comment (name, messager, comment) VALUES (?, ?, ?)', (name, messager, comment))
+        con.commit()
+        con.close()
+   
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Allows access to rows by column name (like a dictionary)
+    cursor = con.cursor()
+    cursor.execute('SELECT * FROM comment')  # You can change this query to fetch comments if needed
+    res1 = cursor.fetchall()
+
+    return render_template('approved-job.html', datas=res, datas1=res1)
+
 
 #job approved for alumni to be view
 @app.route('/job_approved2')
@@ -987,7 +988,35 @@ def select_table1():
     # Render the data in a table
     return render_template("student-details-view.html", datas=res)
     
+#course
+@app.route('/course')
+def course():
+    return render_template('manage_course.html')
 
+#cse
+@app.route('/cse')
+def cse():
+    return render_template('ce.html')
+
+#eee
+@app.route('/eee')
+def eee():
+    return render_template('eee.html')
+
+#mech
+@app.route('/mech')
+def mech():
+    return render_template('mech.html')
+
+#civil
+@app.route('/civil')
+def civil():
+    return render_template('civil.html')
+
+#auto
+@app.route('/auto')
+def auto():
+    return render_template('auto.html')
 
 if __name__=='__main__':
     app.secret_key = '1234'

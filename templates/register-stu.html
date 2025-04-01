@@ -5,35 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration</title>
     <link rel="stylesheet" href="/static/css/register.css">
+    <link rel="icon" href="/static/images/mspvl.png">
 </head>
 <body>
     <div class="register">
         <div class="box">
             <h2>Student Registration</h2>
-            <form action="/register" method="post" autocomplete="off">
+            <form action="/register" method="post" autocomplete="off" required>
                 <div class="input">
 
-                    <input type="text" name="stu_reg" placeholder="Reg No">
+                    <input type="text" name="stu_reg" placeholder="Reg No" required>
                 </div>
                 <div class="id">
 
-                    <input type="text" name="stu_name" placeholder="Student Name">
+                    <input type="text" name="stu_name" placeholder="Student Name" required>
                 </div>
                 <div class="email">
 
-                    <input type="email" name="stu_email"  placeholder="Email">
+                    <input type="email" name="stu_email"  placeholder="Email" required>
                 </div>
                 <div class="username">
 
-                    <input type="text" name="stu_user"  placeholder="Username">
+                    <input type="text" name="stu_user"  placeholder="Username" required>
                 </div>
                 <div class="pass">
 
-                    <input type="password" name="stu_pass"  placeholder="Password">
+                    <input type="password" name="stu_pass"  placeholder="Password" required>
                 </div>
                 <div class="conform-pass">
 
-                    <input type="password" name="stu_con-pass"  placeholder="Conform Password">
+                    <input type="password" name="stu_con-pass"  placeholder="Conform Password" required>
                 </div>
                 <div class="btn-add">
                     <button type="submit">Sign up</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
