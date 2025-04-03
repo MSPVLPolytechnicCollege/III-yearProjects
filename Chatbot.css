@@ -47,8 +47,9 @@
 
 /* Menu Button (3 dots) */
 .menu-button {
-  background: none;
+  background: #00ff3c;
   border: none;
+  border-radius: 5px;
   color: inherit;
   cursor: pointer;
   padding: 5px;
@@ -73,8 +74,8 @@
 
 /* Dark Mode Menu */
 .chatbot-container.dark .menu-dropdown {
-  background: #333;
-  color: white;
+  background: #ffffff;
+  color: rgb(253, 34, 34);
   box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
 }
 
@@ -96,7 +97,7 @@
 }
 
 .chatbot-container.dark .menu-item:hover {
-  background: #444;
+  background: #d7fffc;
 }
 
 /* Chat Display */
@@ -261,7 +262,7 @@
 }
 
 .settings-option {
-  background: none;
+  background: #fff;
   border: none;
   padding: 10px;
   text-align: left;
@@ -274,11 +275,11 @@
 }
 
 .chatbot-container.dark .settings-options {
-  background-color: #333;
+  background-color: #fffafa;
 }
 
 .chatbot-container.dark .settings-option:hover {
-  background-color: #444;
+  background-color: #8bf1ff;
 }
 .theme-options {
   display: flex;
@@ -289,7 +290,7 @@
   padding-left: 20px;
 }
 .theme-option{
-background: none;
+background: #fff;
   border: none;
   padding: 10px;
   text-align: left;
@@ -308,6 +309,5 @@ background: none;
 }
 
 .chatbot-container.dark .theme-option:hover {
-  background-color: #555;
+  background-color: #ffa0a0;
 }
-

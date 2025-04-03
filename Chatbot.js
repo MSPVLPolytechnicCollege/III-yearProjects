@@ -79,34 +79,60 @@ function Chatbot() {
         }
     };
 
-    const sendMessage = async (message) => {
-        if (message.trim() === '') return;
+    
 
-        setMessages((prev) => [...prev, { text: message, sender: 'user' }]);
-        setInput('');
-        setIsLoading(true);
-
-        try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: message }),
-            });
-
-            const data = await response.json();
-            const botResponse = { text: data.response, sender: 'bot' };
-            setMessages((prev) => [...prev, botResponse]);
-            speakText(data.response);
-        } catch (error) {
-            console.error('Error:', error);
-            const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
-            setMessages((prev) => [...prev, errorMessage]);
-            speakText('An error occurred. Please try again.');
-        } finally {
-            setIsLoading(false);
-        }
+    const formatResponse = (response) => {
+      // Remove redundant information
+      response = response.replace(/\s{2,}/g, ' ').trim();
+    
+      // Standardize sentence end (add a period if missing)
+      if (!response.endsWith('.') && !response.endsWith('!')) {
+        response += '.';
+      }
+    
+      // Add friendly user engagement
+      if (!response.includes('Thank you') && !response.includes('You’re welcome')) {
+        response += ' Thank you for your question!';
+      }
+    
+      return response;
     };
 
+    const sendMessage = async (message) => {
+      if (message.trim() === '') return;
+    
+      setMessages((prev) => [...prev, { text: message, sender: 'user' }]);
+      setInput('');
+      setIsLoading(true);
+    
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: message }),
+        });
+    
+        const data = await response.json();
+    
+        // Standardize response formatting here
+        let botResponse = data.response.trim();
+    
+        // Apply basic formatting rules to make it more like ChatGPT
+        botResponse = formatResponse(botResponse);
+    
+        const botReply = { text: botResponse, sender: 'bot' };
+        setMessages((prev) => [...prev, botReply]);
+        speakText(botResponse);
+    
+      } catch (error) {
+        console.error('Error:', error);
+        const errorMessage = { text: 'An error occurred. Please try again.', sender: 'bot' };
+        setMessages((prev) => [...prev, errorMessage]);
+        speakText('An error occurred. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
     const handleKeyDown = (event) => {
         if (event.shiftKey && event.key === 'Enter') {
             event.preventDefault();
@@ -230,4 +256,3 @@ function Chatbot() {
 }
 
 export default Chatbot;
-
