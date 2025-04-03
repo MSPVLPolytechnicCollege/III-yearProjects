@@ -127,7 +127,7 @@ def register():
         cursor.execute("insert into register(name,email,mobile_no,password) values(?,?,?,?);", (n, e, m, pw))
         con.commit()
         con.close()
-        return redirect (url_for('loginpage'))
+        return render_template("sucspage.html")
     return render_template('register.html')
 
 
