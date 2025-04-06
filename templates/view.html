@@ -67,6 +67,8 @@
             <div class="contact">
             <a href="contacttbl"><button type="button">view contact</button></a> <!-----contact tbl---->
           </div>
+
+
         <p>Donate details</p>
         {% if messages %} {% for message in messages %} {{message}} {% endfor %}
         {% endif %}
@@ -105,39 +107,6 @@
       </div>
       </div>
     </div><!---responsive div end-->
-
-
-    <!----table for contact details----
-     <div class="table-responsive">
-     <div class="table">
-      <div class="t2">
-        <p>Contact details</p>
-          {% if messages %} {% for message in messages %} {{message}} {% endfor %}
-        {% endif %}
-        <table class="table table-bordered border-dark table-hover text-center text-capitalize"><!----table colour---
-          <thead>
-            <tr class="table-dark table-active text-uppercase text-white"><!----table row  colour----
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Address</th>
-            </tr>
-          </thead>
-          {% for data in datas %}<!----for loop print again and agin----
-          <tbody>
-            <tr>
-              <td scope="row">{{ data['name'] }}</td>
-              <td>{{ data['email'] }}</td>
-              <td>{{ data['phone'] }}</td>
-              <td>{{ data['address'] }}</td>
-            </tr>
-          </tbody>
-          {% endfor %}
-        </table>
-      </div>
-    </div>
-    </div><!---responsive div end-->
-
 
     <!---scribt-->
     <script

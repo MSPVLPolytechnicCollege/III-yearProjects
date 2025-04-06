@@ -22,12 +22,6 @@ def admin1():
 def login1():
   return redirect(url_for("loginpage.html"))
 
-
-# rouetr the chart
-@app.route('/chart')
-def chart():
-    return render_template('chart.html')
-
 #login page router
 @app.route('/loginpage')
 def home():
@@ -54,6 +48,31 @@ def volunterrs():
 def about():
     return render_template("about.html")
 
+#sucess  router
+@app.route('/sucess',methods=['GET','POST'])
+def sucess():
+    return render_template("sucess.html")
+
+#gallery
+@app.route('/gallery',methods=['GET','POST'])
+def gallery():
+    return render_template("gallery.html")
+
+# login page
+@app.route('/loginpage',methods=['GET','POST'])
+def loginpage():
+    return render_template("loginpage.html")
+
+#payment page
+@app.route('/payment',methods=['GET','POST'])
+def payment():
+    return render_template("payment.html")
+
+#admin dashboard page
+@app.route('/admindashboard',methods=['GET','POST'])
+def admindashboard():
+    return render_template("admindashboard.html")
+
 #adminpage
 @app.route('/admin',methods=['GET','POST'])
 def admipage():
@@ -75,7 +94,7 @@ def admipage():
     return render_template('admin.html')# return the admin.html page
 
 
-#donate & control  details table
+#donate details table
 @app.route('/view')
 def view():
     con = sqlite3.connect('charity.db')
@@ -97,6 +116,17 @@ def contacttbl():
     return render_template("contacttbl.html", datas=res)
 
 
+# volunterrs details table
+@app.route('/vntstbl')
+def vntstbl():
+    con = sqlite3.connect('charity.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from volunterrs')
+    res = cursor.fetchall()
+    return render_template("vntstbl.html", datas=res)
+
+
 # contact the route
 @app.route('/contact',methods=['GET','POST'])
 def contact():
@@ -111,7 +141,7 @@ def contact():
         cursor.execute("insert into contact(name1,name2,email,phone,msg) values(?,?,?,?,?);", (n1,n2,e,ph,msg))
         con.commit()
         con.close()
-        return redirect(url_for('sucess'))
+        return render_template('suspage1.html')
     return render_template("contact.html")
 
 #registerform
@@ -131,7 +161,6 @@ def register():
     return render_template('register.html')
 
 
-
 #volunteerss form
 @app.route('/vlnts',methods=['GET','POST'])
 def vnts():
@@ -147,7 +176,7 @@ def vnts():
         cursor.execute("insert into volunterrs(name,email,phone,address,city,pincode) values(?,?,?,?,?,?);", (n, e, m, add,c,pi))
         con.commit()
         con.close()
-        return redirect (url_for('sucess'))
+        return render_template('suspage2.html')
     return render_template('volunterrs.html')
 
 
@@ -172,7 +201,7 @@ def donate():
         return  redirect(url_for('payment'))
     return render_template('donate.html')
 
-#login page code
+#login page
 @app.route('/confirm',methods=['GET','POST'])
 def login():
     if request.method=='POST':
@@ -191,38 +220,6 @@ def login():
         else:
             return render_template("error.html")
     return render_template("sucess.html")
-
-
-#sucess  router
-@app.route('/sucess',methods=['GET','POST'])
-def sucess():
-    return render_template("sucess.html")
-#gallery
-@app.route('/gallery',methods=['GET','POST'])
-def gallery():
-    return render_template("gallery.html")
-
-# login page
-@app.route('/loginpage',methods=['GET','POST'])
-def loginpage():
-    return render_template("loginpage.html")
-
-#payment page
-@app.route('/payment',methods=['GET','POST'])
-def payment():
-    return render_template("payment.html")
-
-#upi  page
-@app.route('/upI',methods=['GET','POST'])
-def upi():
-    return render_template("upI.html")
-
-#admin dashboard page
-@app.route('/admindashboard',methods=['GET','POST'])
-def admindashboard():
-    return render_template("admindashboard.html")
-
-
 
 
 

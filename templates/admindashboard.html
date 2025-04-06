@@ -78,7 +78,7 @@
       font-size: 18px;
       color: #f1f1f1;
       font-size: 24px;
-      padding: 35px 50px; /*-------------------------*/
+      padding: 25px 50px; /*-----------sidebar link adjust--------------*/
       color: white;
       display: flex;
       align-items: center;
@@ -146,8 +146,10 @@
      /* user link a  */
     .user a{
          margin-left:350px;
-         color: antiquewhite;
+         color: white;
          margin-top: 20px;
+         display:flex;
+         justify-content:space-evenly;
     }
     .btn2{
         margin-left: 450px;
@@ -156,7 +158,9 @@
     margin-left:50px;
     }
 
-
+.nav{
+    display:flex;
+}
   /* cards link a  */
    .content {
       position: relative;
@@ -307,8 +311,6 @@
       cursor: pointer;
     }
 
-
-
    .c2{
     height: 200px;
     width: 400px;
@@ -365,8 +367,11 @@
         </a>
 
           <a href="donate">
-          <ion-icon name="log-in-outline"></ion-icon>
-                <span>Donate</span>
+           <ion-icon name="person-outline"></ion-icon><span>Donate</span>
+        </a>
+
+          <a href="vntstbl">
+           <ion-icon name="at-outline"></ion-icon><span>volunterrs</span>
         </a>
 
       </div>
@@ -378,13 +383,12 @@
              <!----- view link------>
             <div class="user">
               <a href="view" class="btn">view more </a><!----redirect the page into view page--->
+
             </div>
                 <div class="btn2">
                <a href="loginpage"><button type="button">Logout</button></a>
 
                </div>
-
-
         </div>
       </div>
 
