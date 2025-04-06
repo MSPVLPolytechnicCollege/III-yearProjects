@@ -118,3 +118,6 @@ button:hover{
     outline: 3px solid #003b88;
     transition: 0.2s linear;
 }
+head title{
+    text-transform: uppercase;
+}

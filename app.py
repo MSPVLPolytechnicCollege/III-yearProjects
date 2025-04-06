@@ -27,6 +27,20 @@ def stuhome():
     return render_template("home-stu.html", datas=res)
 
 
+#student
+con=sqlite3.connect('alumni_db.db')
+con.execute("""
+    CREATE TABLE if not exists student (
+    regno integer primary key autoincrement,
+    sname text,
+    email text,
+    username text,
+    password text,
+    confirmpass text
+    );
+""")
+con.close()
+
 
 
 @app.route('/success')
@@ -89,9 +103,9 @@ con.execute("""
 #alumni register table
 con = sqlite3.connect('alumini_db.db')
 con.execute("""
-    CREATE TABLE IF NOT EXISTS alumni1 (
-        alumni_name  text,
-        alumni_pass text,
+    CREATE TABLE IF NOT EXISTS alumni (
+        username  text,
+        password text,
         alumni_email TEXT PRIMARY KEY,
         alumni_phone integer,
         graduation integer,
@@ -383,6 +397,7 @@ def total_student():
     res = cursor.fetchall()
     return render_template("total-student.html", datas=res)
 
+
 #alumni login page to verif
 @app.route('/alumni_login',methods=['GET','POST'])
 def alumni_login():
@@ -482,7 +497,7 @@ def update_redirect():
     return render_template('update-stu.html')
 
 
-#Update
+#Update the student password
 @app.route('/forgot', methods=["GET", "POST"])
 def forgot():
     if request.method == 'POST':
@@ -494,43 +509,73 @@ def forgot():
         if forgot_s_pass != forgot_s_con:
             return render_template('error.html', message="Passwords do not match.")
         try:
-            # Connect to the database
             con = sqlite3.connect('alumini_db.db')
             cursor = con.cursor()
             cursor.execute('select username from student where username=?', (forgot_s_user,))
             result = cursor.fetchone()
 
-            # Check if the username matches the route parameter
             if result is None :
                 return render_template('error.html', message="Username mismatch. Please try again.")
-
-            # Update the password in the database
             cursor.execute(
                 "UPDATE student SET password=? ,confirmpass=?  WHERE username=?",
                 (forgot_s_pass, forgot_s_con, forgot_s_user))
-
-            # Commit the changes and close the connection
             con.commit()
             con.close()
-
             # Redirect to a success page
             return render_template('success.html', message="Password updated successfully!")
 
         except:
             return render_template('error.html', message="An error occurred")
-
     return render_template('update-stu.html')
 
+
+#Update the password for alumni
+@app.route('/update_alumni')
+def update_alumni():
+    return render_template('update-alumini.html')
+
+
+#Update the alumni password
+@app.route('/alumni_password_change', methods=["GET", "POST"])
+def alumni_password_change():
+    if request.method == 'POST':
+        # Retrieve form data
+        forgot_s_user = request.form['forgot-stu-name']
+        forgot_s_pass = request.form['forgot-stu-pass']
+
+        
+        try:
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute('select alumni_name from alumni1 where alumni_name=?', (forgot_s_user,))
+            result = cursor.fetchone()
+
+            if result is None :
+                return render_template('error.html', message="Username mismatch. Please try again.")
+
+            cursor.execute(
+                "UPDATE alumni1 SET alumni_pass=?  WHERE alumni_name=?",
+                (forgot_s_pass, forgot_s_user))
+            
+            con.commit()
+            con.close()
+            return render_template('success.html', message="Password updated successfully!")
+
+        except:
+            return render_template('error.html', message="An error occurred")
+
+    return render_template('update-alumini.html')
 
 
 #event to be view on the student
 @app.route('/event-details')
 def eventdetail():
+    sno = request.args.get("sno")
     con = sqlite3.connect('alumini_db.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
-    cursor.execute('select * from event')
-    res = cursor.fetchall()
+    cursor.execute('select * from event where sno=?',(sno,))
+    res = cursor.fetchone()  # Get a single row
     return render_template("event-details.html", datas=res)
 
 
@@ -558,7 +603,8 @@ def updateevent():
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
     cursor.execute('select * from event')
-    res = cursor.fetchall()
+    res=cursor.fetchall()
+    con.close()
     return render_template("update-event.html", datas=res)
 
 

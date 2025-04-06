@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumini Management system</title>
+    <title>ALUMNI MANAGEMENT SYSTEM</title>
     <link rel="stylesheet" href="/static/css/home.css">
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -77,7 +77,7 @@
                         <div class="event-row">
                             <span class="date">{{ data['event_date'] }} <span class="day"></span></span>
                             <span class="description"> {{ data['event_des'] }}</span>
-                            <a href="{{url_for('eventdetail')}}" class="read">Read More</a>
+                            <a href="{{url_for('eventdetail', sno=data['sno'])}}" class="read">Read More</a>
                         </div>
                     {% endfor %}
                 </div>

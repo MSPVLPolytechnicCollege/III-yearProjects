@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
+    <title>CONTACT</title>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <link rel="icon" href="/static/images/mspvl.png">
@@ -76,10 +76,12 @@
         input:hover{
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: 0.2s linear;
+            outline: none;
         }
         textarea:hover{
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: 0.2s linear;
+            outline: none;
         }
         .submit{
            padding-top: 35px;
@@ -133,6 +135,7 @@
         <p class="p">Contact Us</p>
         <div class="box">
             <div class="left-content">
+                <form action="" autocomplete="off">
                 <div class="input">
                     <input type="text" name="contact-name" placeholder="Name">
                 </div>
@@ -151,6 +154,7 @@
                 <div class="submit">
                     <button type="submit">Submit</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>

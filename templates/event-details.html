@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Details</title>
+    <title>EVENT DETAILS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="icon" href="/static/images/mspvl.png">
     <style>
@@ -16,8 +16,8 @@
         .event-box2{
             margin-left: 35%;
             margin-top: 8%;
-            height: 380px;
-            width: 460px;
+            height: 390px;
+            width: 500px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -51,6 +51,9 @@
         i:hover{
             color: #005cd5;
         }
+        tr .eve{
+            max-width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -64,20 +67,20 @@
         <form action="/event-details">
         <table >
             <p>Event Information</p>
-                {% for data in datas %}
+                
                 <tr>
-                    <td>Event Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['event_date'] }}</td>
+                    <td>Event Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ datas['event_date'] }}</td>
                 </tr>
                 <tr>
-                    <td>Event Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td><td>{{ data['event_location'] }}</td>
+                    <td>Event Location &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</td><td>{{ datas['event_location'] }}</td>
                 </tr>
                 <tr>
-                    <td>Event Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ data['event_time'] }}</td>
+                    <td>Event Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :</td><td>{{ datas['event_time'] }}</td>
                 </tr>
                 <tr>
-                    <td>Event Description &nbsp;&nbsp;: </td><td>{{ data['event_des'] }}</td>
+                    <td>Event Description &nbsp;&nbsp;: </td><td class="eve">{{ datas['event_des'] }}</td>
                 </tr>
-                {% endfor %}
+                
         </table>
         </form>
     </div>
