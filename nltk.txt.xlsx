@@ -1,0 +1,79 @@
+Okay, here's the step-by-step procedure to download the NLTK modules (punkt, wordnet, omw-1.4) within Visual Studio Code:
+
+Step 1: Open Your Project in Visual Studio Code
+
+Launch Visual Studio Code.
+Open the folder containing your Flask backend project (the one with your app.py file and where you're using NLTK). You can do this by going to File > Open Folder... and selecting your project directory.
+Step 2: Open the Integrated Terminal in VS Code
+
+VS Code has a built-in terminal that's very convenient for running Python commands related to your project.
+
+Go to View > Terminal in the VS Code menu.
+A terminal window will open at the bottom of your VS Code workspace. Make sure the terminal is activated within your project's virtual environment if you are using one (this is highly recommended). You should see the name of your virtual environment in parentheses at the beginning of the terminal prompt (e.g., (venv) C:\III_Year_Project\Python_json\Final_Project_Pybot\backend_flask>). If you're not in your virtual environment, you'll need to activate it using the appropriate command for your environment (e.g., source venv/bin/activate on macOS/Linux or venv\Scripts\activate on Windows).
+Step 3: Run Python and the NLTK Download Commands
+
+Now, within the VS Code integrated terminal, you will execute the Python commands to download the NLTK modules.
+
+Start a Python interpreter: Type python (or python3 depending on your system's Python setup) and press Enter. This will open an interactive Python session within the terminal. You'll see the >>> prompt.
+
+Import the nltk library: Type the following command and press Enter:
+
+Python
+
+import nltk
+If NLTK is installed correctly in your environment, you won't see any error messages.
+
+Download the punkt module: Type the following command and press Enter:
+
+Python
+
+nltk.download('punkt')
+What to Expect: NLTK will connect to its data server and download the punkt.zip file. You'll see progress information in the terminal. Once the download is complete, it will be extracted.
+Download the wordnet module: Type the following command and press Enter:
+
+Python
+
+nltk.download('wordnet')
+What to Expect: Similar to punkt, NLTK will download and extract the wordnet data.
+Download the omw-1.4 module: Type the following command and press Enter:
+
+Python
+
+nltk.download('omw-1.4')
+What to Expect: NLTK will download and extract the Open Multilingual WordNet data (version 1.4).
+Exit the Python interpreter: Once all three downloads are complete and you see the >>> prompt again, you can exit the Python interpreter by typing exit() and pressing Enter. You'll return to your regular terminal prompt.
+
+Step 4: Restart Your Flask Application (if it was running)
+
+If your Flask backend was running and encountered the LookupError previously, you should now restart it in the VS Code terminal to ensure it can access the newly downloaded NLTK resources.
+
+Verification (Optional):
+
+You can add some test code to your app.py to verify that these modules are now accessible:
+
+Python
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet
+
+# Test word_tokenize (requires 'punkt')
+text = "This is a test sentence."
+tokens = word_tokenize(text)
+print(f"Tokens: {tokens}")
+
+# Test WordNetLemmatizer (requires 'wordnet')
+lemmatizer = WordNetLemmatizer()
+word = "running"
+lemma = lemmatizer.lemmatize(word, pos='v')
+print(f"Lemma of '{word}': {lemma}")
+
+# Test WordNet (requires 'wordnet')
+synsets = wordnet.synsets("dog")
+print(f"Synsets for 'dog': {synsets}")
+
+print("NLTK modules downloaded and accessible!")
+Run your Flask application. If you see the output of these test commands without any LookupError related to punkt or wordnet, it means the modules have been downloaded successfully.
+
+By following these steps within your Visual Studio Code environment, you should be able to download the necessary NLTK modules for your project. Remember to keep your virtual environment activated in the terminal to ensure the modules are installed within your project's dependencies.

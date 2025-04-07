@@ -7,12 +7,18 @@ from flask_mail import Mail, Message
 import random
 import string
 from datetime import datetime, timedelta
+import nltk
+from nltk.stem import WordNetLemmatizer
+import re
+
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True) 
 
-# Load spaCy NLP model
 nlp = spacy.load("en_core_web_sm")
+lemmatizer = WordNetLemmatizer()
+
+
 
 # MongoDB setup
 client = MongoClient("mongodb+srv://JA_Blackcap:MSN91011ja@ja24.a5chk.mongodb.net/?retryWrites=true&w=majority&appName=JA24")
@@ -34,6 +40,15 @@ mail = Mail(app)
 # Function to generate OTP
 def generate_otp():
     return str(random.randint(100000, 999999))  # Generate a 6-digit OTP
+
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r'[^\w\s]', '', text) # Remove punctuation
+    tokens = nltk.word_tokenize(text)
+    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
+    return " ".join(lemmatized_tokens)
+
 
 
 
@@ -182,22 +197,42 @@ def reset_password():
 @app.route('/api/chat', methods=['POST'])
 def chat():
     data = request.get_json()
-    user_message = data.get('query')
+    query = data.get('query', '')
 
-    if not user_message:
-        return jsonify({'message': 'No message received'}), 400
+    if not query.strip():
+        return jsonify({'response': "Please enter your question."})
 
-    # Use spaCy for NLP processing
-    doc = nlp(user_message.lower())
-    processed_text = " ".join([token.lemma_ for token in doc])  # Lemmatization
+    processed_query = preprocess_text(query)
+    print(f"Processed Query: {processed_query}")
 
-    # Search for the processed question in the database
-    qa_entry = qa_collection.find_one({'question': {'$regex': processed_text, '$options': 'i'}})
+    # Search for the processed query in the database
+    response_data = qa_collection.find_one({'question': processed_query})
 
-    if qa_entry:
-        return jsonify({'response': qa_entry['answer']}), 200
+    if response_data:
+        response = response_data['answer']
     else:
-        return jsonify({'response': "Sorry, I didn't understand that. Can you rephrase?"}), 200
+        # Attempt a more flexible search (e.g., check for any lemmatized words in common)
+        query_tokens = set(processed_query.split())
+        best_match = None
+        max_overlap = 0
+
+        for item in qa_collection.find():
+            if 'question' in item:  # Check if 'question' key exists
+                db_question_processed = preprocess_text(item['question'])
+                db_question_tokens = set(db_question_processed.split())
+                overlap = len(query_tokens.intersection(db_question_tokens))
+
+                if overlap > max_overlap and overlap > 0: # Consider a threshold for overlap
+                    max_overlap = overlap
+                    best_match = item['answer']
+
+        if best_match:
+            response = best_match
+        else:
+            response = "Sorry, I didn't understand that. Can you rephrase?"
+
+    return jsonify({'response': response})
+
 
 @app.route('/api/chatbotlog', methods=['POST'])
 def chatbotlog():
