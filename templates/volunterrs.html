@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>volunterrs</title>
+
+      <!-- Bootstrap CSS --->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <style>
+.card {
+      width: 600px;
+      margin-left: 500px;
+      margin-top: 50px;
+      border: solid 1px #f92288;
+    }
+    .card-header {
+      background-color: #f92288;
+      height: 60px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .b1 {
+      margin-left: 250px;
+      margin-top: 30px;
+    }
+    .form-label{
+      font-size:24px;
+      font-weight:medium;
+    }
+.input-area
+      {
+        margin-bottom:20px;
+      }
+       .form-select
+       {
+        width:560px;
+        height:50px;
+        outline:none;
+        border: 1px solid rgb(207, 205, 207);
+        font-size:28px;
+        border-radius:3px;
+      }
+      .col-md-3{
+     margin-left:0px;
+      }
+      .ume{
+        display:flex;
+        }
+
+      .ume input
+      {
+      width:520px;
+      }
+       ion-icon{
+         font-size:30px;
+    }
+
+
+
+  </style>
+<body>
+<form action="/vlnts" method="POST">
+      <div class="card">
+        <div class="card-header">
+        Volunteers
+        </div>
+        <div class="card-body">
+             <!----- name ------->
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+
+                <input type="text" class="form-control" id="name" name="name"  required/>
+            </div>
+            <!----- uname ------->
+
+          <div class="mb-3">
+             <!----  <ion-icon name="mail-outline"></ion-icon>-->
+                <label for="uname" class="form-label" >Email</label>
+
+                <div class="input-group has-validation">
+                     <div class="ume">
+                         <span class="input-group-text" id="uname" >@</span>
+
+                        <input type="email" class="form-control" name="email"  required>
+                    </div>
+                </div>
+        </div><!---required--->
+               <!----- phone ------->
+              <div class="mb-3">
+                <label for="phone" class="form-label">Phone</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phone"
+                  name="phone" required
+                />
+              </div>
+               <!----- address ------->
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  name="address" required
+                />
+              </div>
+                   <!----- city ------->
+              <div class="mb-3">
+                <label for="city" class="form-label">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="city"
+                  name="city" required
+                />
+              </div>
+
+               <!----- pincode ------->
+              <div class="mb-3">
+                <label for="pincode" class="form-label">Pincode</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pincode"
+                  name="pincode" required
+                />
+              </div>
+
+
+
+   <!------ buttton ------->
+              <div class="b1">
+                <button type="submit" class="btn btn-outline-danger">
+                  submit
+                </button>
+              </div>
+    </div><!---body card--->
+
+</body>
+
+

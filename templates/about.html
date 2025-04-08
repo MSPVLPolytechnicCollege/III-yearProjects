@@ -32,9 +32,10 @@
       border: 3px solid #fff;
     }
     .container h3 {
-      margin-left: 80px;
+      margin-left: 30px;
       font-size: larger;
       font-family: Arial, Helvetica, sans-serif;
+      text-align:justify;
     }
 
     .section {
@@ -45,7 +46,7 @@
       /* box a design */
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: space-evenly;
       margin-top: 50px;
       position: relative;
       height: 245px;
@@ -53,7 +54,7 @@
     }
 
     #about .cards > div {
-      width: 200px;
+      width: 400px;
       background-color: #b8b6b6;
       padding: 35px;
       color: black;
@@ -72,6 +73,7 @@
     #about .cards > div p {
       font-size: 14px;
       margin-top: 15px;
+      text-align:justify;
     }
     #about .cards > div button {
       border: 1px solid #f92288;
@@ -82,16 +84,24 @@
       border-radius: 3px;
       cursor: pointer;
     }
-    #about .cards > div button:hover {
+
+    a button {
+      padding: 9px 25px;
       background-color: #f92288;
       color: white;
+      border-radius: 5px;
+      border: 1px solid #f92288;
+      box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0, 0, 0, 0.19);
+      margin-left: 10px;
+      margin-top: 10px;
+      outline: none;
+      width: 100px;
+      height: 30px;
     }
-    #about .cards > div:hover {
-      width: 400px;
-      margin-top: -20px;
-      border-color: #f92288;
-      padding: 55px;
-      height: auto;
+    a button:hover {
+      color: #f92288;
+      background: white;
+      outline: none;
     }
   </style>
 
@@ -100,52 +110,50 @@
       <div class="container">
         <h2 class="sectiontitle">About Us</h2>
         <h3>
-         The main mission of a charity trust typically focuses on making a positive impact on
-          society and supporting those in need.
-          our mission is to bring about lasting positive change by providing support, compassion, and
-          opportunities to individuals and communities in need. We are dedicated to
-          improving lives throughsustainable, impactful programs and initiatives aimed at addressing key issues such as poverty,
-          education, health, and social justice.
+          The main mission of a charity trust typically focuses on making a
+          positive impact on society and supporting those in need. our mission
+          is to bring about lasting positive change by providing support,
+          compassion, and opportunities to individuals and communities in need.
+          We are dedicated to improving lives through sustainable, impactful
+          programs and initiatives aimed at addressing key issues such as
+          poverty, education, health, and social justice.
 
+          Our goal at charity trust Management System using QR code is to create a positive impact in society by supporting
+          underprivileged communities through education, healthcare, and social welfare initiatives. We strive to empower
+          individuals with opportunities for a better future by providing scholarships, medical aid, food assistance, and s
+          kill development programs. Through our dedicated efforts and community support, we aim to build a more compassionate
+          and self-sustaining society.
         </h3>
 
         <div class="cards">
           <div class="donationbox">
             <div class="title">Give donation</div>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
-              maxime soluta
+              Your donation to charity trust Management System using QR code helps provide education, healthcare, and
+              essential aid to underprivileged communities. Every contribution, big or small, brings hope and change to
+              those in need. Donate online, via bank transfer, or in person, and be a part of our journey towards a better future.
+              Together, we can create a lasting impact!
             </p>
-            <button>Donate now</button>
+            <a href="donate"><button type="button">Donate</button></a>
           </div>
           <!----donation boxend-->
 
           <div class="volutersbox">
             <div class="title">Become a voluterrs</div>
             <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
-              maxime soluta
+             Volunteers are the heart of charity trust Management System using QR code. By dedicating your time and skills,
+              you can help us provide education, healthcare, and essential support to those in need. Whether it's organizing
+              events, teaching, or spreading awareness, every effort counts. Join our mission today and make a meaningful impact
+              in the community!
             </p>
-            <button>Become now</button>
+            <a href="volunterrs"><button type="button">Becomenow</button></a>
           </div>
           <!----donation boxend-->
 
-          <div class="ScholarshipBox">
-            <div class="title">Give a scholarship</div>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut
-              quaerat labore quasi ipsum iure, odit quibusdam voluptas eos
-              maxime soluta
-            </p>
-            <button>Give immediately</button>
-          </div>
           <!----donation boxend-->
         </div>
       </div>
     </section>
     <!---end-->
-
   </body>
 </html>

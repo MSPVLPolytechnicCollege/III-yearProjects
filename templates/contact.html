@@ -8,6 +8,51 @@
    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <style>
+
+
+
+
+
+
+  .popup {
+          width: 400px;
+          background:#fff;
+          border-radius: 6px;
+          border:solid 2px #f92288;
+          position: absolute;
+          top: 0%;
+          left: 40%;
+          transform: translate(-50%, -50%) scale(0.1);
+          text-align:center;
+          padding:0 30px 30px;
+          color:#333;
+           visibility: hidden;
+           transition:transform 0.4s,top 0.4s;
+        }
+        .open-popup {
+          visibility: visible;
+          top: 60%;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+    .popup img {
+          width: 150px;
+          margin-top: -50px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px (rgb(0, 0, 0, 0.2));
+        }
+    .popup button {
+          width: 100%;
+          margin-top: 50px;
+          padding: 10px 0;
+          background: #6fd649;
+          color: #fff;
+          border: 0;
+          outline: none;
+          font-size: 18px;
+          border-radius: 4px;
+          cursor: pointer;
+          box-shadow: 0 5px 5px (rgb(0, 0, 0, 0.2));
+        }
 * {
       margin: 0px;
     }
@@ -92,7 +137,7 @@
     }
     .inputbox textarea {
       padding: 10px;
-      font-size: 1.1em;
+      font-size:36px;
       outline: none;
       border: 1px solid #333;
       resize: none;
@@ -112,6 +157,7 @@
     }
     .inputBox ::placeholder {
       color: #999;
+
     }
 
 /* info */
@@ -229,7 +275,9 @@
 		min-height:300px;
 		padding: 0;
 	}
-}
+
+
+
 </style>
 <body>
     <div class="form">
@@ -248,38 +296,39 @@
               <div class="row50">
                 <div class="inputBox">
                   <span>First name</span>
-                  <input type="text " name="name1" placeholder="Maha" />
+                  <input type="text " name="name1" placeholder="Maha"  required/>
                 </div>
                 <div class="inputBox">
                   <span>Last name</span>
-                  <input type="text " name="name2" placeholder="Lakshmi" />
+                  <input type="text " name="name2" placeholder="Lakshmi"  required/>
                 </div>
               </div>
 
               <div class="row50">
                 <div class="inputBox">
                   <span>Email</span>
-                  <input type="text" name="email" placeholder="maha@gmail.com" />
+                  <input type="email" name="email" placeholder="maha@gmail.com"  required/>
                 </div>
                 <div class="inputBox">
                   <span>Mobile</span>
-                  <input type="text" name="phone" placeholder="7843580917" />
+                  <input type="text" name="phone" placeholder="7843580917"  required/>
                 </div>
               </div>
 
               <div class="row100">
                 <div class="inputBox">
                   <span>Message</span>
-                  <textarea type="text" name="msg" placeholder="write your message here..."></textarea>
+                  <textarea type="text" name="msg" placeholder="write your message here..." required></textarea>
                 </div>
               </div>
 
               <div class="row100">
                 <div class="inputBox">
-                  <input type="submit" value="send" />
+                  <input type="submit" value="send"  />
                 </div>
               </div>
             </div>
+
             <!---formbox-->
           </form>
         </div>
@@ -326,6 +375,8 @@
     </div>
         </form>
     </div>
+
+
 </body>
 
 </html>

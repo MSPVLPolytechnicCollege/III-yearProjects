@@ -83,6 +83,59 @@
          font-size:30px;
     }
 
+
+       .popup {
+          width: 400px;
+          background:#fff;
+          border-radius: 6px;
+          border:solid 2px #f92288;
+          position: absolute;
+          top: 0%;
+          left: 40%;
+          transform: translate(-50%, -50%) scale(0.1);
+          text-align:center;
+          padding:0 30px 30px;
+          color:#333;
+           visibility: hidden;
+           transition:transform 0.4s,top 0.4s;
+        }
+        .open-popup {
+          visibility: visible;
+          top: 60%;
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+    .popup img {
+          width: 150px;
+          margin-top: -50px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px (rgb(0, 0, 0, 0.2));
+        }
+    .popup button {
+          width: 100%;
+          margin-top: 50px;
+          padding: 10px 0;
+          background: #6fd649;
+          color: #fff;
+          border: 0;
+          outline: none;
+          font-size: 18px;
+          border-radius: 4px;
+          cursor: pointer;
+          box-shadow: 0 5px 5px (rgb(0, 0, 0, 0.2));
+        }
+        .submit{
+
+            height:40px;
+            width:100px;
+            outline:none;
+            color:#fff;
+             background:#ff3091;
+            border: 1px solid #ff3091;
+             border-radius:5px;
+             font-size:18px;
+             margin-right:20px;
+             margin-top:30px;
+    }
   </style>
   <body>
 
@@ -96,19 +149,19 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
 
-                <input type="text" class="form-control" id="name" name="name" />
+                <input type="text" class="form-control" id="name" name="name" required/>
             </div>
             <!----- uname ------->
 
           <div class="mb-3">
              <!----  <ion-icon name="mail-outline"></ion-icon>-->
-                <label for="uname" class="form-label" >Username</label>
+                <label for="uname" class="form-label" >Email</label>
 
                 <div class="input-group has-validation">
                      <div class="ume">
                          <span class="input-group-text" id="uname" >@</span>
 
-                        <input type="text" class="form-control" name="uname" >
+                        <input type="email" class="form-control" name="uname" required>
                     </div>
                 </div>
         </div><!---required--->
@@ -129,7 +182,7 @@
                   type="text"
                   class="form-control"
                   id="address"
-                  name="address"
+                  name="address" required
                 />
               </div>
                    <!----- city ------->
@@ -139,7 +192,7 @@
                   type="text"
                   class="form-control"
                   id="city"
-                  name="city"
+                  name="city" required
                 />
               </div>
 
@@ -150,13 +203,13 @@
                   type="text"
                   class="form-control"
                   id="pincode"
-                  name="pincode"
+                  name="pincode" required
                 />
               </div>
                <!----- select ------->
              <div class="mb-3">
                     <label for="state" class="form-label">State</label>
-                    <select class="form-select" id="state" name="state" >
+                    <select class="form-select" id="state" name="state" required >
                               <option selected disabled value="">choose</option>
                               <option>Tamil Nadu</option>
                                  <option>Kerala</option>
@@ -172,7 +225,7 @@
                   type="text"
                   class="form-control"
                   id="amount"
-                  name="amount"
+                  name="amount" required
                 />
               </div>
                    <!----- datretime ------->
@@ -182,37 +235,18 @@
                   type="datetime-local"
                   class="form-control"
                   id="dtetme"
-                  name="dtetme"
+                  name="dtetme" required
                 />
               </div>
 
-              <!----- month ------->
-            <div class="mb-3">
-                <label for="mth" class="form-label">Month</label>
-                <input
-                  type="month"
-                  class="form-control"
-                  id="mth"
-                  name="mth"
-                />
-              </div>
-                   <!----- week ------->
-            <div class="mb-3">
-                <label for="week" class="form-label">week</label>
-                <input
-                  type="week"
-                  class="form-control"
-                  id="week"
-                  name="weekField"
-                />
-            </div>
 
    <!------ buttton ------->
               <div class="b1">
-                <button type="submit" class="btn btn-outline-danger">
+                <button type="submit" class="btn btn-outline-danger" >
                   payment
                 </button>
               </div>
+
     </div><!---body card--->
          <!------ footer ------->
    <div class="card-footer text-body-secondary text-right">
@@ -221,5 +255,7 @@
  </div>
   </form>
 
+
   </body>
 </html>
+

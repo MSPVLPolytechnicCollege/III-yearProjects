@@ -22,8 +22,11 @@ def admin1():
 def login1():
   return redirect(url_for("loginpage.html"))
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4e491c737503fb7940ebdc802caa50951f97fb2a
 #login page router
 @app.route('/loginpage')
 def home():
@@ -34,15 +37,46 @@ def home():
 def cnttbl():
     return render_template('contacttbl.html')
 
-#chart page router
-@app.route('/chart')
-def chart():
-    return render_template('chart.html')
+
+#error page router
+@app.route('/error')
+def error():
+    return render_template('error.html')
+
+#volunterrs page router
+@app.route('/volunterrs')
+def volunterrs():
+    return render_template('volunterrs.html')
 
 #about page
 @app.route('/about',methods=['GET','POST'])
 def about():
     return render_template("about.html")
+
+#sucess  router
+@app.route('/sucess',methods=['GET','POST'])
+def sucess():
+    return render_template("sucess.html")
+
+#gallery
+@app.route('/gallery',methods=['GET','POST'])
+def gallery():
+    return render_template("gallery.html")
+
+# login page
+@app.route('/loginpage',methods=['GET','POST'])
+def loginpage():
+    return render_template("loginpage.html")
+
+#payment page
+@app.route('/payment',methods=['GET','POST'])
+def payment():
+    return render_template("payment.html")
+
+#admin dashboard page
+@app.route('/admindashboard',methods=['GET','POST'])
+def admindashboard():
+    return render_template("admindashboard.html")
 
 #adminpage
 @app.route('/admin',methods=['GET','POST'])
@@ -61,17 +95,17 @@ def admipage():
             session["ad_pass"] = data['ad_pass']
             return redirect("admindashboard")  #call the success in router
         else:
-            return ("Mismatch the password and username")
+            return render_template("error.html")
     return render_template('admin.html')# return the admin.html page
 
 
-#donate & control  details table
+#donate details table
 @app.route('/view')
 def view():
     con = sqlite3.connect('charity.db')
     con.row_factory = sqlite3.Row  # Enables dictionary-style access
     cursor = con.cursor()
-    cursor.execute('select * from dnt')
+    cursor.execute('select * from dnt order by amount desc')
     res = cursor.fetchall()
     return render_template("view.html", datas=res)
 
@@ -85,6 +119,17 @@ def contacttbl():
     cursor.execute('select * from contact')
     res = cursor.fetchall()
     return render_template("contacttbl.html", datas=res)
+
+
+# volunterrs details table
+@app.route('/vntstbl')
+def vntstbl():
+    con = sqlite3.connect('charity.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from volunterrs')
+    res = cursor.fetchall()
+    return render_template("vntstbl.html", datas=res)
 
 
 # contact the route
@@ -101,6 +146,7 @@ def contact():
         cursor.execute("insert into contact(name1,name2,email,phone,msg) values(?,?,?,?,?);", (n1,n2,e,ph,msg))
         con.commit()
         con.close()
+        return render_template('suspage1.html')
     return render_template("contact.html")
 
 #registerform
@@ -116,8 +162,27 @@ def register():
         cursor.execute("insert into register(name,email,mobile_no,password) values(?,?,?,?);", (n, e, m, pw))
         con.commit()
         con.close()
-        return redirect (url_for('loginpage'))
+        return render_template("sucspage.html")
     return render_template('register.html')
+
+
+#volunteerss form
+@app.route('/vlnts',methods=['GET','POST'])
+def vnts():
+    if request.method=="POST":
+        n = request.form['name']
+        e = request.form['email']
+        m = request.form['phone']
+        add = request.form['address']
+        c = request.form['city']
+        pi = request.form['pincode']
+        con = sqlite3.connect('charity.db')
+        cursor = con.cursor()
+        cursor.execute("insert into volunterrs(name,email,phone,address,city,pincode) values(?,?,?,?,?,?);", (n, e, m, add,c,pi))
+        con.commit()
+        con.close()
+        return render_template('suspage2.html')
+    return render_template('volunterrs.html')
 
 
 #donate form
@@ -133,17 +198,15 @@ def donate():
         st = request.form['state']
         amt = request.form['amount']
         dt = request.form['dtetme']
-        mth = request.form['mth']
-        wf = request.form['weekField']
         con = sqlite3.connect('charity.db')
         cursor = con.cursor()
-        cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme,mth,weekField) values(?,?,?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt,mth,wf))
+        cursor.execute("insert into dnt (name, uname, phone, address,city,pincode,state,amount,dtetme) values(?,?,?,?,?,?,?,?,?);", (n, e, m,add,c,pi,st,amt,dt))
         con.commit()
         con.close()
         return  redirect(url_for('payment'))
     return render_template('donate.html')
 
-#login page code
+#login page
 @app.route('/confirm',methods=['GET','POST'])
 def login():
     if request.method=='POST':
@@ -160,40 +223,8 @@ def login():
             session["password"] = data['password']
             return redirect("sucess")  #call the success in router
         else:
-            return ("Mismatch the password and username")
-    return redirect(url_for("sucess.html"))
-
-
-#sucess  router
-@app.route('/sucess',methods=['GET','POST'])
-def sucess():
+            return render_template("error.html")
     return render_template("sucess.html")
-#gallery
-@app.route('/gallery',methods=['GET','POST'])
-def gallery():
-    return render_template("gallery.html")
-
-# login page
-@app.route('/loginpage',methods=['GET','POST'])
-def loginpage():
-    return render_template("loginpage.html")
-
-#payment page
-@app.route('/payment',methods=['GET','POST'])
-def payment():
-    return render_template("payment.html")
-
-#upi  page
-@app.route('/upI',methods=['GET','POST'])
-def upi():
-    return render_template("upI.html")
-
-#admin dashboard page
-@app.route('/admindashboard',methods=['GET','POST'])
-def admindashboard():
-    return render_template("admindashboard.html")
-
-
 
 
 

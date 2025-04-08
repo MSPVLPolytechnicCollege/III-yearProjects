@@ -12,8 +12,11 @@
     crossorigin="anonymous"
   />
 <style>
+    .table{
+    width:1300px;
+    }
     .t1{
-    margin-left:300px;
+    margin-left:150px;
     width:800px;
     margin-top:50px;
 
@@ -33,23 +36,44 @@
     font-size:26px;
     font-weight:bold;
     }
+    .contact {
+    margin-top:30px;
+    }
+      a button {
+      padding: 9px 25px;
+      background-color: #f92288;
+      color: white;
+      border-radius: 5px;
+      border: 1px solid #f92288;
+      box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2), 0 6px 20px 0 rgb(0, 0, 0, 0.19);
+      margin-left: 650px;
+      margin-top: 10px;
+      outline:none;
+    }
+    a button:hover {
+      color: #f92288;
+      background: white;
+      outline:none;
+    }
 </style>
   <body>
 
-   <div class="contact">
-            <a href="contacttbl"><button type="button">goto</button></a> <!-----contact tbl---->
-          </div>
 
 
     <div class="table-responsive">
          <!----table for donation Details--->
       <div class="table">
         <div class="t1">
+            <div class="contact">
+            <a href="contacttbl"><button type="button">view contact</button></a> <!-----contact tbl---->
+          </div>
+
+
         <p>Donate details</p>
         {% if messages %} {% for message in messages %} {{message}} {% endfor %}
         {% endif %}
 
-        <table class="table table-bordered border-dark table-hover text-center text-capitalize" >
+        <table class="table table-bordered border-dark table-hover text-center " >
           <thead>
             <tr class="table-dark table-active text-white">
               <th scope="col">Name</th>
@@ -61,8 +85,6 @@
               <th scope="col">State</th>
               <th scope="col">Amount</th>
               <th scope="col">Date & Time</th>
-              <th scope="col">Month</th>
-              <th scope="col">Week</th>
             </tr>
 
           </thead>
@@ -78,8 +100,6 @@
               <td>{{ data['state'] }}</td>
               <td>{{ data['amount'] }}</td>
               <td>{{ data['dtetme'] }}</td>
-              <td>{{ data['mth'] }}</td>
-              <td>{{ data['weekField'] }}</td>
             </tr>
           </tbody>
           {% endfor %}
@@ -87,39 +107,6 @@
       </div>
       </div>
     </div><!---responsive div end-->
-
-
-    <!----table for contact details----
-     <div class="table-responsive">
-     <div class="table">
-      <div class="t2">
-        <p>Contact details</p>
-          {% if messages %} {% for message in messages %} {{message}} {% endfor %}
-        {% endif %}
-        <table class="table table-bordered border-dark table-hover text-center text-capitalize"><!----table colour---
-          <thead>
-            <tr class="table-dark table-active text-uppercase text-white"><!----table row  colour----
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Address</th>
-            </tr>
-          </thead>
-          {% for data in datas %}<!----for loop print again and agin----
-          <tbody>
-            <tr>
-              <td scope="row">{{ data['name'] }}</td>
-              <td>{{ data['email'] }}</td>
-              <td>{{ data['phone'] }}</td>
-              <td>{{ data['address'] }}</td>
-            </tr>
-          </tbody>
-          {% endfor %}
-        </table>
-      </div>
-    </div>
-    </div><!---responsive div end-->
-
 
     <!---scribt-->
     <script
