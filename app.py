@@ -23,10 +23,6 @@ def login1():
   return redirect(url_for("loginpage.html"))
 
 
-# rouetr the chart
-@app.route('/chart')
-def chart():
-    return render_template('chart.html')
 
 #login page router
 @app.route('/loginpage')
