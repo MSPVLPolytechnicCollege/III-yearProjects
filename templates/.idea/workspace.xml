@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4c07f349-cb08-463d-80de-7a791001d96b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../app.py" beforeDir="false" afterPath="$PROJECT_DIR$/../app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../charity.db" beforeDir="false" afterPath="$PROJECT_DIR$/../charity.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../charity.sqbpro" beforeDir="false" afterPath="$PROJECT_DIR$/../charity.sqbpro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,14 +33,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Python.app.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "web-Based-Charity-App-Using-QR-code"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python.app.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;web-Based-Charity-App-Using-QR-code&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

@@ -1,4 +1,5 @@
 
+
 #import sqlite
 import sqlite3
 #import modules
@@ -22,11 +23,6 @@ def admin1():
 def login1():
   return redirect(url_for("loginpage.html"))
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 4e491c737503fb7940ebdc802caa50951f97fb2a
 #login page router
 @app.route('/loginpage')
 def home():
