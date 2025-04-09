@@ -1,259 +1,1071 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from pymongo import MongoClient
-from werkzeug.security import generate_password_hash, check_password_hash
-import spacy
-from flask_mail import Mail, Message
-import random
-import string
-from datetime import datetime, timedelta
-import nltk
-from nltk.stem import WordNetLemmatizer
-import re
+
+import os
+from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
+import sqlite3
+import base64 #Base64 use pannurathu browser-la image store & display panna best option.
 
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True) 
 
-nlp = spacy.load("en_core_web_sm")
-lemmatizer = WordNetLemmatizer()
+app.secret_key="123"
 
+UPLOAD_FOLDER='static/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-
-# MongoDB setup
-client = MongoClient("mongodb+srv://JA_Blackcap:MSN91011ja@ja24.a5chk.mongodb.net/?retryWrites=true&w=majority&appName=JA24")
-db = client['Pybot']
-users_collection = db['User_details']
-qa_collection = db['QN_AN']  # The Q&A collection
-otp_collection = db["OTP_Collection"]
-
-# Flask-Mail Configuration
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USE_SSL"] = False
-app.config["MAIL_USERNAME"] = "jo24alive@gmail.com"
-app.config["MAIL_PASSWORD"] = "kdob lghy kghj cewi"
-
-mail = Mail(app)
-
-# Function to generate OTP
-def generate_otp():
-    return str(random.randint(100000, 999999))  # Generate a 6-digit OTP
+@app.route('/')
+@app.route('/login')
+def home():
+    return render_template('login-stu.html')
 
 
-def preprocess_text(text):
-    text = text.lower()
-    text = re.sub(r'[^\w\s]', '', text) # Remove punctuation
-    tokens = nltk.word_tokenize(text)
-    lemmatized_tokens = [lemmatizer.lemmatize(token) for token in tokens]
-    return " ".join(lemmatized_tokens)
+@app.route('/student-home')
+def stuhome():
+    con=sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template("home-stu.html", datas=res)
+
+
+#student
+con=sqlite3.connect('alumni_db.db')
+con.execute("""
+    CREATE TABLE if not exists student (
+    regno integer primary key autoincrement,
+    sname text,
+    email text,
+    username text,
+    password text,
+    confirmpass text
+    );
+""")
+con.close()
 
 
 
+@app.route('/success')
+def success():
+    return render_template('success.html')
 
-@app.route('/api/signup', methods=['POST'])
-def signup():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    age = data.get('age')
-    email = data.get('email')  
+con = sqlite3.connect('alumini_db.db')
+con.execute("create table if not exists student(regno integer primary key, sname text, email text unique ,username text unique,password text,confirmpass text) ")
+con.close()
 
-    if not username or not password or not age or not email:
-        return jsonify({'message': 'Missing required fields'}), 400
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS event (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        event_date TEXT,
+        event_location TEXT,
+        event_time TEXT,
+        event_des TEXT
+    );
+""")
 
-    if users_collection.find_one({'username': username}):
-        return jsonify({'message': 'Username already exists'}), 409
-    
-    if users_collection.find_one({'email': email}):
-        return jsonify({'message': 'Email already exists'}), 409
-
-    hashed_password = generate_password_hash(password)
-
-    user_data = {
-        'username': username,
-        'password': hashed_password,
-        'age': int(age),
-        'email': email  
-    }
-
-    msg = Message("SignUp Alert from your Account", sender="your-email@gmail.com", recipients=[email])
-    msg.body = f"Welcome to Pybot."
-    try:
-        mail.send(msg)
-        users_collection.insert_one(user_data)
-        return jsonify({'message': 'User created successfully'}), 201
-
-    except Exception as e:
-        print("Error occured while SignUp")
+#contact table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS contact1 (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        stu_name  text,
+        stu_email TEXT,
+        stu_contact integer,
+        subject TEXT,
+        message TEXT
+    );
+""")
 
 
-    
+# alumni contact table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS alumni_contact (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        stu_name  text,
+        stu_email TEXT,
+        stu_contact integer,
+        subject TEXT,
+        message TEXT
+    );
+""")
 
-@app.route('/api/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+#course table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS course (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        course TEXT ,
+        active text
+    );
+""")
 
-    if not username or not password:
-        return jsonify({'message': 'Missing required fields'}), 400
 
-    user = users_collection.find_one({'username': username})
+#alumni register table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS alumni (
+        username  text,
+        password text,
+        alumni_email TEXT PRIMARY KEY,
+        alumni_phone integer,
+        graduation integer,
+        dob integer,
+        course text,
+        address text
+    );
+""")
+con.close()
 
-    if user and check_password_hash(user['password'], password):
-        return jsonify({'message': 'Login successful'}), 200
-    else:
-        return jsonify({'message': 'Invalid credentials'}), 401
 
-@app.route("/api/forgotpassword", methods=["POST"])
-def forgot_password():
-    try:
-        data = request.json
-        username = data.get("username", "").strip()
-        email = data.get("email", "").strip()
+#gallery
+con=sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE if not exists image1 (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    image BLOG,
+    description text
+    );
+""")
+con.close()
 
-        if not username or not email:
-            return jsonify({"message": "Username and email are required."}), 400
+con=sqlite3.connect('alumini_db.db')
+con.execute("create table if not exists admin1(username text primary key,password text);")
+con.close()
 
-        print(f"Received Username: {username}, Email: {email}")
+#request-job table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS job_request (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        company  text,
+        job_location TEXT,
+        job_title text,
+        qualification TEXT,
+        description TEXT,
+        key_skills TEXT,
+        job_package TEXT,
+        experience TEXT,
+        num_vacancy TEXT,
+        reference_email TEXT,
+        last_date integer,
+        contact text
+    );
+""")
 
-        # Check if the user exists (case-insensitive query)
-        user = users_collection.find_one({
-            "username": {"$regex": f"^{username}$", "$options": "i"},
-            "email": {"$regex": f"^{email}$", "$options": "i"}
-        })
+#table for the accepted job after click the accept button
+con = sqlite3.connect("alumini_db.db")
+cursor = con.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS accepted_jobs1 (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        company TEXT,
+        job_location TEXT,
+        job_title TEXT,
+        qualification TEXT,
+        description TEXT,
+        key_skills TEXT,
+        job_package TEXT,
+        experience TEXT,
+        num_vacancy INTEGER,
+        reference_email TEXT,
+        last_date TEXT,
+        contact text
+    )
+''')
+con.commit()
+con.close()
 
-        print(f"Database Query Result: {user}")
+#cse table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS cse (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
-        if not user:
-            return jsonify({"message": "Invalid username or email."}), 400
+#it table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS it (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
-        # Generate OTP and expiry time
-        otp = generate_otp()
-        expiry_time = datetime.utcnow() + timedelta(minutes=10)
+#eee table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS eee (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
-        # Store OTP in MongoDB
-        otp_collection.update_one(
-            {"email": email},
-            {"$set": {"otp": otp, "expires_at": expiry_time}},
-            upsert=True
-        )
+#ece table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS ece (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
-        print(f"Generated OTP: {otp} for {email}")
+#mech table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS mech (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
-        # Send OTP email
-        msg = Message("Password Reset OTP", sender="your-email@gmail.com", recipients=[email])
-        msg.body = f"Your OTP is {otp}. It expires in 10 minutes."
+#civil table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS civil (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
 
+#automobile table
+con = sqlite3.connect('alumini_db.db')
+con.execute("""
+    CREATE TABLE IF NOT EXISTS auto (
+        sno INTEGER PRIMARY KEY AUTOINCREMENT,
+        name  text,
+        regno integer,
+        dob integer,
+        semester TEXT,
+        year TEXT,
+        department TEXT,
+        address TEXT,
+        phoneno integer
+        
+    );
+""")
+
+#comment
+con=sqlite3.connect('alumini_db.db')
+con.execute("""
+    create table if not exists comment(
+            id integer primary key autoincrement,
+            name text ,
+            messager text,
+            comment text
+        );
+""")
+
+#Register the student details
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
         try:
-            mail.send(msg)
-            print(f"OTP email sent successfully to {email}")
-            return jsonify({"message": "OTP sent to your email."}), 200
-        except Exception as e:
-            print(f"Error sending email: {e}")
-            return jsonify({"message": "Failed to send OTP email. Try again."}), 500
+            regno = request.form["stu_reg"]
+            sname = request.form["stu_name"]
+            email = request.form["stu_email"]
+            username = request.form["stu_user"]
+            password = request.form["stu_pass"]
+            confirmpass = request.form["stu_con-pass"]
 
-    except Exception as e:
-        print(f"Unexpected Error: {e}")
-        return jsonify({"message": "An error occurred. Try again."}), 500
+            if password != confirmpass:
+                return render_template('error.html', message="Passwords do not match.")
+
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute("insert into student(regno,sname,email,username,password,confirmpass) values(?,?,?,?,?,?);", (regno,sname,email,username,password,confirmpass))
+            con.commit()
+            # Redirect to the 'success' page and pass the message
+            return render_template('success.html', message="Registered Successfully.")
+
+        except:
+            return render_template('error.html', message="Registration failed. Details: " )
+        finally:
+            return redirect(url_for('home'))
+            con.close()
+    return render_template('register-stu.html')
+
+@app.route('/alumni_dashboard')
+def alumni_dashboard():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template('alumni.html',datas=res)
+
+
+
+@app.route('/alumni_redirect')
+def alumni_redirect():
+    return render_template('register-alumini.html')
+
+
+#register page for alumni
+@app.route('/alumni_register', methods=['GET', 'POST'])
+def alumni_register():
+    if request.method == 'POST':
+        try:
+            name=request.form['alumini-name']
+            password=request.form['alumini-pass']
+            email=request.form['alumini-email']
+            phone=request.form['alumini-phone']
+            graduation=request.form['graduation-year']
+            dob=request.form['dob']
+            course=request.form['course']
+            address=request.form['address']
+
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute("insert into alumni1(alumni_name,alumni_pass,alumni_email,alumni_phone,graduation,dob,course,address) values(?,?,?,?,?,?,?,?);", (name,password,email,phone,graduation,dob,course,address))
+            con.commit()
+            # Redirect to the 'success' page and pass the message
+            return render_template('success.html', message="Registered Successfully.")
+
+        except:
+            return render_template('error.html', message="Registration failed. Details: " )
+        finally:
+            return redirect(url_for('alumni_login'))
+    return render_template('register-alumni.html')
+
+
+@app.route('/total_alumni')
+def total_alumni():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from alumni1')
+    res = cursor.fetchall()
+    return render_template("total-alumni.html", datas=res)
+
+#student data are go to the admin page
+@app.route('/total_student')
+def total_student():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from student')
+    res = cursor.fetchall()
+    return render_template("total-student.html", datas=res)
+
+
+#alumni login page to verif
+@app.route('/alumni_login',methods=['GET','POST'])
+def alumni_login():
+    if request.method=='POST':
+        username = request.form['alumini-name']
+        password = request.form["alumini-pass"]
+        con = sqlite3.connect('alumini_db.db')
+        con.row_factory = sqlite3.Row  # select query use pana ithu use panuvo to select the row
+        cursor = con.cursor()
+        cursor.execute("select * from alumni1 where alumni_name=? and alumni_pass=?", (username, password))
+        data = cursor.fetchone()  # to fetch only one day that username and password
+
+        if data:
+            session['username'] = data['alumni_name']
+            session['password'] = data['alumni_pass']
+
+            return redirect(url_for("alumni_dashboard"))
+        else:
+            return render_template('error.html', message="Username and Password Mismatch.")
+    return render_template('login-alumini.html')
+
+
+
+@app.route('/admin')
+def admin_dashboard():
+    total_events = get_total_events().json['total']  # **Extract integer value from JSON**
+    total_contact = get_total_contact().json['total']  
+    total_job_request = get_total_job_request().json['total']  
+    total_jobs = get_total_jobs_json().json['total']
+    total_alumni = get_total_alumni_json().json['total']
+
+    print("Total Events:", total_events)  # Debugging
+    print("Total Contact:", total_contact)  # Debugging
+    print("Total Job Request:", total_job_request)  # Debugging
+    print("Total Job:", total_jobs)  # Debugging
+    print("Total Alumni:", total_alumni)  # Debugging
+
+    return render_template('admin.html',
+        total_events=total_events, 
+        total_contact=total_contact, 
+        total_request_job=total_job_request, 
+        total_jobs=total_jobs,
+        total_alumni=total_alumni
+    )
+
+
+#admin login page to verify
+@app.route('/adminlogin',methods=['GET','POST'])
+def admin():
+    if request.method=='POST':
+        username = request.form['admin-name']
+        password = request.form["admin-pass"]
+        con = sqlite3.connect('alumini_db.db')
+        con.row_factory = sqlite3.Row  # select query use pana ithu use panuvo to select the row
+        cursor = con.cursor()
+        cursor.execute("select * from admin1 where username=? and password=?;", (username, password))
+        data = cursor.fetchone()  # to fetch only one day that username and password
+
+        if data:
+            session['username'] = data['username']
+            session['password'] = data['password']
+            return redirect(url_for("admin_dashboard"))
+        else:
+            return render_template('error.html', message="Username and Password Mismatch.")
+    return render_template('login-admin.html')
+
+#student login and to check and verify
+@app.route('/login',methods=['GET','POST'])
+def login():
+    if request.method=='POST':
+        username = request.form['stu-name']
+        password = request.form["stu-pass"]
+        con=sqlite3.connect('alumini_db.db')
+        con.row_factory=sqlite3.Row #select query use pana ithu use panuvo to select the row
+        cursor=con.cursor()
+        cursor.execute("select * from student where username=? and password=?;" ,(username,password))
+        data=cursor.fetchone() #to fetch only one day that username and password
+
+        if data:
+            session['username']=data['username']
+            session['password']=data['password']
+            return redirect(url_for("stuhome"))
+        else:
+            return render_template('error.html', message="Username and Password Mismatch.")
+
+    return redirect(url_for("home"))
+
+
+@app.route('/signup')
+def signup():
+    return render_template('register-stu.html')
+
+
+#Update the password
+@app.route('/update_redirect')
+def update_redirect():
+    return render_template('update-stu.html')
+
+
+#Update the student password
+@app.route('/forgot', methods=["GET", "POST"])
+def forgot():
+    if request.method == 'POST':
+        # Retrieve form data
+        forgot_s_user = request.form['forgot-stu-name']
+        forgot_s_pass = request.form['forgot-stu-pass']
+        forgot_s_con = request.form['forgot-stu-conpass']
+
+        if forgot_s_pass != forgot_s_con:
+            return render_template('error.html', message="Passwords do not match.")
+        try:
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute('select username from student where username=?', (forgot_s_user,))
+            result = cursor.fetchone()
+
+            if result is None :
+                return render_template('error.html', message="Username mismatch. Please try again.")
+            cursor.execute(
+                "UPDATE student SET password=? ,confirmpass=?  WHERE username=?",
+                (forgot_s_pass, forgot_s_con, forgot_s_user))
+            con.commit()
+            con.close()
+            # Redirect to a success page
+            return render_template('success.html', message="Password updated successfully!")
+
+        except:
+            return render_template('error.html', message="An error occurred")
+    return render_template('update-stu.html')
+
+
+#Update the password for alumni
+@app.route('/update_alumni')
+def update_alumni():
+    return render_template('update-alumini.html')
+
+
+#Update the alumni password
+@app.route('/alumni_password_change', methods=["GET", "POST"])
+def alumni_password_change():
+    if request.method == 'POST':
+        # Retrieve form data
+        forgot_s_user = request.form['forgot-stu-name']
+        forgot_s_pass = request.form['forgot-stu-pass']
+
+        
+        try:
+            con = sqlite3.connect('alumini_db.db')
+            cursor = con.cursor()
+            cursor.execute('select alumni_name from alumni1 where alumni_name=?', (forgot_s_user,))
+            result = cursor.fetchone()
+
+            if result is None :
+                return render_template('error.html', message="Username mismatch. Please try again.")
+
+            cursor.execute(
+                "UPDATE alumni1 SET alumni_pass=?  WHERE alumni_name=?",
+                (forgot_s_pass, forgot_s_user))
+            
+            con.commit()
+            con.close()
+            return render_template('success.html', message="Password updated successfully!")
+
+        except:
+            return render_template('error.html', message="An error occurred")
+
+    return render_template('update-alumini.html')
+
+
+#event to be view on the student
+@app.route('/event-details')
+def eventdetail():
+    sno = request.args.get("sno")
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event where sno=?',(sno,))
+    res = cursor.fetchone()  # Get a single row
+    return render_template("event-details.html", datas=res)
+
+
+#Event to be add
+@app.route('/add-event',methods=['GET','POST'])
+def addevent():
+    if request.method=="POST":
+        date=request.form['event-date']
+        location=request.form['event-location']
+        time=request.form['event-time']
+        des=request.form['event-des']
+        con=sqlite3.connect('alumini_db.db')
+        cursor=con.cursor()
+        cursor.execute('insert into event(event_date,event_location,event_time,event_des) values(?,?,?,?)',(date,location,time,des))
+        con.commit()
+        con.close()
+        return redirect(url_for('admin_dashboard'))
+    return render_template('event.html')
+
+
+#update the event
+@app.route('/view_update_event')
+def updateevent():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res=cursor.fetchall()
+    con.close()
+    return render_template("update-event.html", datas=res)
+
+
+#Delete the event by admin
+@app.route('/deleteevent/<string:sno>',methods=['GET','POST'])
+def deleteevent(sno):
+    con=sqlite3.connect('alumini_db.db')
+    cursor=con.cursor()
+    cursor.execute('delete from event where sno=?',(sno,))
+    con.commit()
+    con.close()
+    return redirect(url_for('updateevent'))
+
+#view the event by alumni
+@app.route('/viewevent')
+def viewevent():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from event')
+    res = cursor.fetchall()
+    return render_template("event-alumni.html", datas=res)
+
+
+@app.route('/stu-contact',methods=['POST','GET'])
+def stucontact():
+    if request.method=='POST':
+        name=request.form['contact-name']
+        email = request.form['contact-email']
+        contact = request.form['contact-number']
+        subject = request.form['contact-subject']
+        message = request.form['contact-message']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into contact1(stu_name,stu_email,stu_contact,subject,message) values(?,?,?,?,?)',(name,email,contact,subject,message))
+        con.commit()
+        con.close()
+        return redirect(url_for('stuhome'))
+    return render_template('contact.html')
+
+
+#contact to be view on the admin
+@app.route('/view_contact')
+def view_contact():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from contact1')
+    res = cursor.fetchall()
+    return render_template('contact-view.html',datas=res)
+
+
+@app.route('/alumni_contact',methods=['POST','GET'])
+def alumni_contact():
+    if request.method=='POST':
+        name=request.form['contact-name']
+        email = request.form['contact-email']
+        contact = request.form['contact-number']
+        subject = request.form['contact-subject']
+        message = request.form['contact-message']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into alumni_contact(stu_name,stu_email,stu_contact,subject,message) values(?,?,?,?,?)',(name,email,contact,subject,message))
+        con.commit()
+        con.close()
+        return redirect(url_for('stuhome'))
+    return render_template('contact-alumni.html')
+
+
+#contact to be view on the alumni
+@app.route('/view_contact_alumni')
+def view_contact_alumni():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from alumni_contact')
+    res = cursor.fetchall()
+    return render_template('contact-view-alumni.html',datas=res)
+
+
+
+
+#delete the contact by the admin (student)
+@app.route('/deletecontact/<string:sno>',methods=['GET','POST'])
+def deletecontact(sno):
+    con=sqlite3.connect('alumini_db.db')
+    cursor=con.cursor()
+    cursor.execute('delete from contact1 where sno=?',(sno,))
+    con.commit()
+    con.close()
+    return render_template('contact-view.html')
+
+
+
+#gallery
+@app.route('/gallery')
+def gallery():
+    con = sqlite3.connect('alumini_db.db')
+    cursor = con.cursor()
+    cursor.execute('SELECT image,description FROM image1')  # Fetching image data
+    images = cursor.fetchall()
+    con.close()
+
+    # Convert images to Base64 format for display
+    image_list = [
+        {
+            'data': f"data:image/jpeg;base64,{base64.b64encode(img[0]).decode('utf-8')}",
+            'description':img[1]
+        }
+        for img in images
+    ]
+
+    return render_template('add-gallery.html', images=image_list)
+
+
+#student gallery
+@app.route('/stu_gallery')
+def stu_gallery():
+    con = sqlite3.connect('alumini_db.db')
+    cursor = con.cursor()
+    cursor.execute('SELECT image,description FROM image1')  # Fetching image data
+    images = cursor.fetchall()
+    con.close()
+
+     # Convert images to Base64 format for display
+    image_list = [
+        {
+            'data': f"data:image/jpeg;base64,{base64.b64encode(img[0]).decode('utf-8')}",
+            'description':img[1]
+        }
+        for img in images
+    ]
+    return render_template('stu-alumni-gallery.html', images=image_list)
+
+# alumni gallery
+@app.route('/alumni_gallery')
+def alumni_gallery():
+    con = sqlite3.connect('alumini_db.db')
+    cursor = con.cursor()
+    cursor.execute('SELECT image,description FROM image1')  # Fetching image data
+    images = cursor.fetchall()
+    con.close()
+
+     # Convert images to Base64 format for display
+    image_list = [
+        {
+            'data': f"data:image/jpeg;base64,{base64.b64encode(img[0]).decode('utf-8')}",
+            'description':img[1]
+        }
+        for img in images
+    ]
+    return render_template('alumni-gallery.html', images=image_list)
+
+#gallery - data to be add
+@app.route('/insert_image',methods=['GET','POST'])
+def insert_image():
+    if request.method=='POST':
+        if 'image' not in request.files: #Request-la 'image' field irukka-nu check panrom.
+            return "No file part" #If image file upload aagala-na, "No file part" nu solli return pannidum.
+        
+        image=request.files['image'] #User upload panna image-a eduthuttu image variable-la store panrom.
+        description=request.form['description']
+
+
+        if image.filename == '':
+            return "No selected file"
+        
+        # Convert image to binary
+        image_data = image.read()
+
+        con=sqlite3.connect('alumini_db.db')
+        cursor=con.cursor()
+        cursor.execute('insert into image1(image,description) values(?,?)',(image_data,description)) #E.g., static/uploads/example.jpg nu path DB-la store aagum.
+        con.commit()
+        con.close()
+        print("Redirecting to /gallery")  # Debugging log
+        return redirect(url_for('gallery'))
+    return render_template('/add-gallery.html')
+
+#event count dynamic ka update in the admin page
+@app.route('/get_total_events')
+def get_total_events():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM event")
+    total_events = cursor.fetchone()[0]  # Event count fetch pannum
+
+    conn.close()
+    return jsonify({'total': total_events})  # **Direct JSON return**
+
+#contact  count dynamic ka update in the admin page
+@app.route('/get_total_contact')
+def get_total_contact():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM contact1")
+    total_contact = cursor.fetchone()[0]  # Count fetch pannum
+
+    conn.close()
+    return jsonify({'total': total_contact})  # **Direct JSON return**
+
+#alumni can add a job request for the admin redirect
+@app.route('/redirect_request_job_admin',methods=['GET','POST'])
+def redirect_request_job_admin():
+    return render_template('job-posting-alumni.html')
+
+
+#alumni can add a job request for the admin
+@app.route('/request_job_admin',methods=['GET','POST'])
+def request_job_admin():
+    if request.method=='POST':
+        company=request.form['company-name']
+        job_location=request.form['job-location']
+        job_title=request.form['job-title']
+        job_qualification=request.form['job-qualification']
+        job_description=request.form['job-description']
+        key_skill=request.form['key-skill']
+        job_package=request.form['job-package']
+        job_experience=request.form['job-experience']
+        job_vacancy=request.form['job-vacancy']
+        job_email=request.form['job-email']
+        job_date=request.form['job-date']
+        contact=request.form['contact']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('insert into job_request(company,job_location,job_title,qualification,description,key_skills,job_package,experience, num_vacancy,reference_email,last_date,contact) values(?,?,?,?,?,?,?,?,?,?,?,?) ',(company,job_location,job_title,job_qualification,job_description,key_skill,job_package,job_experience,job_vacancy,job_email,job_date,contact))
+        con.commit()
+        con.close()
+    return render_template('job-posting-alumni.html')
+
+@app.route('/request_job_show')
+def request_job_show():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('job-request-admin.html',datas=res)
+
+@app.route('/alumni_view_job')
+def alumni_view_job():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('alumini-view-job.html',datas=res)
+
+@app.route('/job_stu')
+def job_stu():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from job_request')
+    res = cursor.fetchall()
+    return render_template('job-stu.html',datas=res)
+
+
+#Delete the job by admin
+@app.route('/deletejob/<string:sno>',methods=['GET','POST'])
+def deletejob(sno):
+    con=sqlite3.connect('alumini_db.db')
+    cursor=con.cursor()
+    cursor.execute('delete from job_request where sno=?',(sno,))
+    con.commit()
+    con.close()
+    return redirect(url_for('admin_dashboard'))
+
+#job-request  count dynamic ka update in the admin page
+@app.route('/get_total_job_request')
+def get_total_job_request():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM job_request")
+    total_job_request = cursor.fetchone()[0]  # Job request count fetch pannum
+
+    conn.close()
+    return jsonify({'total': total_job_request})  # JSON format la return pannum
+
+
+# 🔹 Accept panna data new table la insert panna route
+@app.route('/save_job', methods=['POST'])
+def save_job():
+    data = request.json  # JSON data receive pannrom
+    conn = sqlite3.connect("alumini_db.db")
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        INSERT INTO accepted_jobs1 (sno, company, job_location, job_title, qualification, description, key_skills, job_package, experience, num_vacancy, reference_email, last_date,contact)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
+    ''', (
+        data['sno'], data['company'], data['job_location'], data['job_title'], 
+        data['qualification'], data['description'], data['key_skills'], 
+        data['job_package'], data['experience'], data['num_vacancy'], 
+        data['reference_email'], data['last_date'], data['contact']
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Job request saved successfully!"})  # Success message
+
+
+@app.route('/job_approved', methods=['POST', 'GET'])
+def job_approved():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Allows access to rows by column name (like a dictionary)
+    cursor = con.cursor()
+    cursor.execute('select * from accepted_jobs1')
+    res = cursor.fetchall()
+    if request.method == 'POST':
+        name = request.form['sender-name']
+        messager = request.form['stu-alu']
+        comment = request.form['name']
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        cursor.execute('INSERT INTO comment (name, messager, comment) VALUES (?, ?, ?)', (name, messager, comment))
+        con.commit()
+        con.close()
+   
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Allows access to rows by column name (like a dictionary)
+    cursor = con.cursor()
+    cursor.execute('SELECT * FROM comment')  # You can change this query to fetch comments if needed
+    res1 = cursor.fetchall()
+
+    return render_template('approved-job.html', datas=res, datas1=res1)
+
+
+#job approved for alumni to be view
+@app.route('/job_approved2')
+def job_approved2():
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+    cursor.execute('select * from accepted_jobs1')
+    res = cursor.fetchall()
+    return render_template('approved-job2.html',datas=res)
+
+#approval job request count dynamic ka update in the admin page
+@app.route('/get_total_jobs_json')
+def get_total_jobs_json():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM accepted_jobs1")
+    total_jobs = cursor.fetchone()[0]
+
+    conn.close()
+    return jsonify({'total': total_jobs})  # JSON format la return pannu
+
+#total alumni count dynamic ka update in the admin page
+@app.route('/get_total_alumni_json')
+def get_total_alumni_json():
+    conn = sqlite3.connect('alumini_db.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM alumni1")
+    total_alumni = cursor.fetchone()[0]
+
+    conn.close()
+    return jsonify({'total': total_alumni})  # JSON format la return pannu
+
+
+
+#data to be inserted on the selected department
+@app.route('/add_student1', methods=['GET','POST'])
+def add_student1():
+    if request.method=='POST':
+        name = request.form['name']
+        register_number = request.form['register']
+        dob = request.form['dob']
+        semester = request.form['semester']
+        year = request.form['year']
+        department = request.form['department']
+        address = request.form['address']
+        phone = request.form['phone']
+
+         # Validate department to avoid SQL Injection
+        allowed_departments = ['CSE', 'IT', 'EEE', 'MECH', 'CIVIL', 'ECE', 'AUTO']
+        if department not in allowed_departments:
+            return "Invalid department selected!", 400
+        
+        con = sqlite3.connect('alumini_db.db')
+        cursor = con.cursor()
+        query = f"INSERT INTO {department} (name, regno, dob, semester, year, address, phoneno) VALUES (?, ?, ?, ?, ?, ?, ?)"
+        cursor.execute(query, (name, register_number, dob, semester, year, address, phone))
+        con.commit()
+        con.close()
+         # Redirect back to the form with a success message
+        return redirect(url_for('add_student1', success="Student record inserted successfully!"))
+
+    success_message = request.args.get('success')  # Retrieve success message
+    return render_template('student-details.html', success=success_message)
+
+# Route to fetch data based on the selected department
+@app.route('/select_table',methods=['GET','POST'])
+def select_table():
+     return render_template("student-details-view.html")
+
+# Route to fetch data based on the selected department
+@app.route('/select_table1',methods=['GET','POST'])
+def select_table1():
+    semester = request.form.get('semester')
+    year = request.form.get('year')
+    department = request.form.get('department')
+
+    # Allowed departments for security
+    allowed_departments = ['CSE', 'IT', 'EEE', 'MECH', 'CIVIL', 'ECE', 'AUTO']
+    if department not in allowed_departments:
+        return "Invalid department selected!", 400
+
+    # Connect to database
+    con = sqlite3.connect('alumini_db.db')
+    con.row_factory = sqlite3.Row  # Enables dictionary-style access
+    cursor = con.cursor()
+
+    query = f"SELECT * FROM {department} WHERE semester=? AND year=?"
+    cursor.execute(query, (semester, year))
+    res = cursor.fetchall()
     
-@app.route("/api/verifyotp", methods=["POST"])
-def verify_otp():
-    data = request.json
+    con.close()
 
-    # Check if data is None
-    if not data:
-        return jsonify({"message": "Invalid request. No data received."}), 400
+    # Render the data in a table
+    return render_template("student-details-view.html", datas=res)
+    
+#course
+@app.route('/course')
+def course():
+    return render_template('manage_course.html')
 
-    otp_entered = data.get("otp", "").strip()
+#cse
+@app.route('/cse')
+def cse():
+    return render_template('ce.html')
 
-    if not otp_entered:
-        return jsonify({"message": "OTP is required."}), 400
+#eee
+@app.route('/eee')
+def eee():
+    return render_template('eee.html')
 
-    record = otp_collection.find_one({"otp": otp_entered})
+#mech
+@app.route('/mech')
+def mech():
+    return render_template('mech.html')
 
-    if record:
-        if datetime.utcnow() < record.get("expires_at", datetime.utcnow()):
-            return jsonify({"message": "OTP verified. Proceed to reset password."}), 200
-        else:
-            return jsonify({"message": "OTP expired. Request a new one."}), 400
-    else:
-        return jsonify({"message": "Invalid OTP."}), 400
+#civil
+@app.route('/civil')
+def civil():
+    return render_template('civil.html')
 
+#auto
+@app.route('/auto')
+def auto():
+    return render_template('auto.html')
 
-@app.route("/api/resetpassword", methods=["POST"])
-def reset_password():
-    data = request.json
-    email = data.get("email")
-    new_password = data.get("newPassword")
-
-    users_collection.update_one({"email": email}, {"$set": {"password": new_password}})
-
-    return jsonify({"message": "Password reset successful."}), 200
-
-
-@app.route('/api/chat', methods=['POST'])
-def chat():
-    data = request.get_json()
-    query = data.get('query', '')
-
-    if not query.strip():
-        return jsonify({'response': "Please enter your question."})
-
-    processed_query = preprocess_text(query)
-    print(f"Processed Query: {processed_query}")
-
-    # Search for the processed query in the database
-    response_data = qa_collection.find_one({'question': processed_query})
-
-    if response_data:
-        response = response_data['answer']
-    else:
-        # Attempt a more flexible search (e.g., check for any lemmatized words in common)
-        query_tokens = set(processed_query.split())
-        best_match = None
-        max_overlap = 0
-
-        for item in qa_collection.find():
-            if 'question' in item:  # Check if 'question' key exists
-                db_question_processed = preprocess_text(item['question'])
-                db_question_tokens = set(db_question_processed.split())
-                overlap = len(query_tokens.intersection(db_question_tokens))
-
-                if overlap > max_overlap and overlap > 0: # Consider a threshold for overlap
-                    max_overlap = overlap
-                    best_match = item['answer']
-
-        if best_match:
-            response = best_match
-        else:
-            response = "Sorry, I didn't understand that. Can you rephrase?"
-
-    return jsonify({'response': response})
-
-
-@app.route('/api/chatbotlog', methods=['POST'])
-def chatbotlog():
-    data = request.get_json()
-    user_message = data.get('query')
-
-    if not user_message:
-        return jsonify({'message': 'No message received'}), 400
-
-    # Use spaCy for NLP processing
-    doc = nlp(user_message.lower())
-    processed_text = " ".join([token.lemma_ for token in doc])  # Lemmatization
-
-    # Search for the processed question in the database
-    qa_entry = qa_collection.find_one({'question': {'$regex': processed_text, '$options': 'i'}})
-
-    if qa_entry:
-        return jsonify({'response': qa_entry['answer']}), 200
-    else:
-        return jsonify({'response': "Sorry, I cann't understand that. Can you rephrase?"}), 200
-
-
-if __name__ == '__main__':
+if __name__=='__main__':
+    app.secret_key = '1234'
     app.run(debug=True)
+

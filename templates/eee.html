@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EEE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+       
+       body{
+           font-family: 'Roboto',sans-serif;
+           background-color:#f1f5f8 ;
+       }
+       .big-box{
+            height: 80%;
+            width: 80%;
+            background-color: #f1f5f8;
+            margin-top: 50px;
+            margin-left: 140px;
+            border: 2px solid rgb(0,174,255);
+            border-radius: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr ; /* Three equal columns */
+            grid-template-rows: auto auto; /* Two rows */
+            margin-bottom: 50px;
+       }
+       .box1{
+            margin-left: 80px;
+            font-size: 16px;
+            height: auto;
+            width: auto;
+            background-color: white;
+            margin-right: 80px;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            font-family: 'Poppins';
+            padding: 10px;
+            border: 1px solid #bec2c5;
+       }
+       .small-box{
+            font-size: 18px;
+            background-color: rgb(0,174,255);
+            color: white;
+            padding: 2px;
+            text-align: center;
+       }
+       .dept{
+        font-size: 30px;
+        font-family: 'Satisfy';
+        letter-spacing: 1px;
+        color: rgb(0,174,255);
+        text-align: center;
+       }
+       .outline{
+        font-size: 22px;
+        color: rgb(0,174,255);
+        text-align: center;
+       }
+       .icon a{
+            margin-left:1450px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="course">
+        <div class="icon">
+            <a href="{{url_for('course')}}"><i class="fas fa-close"></i></a>
+        </div>
+    </div>
+    <p class="dept">Electrical & Electronics Engineering </p>
+    <p class="outline">Course Outline</p>
+    <div class="big-box">
+       
+        <div class="box1">
+            <p class="small-box">III Semester</p>
+            <ul>
+                <li>Electrical Circuit Theory</li>
+                <li>Electrical Machines-I</li>
+                <li>Electronic Devices and Circuits</li>
+                <li>Electrical Circuits and Machines Practical</li>
+                <li>Electronic Devices and Circuits Practical</li>
+                <li>Electrical Work Shop Practical</li>
+                <li>Computer Applications Practical</li>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">IV Semester</p>
+            <ul>
+                <li>Electrical Machines – II</li>
+                <li>Measurements and Instruments</li>
+                <li>Digital Electronics</li>
+                <li>Transducers and Signal Conditioners</li>
+                <li>Electrical Machines and Instrumentation Practical</li>
+                <li>Integrated Circuits Practical</li>
+                <li>Life and Employability Skill Practical</li>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">V Semester</p>
+            <ul>
+                <li>Generation transmission and switchgear</li>
+                <li>Micro controller</li>
+                <li>Electrical Estimation and Energy Auditing</li>
+                <li>Elective Theory-I</li>
+                    <ul>
+                        <li>Control of Electrical Machines</li>
+                        <li>Programmable Logic Controller</li>
+                        <li>Electrical Machine Design</li>
+                    </ul>
+                <li>Computer Aided Electrical drawing Practical</li>
+                <li>Micro Controller Practical</li>
+                <li>Elective Practical – I</li>
+                <ul>
+                    <li>Control of Electrical Machines Practical</li>
+                    <li>Programmable Logic Controller Practical</li>
+                    <li>Electrical Machine Design Practical</li>
+                </ul>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">VI Semester</p>
+            <ul>
+                <li>Distribution and Utilization</li>
+                <li>Operation and Maintenance of Electrical Equipment</li>
+                <li>Elective Theory-II</li>
+                    <ul>
+                        <li>Power Electronics</li>
+                        <li>Bio-Medical Instrumentation</li>
+                        <li>Computer Hardware and Networks</li>
+                    </ul>
+                <li>Wiring and Winding Practical</li>
+                <li>Electrical Circuits Simulation Practical</li>
+                <li>Elective Practical-II</li>
+                    <ul>
+                        <li>Power Electronics Practical</li>
+                        <li>Bio-Medical Instrumentation Practical</li>
+                        <li>Computer Hardware and Networks Practical</li>
+                    </ul>
+                <li>Project Work</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

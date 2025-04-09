@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIEW CONTACT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #f1f5f8;
+        }
+        p{
+            text-align: center;
+            font-size: 32px;
+            font-family: 'Lato',sans-serif;
+            color: #005cd5;
+            font-weight: 700;
+        }
+        .box2{
+            margin-top: 50px;
+
+        }
+        table{
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+        }
+        table tr{
+            font-size: 20px;
+            font-family: 'Lato',sans-serif;
+            font-weight: 500;
+
+        }
+        th,td{
+           padding: 8px 12px;
+        }
+        table td:nth-child(6) a{
+            color: white;
+            border-radius: 10px;
+            background:#e20303;
+            text-decoration:none;
+            padding:5px 30px 5px 30px ;
+        }
+        table td:nth-child(6) a:hover{
+            transition: 0.2s linear;
+            background:#ff0000 ;
+        }
+        table{
+            margin-left: 160px;
+	        width:80%;
+	        border-collapse:collapse;
+	        margin-top:25px;
+        }
+        tr td,tr th{
+	        border:1px solid #4682B4;
+	        padding:10px;
+        }
+        tr th{
+            border:none;
+            background:#007BFF;
+            border:1px solid #4682B4;
+            color:white;
+        }
+        .icon a{
+            margin-left:1450px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+        .icon a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
+        }
+       
+    </style>
+</head>
+<body>
+    {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+    {% endif %}
+    <form action="/view_contact_alumni" method="">
+        <div class="box1">
+            <div class="icon">
+                <a href="{{url_for('alumni_dashboard')}}"><ion-icon name="close-outline"></ion-icon></a>
+            </div>
+            <div class="box2">
+                <p>To View the Contact</p>
+                <table border="1">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact Number</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Active</th>
+                    </tr>
+                {% for data in datas %}
+                <tr>
+                    <td>{{ data['stu_name'] }}</td>
+                    <td>{{ data['stu_email'] }}</td>
+                    <td>{{ data['stu_contact'] }}</td>
+                    <td>{{ data['subject'] }}</td>
+                    <td>{{ data['message'] }}</td>
+
+                    <td><a class='link3' onclick="return confirm('Are you sure to delete?');" href="">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </form>
+</body>
+</html>
+
+
+

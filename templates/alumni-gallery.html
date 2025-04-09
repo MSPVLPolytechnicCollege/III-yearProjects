@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSPVL GALLERY</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #f1f5f8;
+            font-family: 'Roboto',sans-serif;
+        }
+        .college-images{
+            margin-top: 50px;
+          
+        }
+        .college-images p{
+            text-align: center;
+            font-size: 28px;
+            color: #005cd5;
+            font-weight: 700;
+            font-family: 'Lora',sans-serif;
+        }
+        .input-images{
+            margin-top: 50px;
+            margin-left: 90px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Responsive Grid */
+            gap: 10px;
+            max-width: 90%;
+        }
+        img{
+            overflow: hidden;
+            height: 300px;
+            width: 350px;
+            object-fit: cover;
+            border-radius: 25px;
+            margin-top: 40px;
+            box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
+        }
+        .container{
+            margin-left: 100px;
+        }
+        img:hover{
+            transition: 0.2s ease;
+            transform: scale(1.02); /* Zoom effect */
+            box-shadow: 0px 10px 15px rgba(0,0,0,0.4);
+        }
+        .content{
+            margin-left: 80px;
+            margin-right: 10px;
+            margin-bottom: 3px;
+           
+        }
+        input{
+            height: 25px;
+            width: 250px;
+            padding-left: 10px;
+        }
+        .type{
+            padding: 5px;
+            border-radius: 8px;
+            border: 1px solid #005cd5 ;
+            outline: 1px solid #005cd5;
+        }
+        .type:hover{
+            box-shadow: 0px 3px 7px rgba(0,0,0,0.2);
+            transition: 0.2s ease;
+            border: 1px solid #005cd5 ;
+            outline: 1px solid #005cd5;
+        }
+        .image-box{
+            display: flex;
+            flex-direction: column; /* Stack image + text */
+            align-items: center; /* Center horizontally */
+            text-align: center; /* Ensure text is centered */
+            width: 300px; /* Adjust width as needed */
+        }
+        .image-box p{
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+         .icon {
+            color: black;
+            font-size: 26px;
+            margin-top:30px;
+        }
+        a{
+            margin-left:1520px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+         a:hover{
+            transition:0.2s ease;
+            color:#005cd5;
+        }
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+    {% endif %}
+    <form action="/stu_gallery">
+        <div class="gallery">
+             <div class="icon">
+                <a href="{{url_for('alumni_dashboard')}}"><ion-icon name="close-outline"></ion-icon></a>
+            </div>
+            <div class="college-images">
+                <div class="clg-img">
+                    <p>College Gallery</p>
+                </div>
+                <div class="container">
+                    <div class="input-images">
+                        {% for img in images %}
+                            <div class="image-box">
+                                <img src="{{ img.data }}" alt="Uploaded Image">
+                                <p>{{ img.description }}</p>
+                            </div>
+                           
+                        {% endfor %}
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERROR</title>
+    <link rel="icon" href="/static/images/mspvl.png">
+</head>
+<body>
+    <h1>{{ message }}</h1>
+
+    <script>
+        //Show an alert with the message passed from Flask
+        alert("{{ message }}");
+
+        // After the alert, redirect back to the home page or login page
+        window.location.href = '/';
+    </script>
+</body>
+</html>

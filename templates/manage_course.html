@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COURSE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+       *{
+           margin: 0;
+           padding: 0;
+       }
+       body{
+           font-family: 'Roboto',sans-serif;
+           background-color:#f1f5f8 ;
+       }
+       h2{
+            color: #005cd5;
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            padding-top: 40px;
+       }
+       .big-box{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr; /* Three equal columns */
+            grid-template-rows: auto auto; /* Two rows */
+            row-gap: 0px;
+            padding-bottom: 70px;
+       }
+
+       .box1{
+            height: 320px;
+            width: 300px;
+            background-color: white;
+            margin-left: 35px;
+            margin-top: 150px;
+            border: 2px solid #007BFF;
+            border-radius: 20px;
+            outline: none;
+            
+        }
+        .box1 .image {
+            font-family: 'Satisfy';
+            color: #007BFF;
+            font-size: 70px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 100px;
+            text-decoration: none;
+        }
+        .box1 .image2 {
+            font-family: 'Satisfy';
+            color: #007BFF;
+            font-size: 70px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 115px;
+            text-decoration: none;
+        }
+        .box1 .image6 {
+            font-family: 'Satisfy';
+            color: #007BFF;
+            font-size: 70px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 85px;
+            text-decoration: none;
+        }
+        .box1 .image4 {
+            font-family: 'Satisfy';
+            color: #007BFF;
+            font-size: 70px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 70px;
+            text-decoration: none;
+        }
+        .box1 .image5 {
+            font-family: 'Satisfy';
+            color: #007BFF;
+            font-size: 70px;
+            display: inline-block;
+            margin-top: 50px;
+            margin-left: 70px;
+            text-decoration: none;
+        }
+        .box1 p{
+            font-size: 20px;
+            margin-top: 35px;
+            font-family: 'Roboto';
+            font-weight: 600;
+            text-align: center;
+            max-width: 270px;
+            margin-left: 15px;
+        }
+        .box1 .button{
+            text-decoration: none;
+            font-size: 18px;
+            background: rgb(0,174,255);
+            background: linear-gradient(90deg, rgba(0,174,255,1) 0%, rgba(40,18,254,1) 55%, rgba(0,152,255,1) 100%);
+            padding: 5px 20px;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Roboto';
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 30px;
+            margin-left: 110px;
+        }
+        .box1 .button:hover{
+            background: rgb(0,174,255);
+            background: linear-gradient(90deg, rgba(0,174,255,1) 0%, rgba(40,18,254,1) 55%, rgba(0,152,255,1) 100%);
+            transition: 0.3s linear;
+            outline: 2px solid  #007BFF;
+            outline-offset: 2px;
+        
+        }
+        .icon a{
+            margin-left:1450px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="div">
+        <form action="/course" method="POST">
+            <h2>VIEW THE COURSE BASED ON THE DEPARTMENT</h2>
+        <div class="big-box">
+            
+            <div class="box1">
+                <a href="#" class="image">CSE</a>
+                <p>DIPLOMA COMPUTER ENGG.</p>
+                <a href="{{url_for('cse')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image2">IT</a>
+                <p>DIPLOMA INFORMATION TECHNOLOGY</p>
+                <a href="{{url_for('cse')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image">EEE</a>
+                <p>DIPLOMA ELECTRICAL AND ELECTRONICS ENGG. </p>
+                <a href="{{url_for('eee')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image4">CIVIL</a>
+                <p>DIPLOMA CIVIL ENGG.</p>
+                <a href="{{url_for('civil')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image5">MECH</a>
+                <p>DIPLOMA MECHANICAL ENGG.</p>
+                <a href="{{url_for('mech')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image6">AUTO</a>
+                <p>DIPLOMA AUTOMOBILE ENGG.</p>
+                <a href="{{url_for('auto')}}" class="button">Select</a>
+            </div>
+            <div class="box1">
+                <a href="#" class="image">ECE</a>
+                <p>DIPLOMA ELECTRONICS AND COMMUNICATION ENGG.</p>
+                <a href="" class="button">Select</a>
+            </div>
+            
+        </div>
+    </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIVIL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="icon" href="/static/images/mspvl.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Playwrite+NL+Guides&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Satisfy&display=swap');
+       
+       body{
+           font-family: 'Roboto',sans-serif;
+           background-color:#f1f5f8 ;
+       }
+       .big-box{
+            height: 80%;
+            width: 80%;
+            background-color: #f1f5f8;
+            margin-top: 50px;
+            margin-left: 140px;
+            border: 2px solid rgb(0,174,255);
+            border-radius: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr ; /* Three equal columns */
+            grid-template-rows: auto auto; /* Two rows */
+            margin-bottom: 50px;
+       }
+       .box1{
+            margin-left: 80px;
+            font-size: 16px;
+            height: auto;
+            width: auto;
+            background-color: white;
+            margin-right: 80px;
+            margin-top: 50px;
+            margin-bottom: 40px;
+            font-family: 'Poppins';
+            padding: 10px;
+            border: 1px solid #bec2c5;
+       }
+       .small-box{
+            font-size: 18px;
+            background-color: rgb(0,174,255);
+            color: white;
+            padding: 2px;
+            text-align: center;
+       }
+       .dept{
+        font-size: 30px;
+        font-family: 'Satisfy';
+        letter-spacing: 1px;
+        color: rgb(0,174,255);
+        text-align: center;
+       }
+       .outline{
+        font-size: 22px;
+        color: rgb(0,174,255);
+        text-align: center;
+       }
+       .icon a{
+            margin-left:1450px;
+            padding-top:20px;
+            font-size:32px;
+            text-decoration:none;
+            font-weight:700px;
+            color: black;
+        }
+
+        .icon i{
+            color: black;
+            font-size: 32px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="course">
+        <div class="icon">
+            <a href="{{url_for('course')}}"><i class="fas fa-close"></i></a>
+        </div>
+    </div>
+    <p class="dept">Civil Engineering </p>
+    <p class="outline">Course Outline</p>
+    <div class="big-box">
+        
+        <div class="box1">
+            <p class="small-box">III Semester</p>
+            <ul>
+                <li>Engineering Mechanics</li>
+                <li>Construction Materials and Construction Practice</li>
+                <li>Surveying I</li>
+                <li>Civil Engineering Drawing I</li>
+                <li>Material Testing Lab I</li>
+                <li>Surveying Practice I</li>
+                <li>Computer Application Practical</li>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">IV Semester</p>
+            <ul>
+                <li>Theory of Structures</li>
+                <li>Transportation Engineering
+                    Surveying II</li>
+                <li>Estimating and Costing I</li>
+                <li>Material Testing Lab II</li>
+                <li>Surveying Practice II</li>
+                <li>CAD in Civil Engineering Drawing I</li>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">V Semester</p>
+            <ul>
+                <li>Structural Engineering</li>
+                <li>Environmental Engineering and Pollution Control</li>
+                <li>Elective Theory-I</li>
+                    <ul>
+                        <li>Advanced Construction Technology</li>
+                        <li>Remote Sensing and GIS</li>
+                        <li>Soil Mechanics and Foundation Engineering</li>
+                        <li>Water Resources Management</li>
+                    </ul>
+                <li>Civil Engineering Drawing II</li>
+                <li>Construction Practice Lab</li>
+                <li>CAD In Civil Engineering Drawing II</li>
+                <li>Life and Employability Skill Practical</li>
+            </ul>
+        </div>
+        <div class="box1">
+            <p class="small-box">VI Semester</p>
+            <ul>
+                <li>Construction Management with MIS</li>
+                <li>Hydraulics</li>
+                <li>Elective Theory-II</li>
+                    <ul>
+                        <li>Steel Structures</li>
+                        <li>Town Planning</li>
+                        <li>Earthquake Engineering</li>
+                        <li>Building Services</li>
+                    </ul>
+                <li>Estimating and Costing II</li>
+                <li>Hydraulics Lab</li>
+                <li>Computer Applications In Civil Engineering Practice</li>
+                <li>Project Work</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
