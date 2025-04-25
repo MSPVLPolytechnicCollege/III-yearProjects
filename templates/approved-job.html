@@ -183,6 +183,7 @@
             {{message}}
         {% endfor %}
     {% endif %}
+    {% for data in datas %}
     <form action="/job_approved" method="post">
         <div class="course">
             <div class="icon">
@@ -191,7 +192,7 @@
             
             <div class="big-box">
                 <p class="job-content">JOB VACANCY</p>
-                {% for data in datas %}
+                
                 <div class="data">
                     <p class="job-content1">Job Details</p>
                    <div class="datas">
@@ -234,12 +235,13 @@
                         </div>
                     </div>
                     {% endfor %}
-                    {% endfor %}
+                    
                </div>
                    
                 </div>
             </div>
         </div>
     </form>
+    {% endfor %}
     </body>
 </html>
