@@ -1,3 +1,4 @@
+
 import os
 from flask import Flask, render_template, request, redirect, url_for, flash, session,jsonify
 import sqlite3
@@ -1067,3 +1068,4 @@ def auto():
 if __name__=='__main__':
     app.secret_key = '1234'
     app.run(debug=True)
+
